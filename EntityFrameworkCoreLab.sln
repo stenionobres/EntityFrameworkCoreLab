@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCoreLab.Application", "EntityFrameworkCoreLab.Application\EntityFrameworkCoreLab.Application.csproj", "{22760AF3-E743-4A72-B19B-DAFBB5F39326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCoreLab.Persistence", "EntityFrameworkCoreLab.Persistence\EntityFrameworkCoreLab.Persistence.csproj", "{9592AA32-8C8E-45DC-9A83-1C9EBAB9DE0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22760AF3-E743-4A72-B19B-DAFBB5F39326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22760AF3-E743-4A72-B19B-DAFBB5F39326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22760AF3-E743-4A72-B19B-DAFBB5F39326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22760AF3-E743-4A72-B19B-DAFBB5F39326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9592AA32-8C8E-45DC-9A83-1C9EBAB9DE0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9592AA32-8C8E-45DC-9A83-1C9EBAB9DE0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9592AA32-8C8E-45DC-9A83-1C9EBAB9DE0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9592AA32-8C8E-45DC-9A83-1C9EBAB9DE0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC135689-B9C4-4B57-A150-392E5A2F253A}
+	EndGlobalSection
+EndGlobal
