@@ -2,7 +2,7 @@
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
 using System;
 
-namespace EntityFrameworkCoreLab.Persistence.Mappers
+namespace EntityFrameworkCoreLab.Persistence.Mappers.Amazon
 {
     public class AmazonCustomerMapper
     {

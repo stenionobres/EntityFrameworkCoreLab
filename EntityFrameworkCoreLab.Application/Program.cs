@@ -1,5 +1,5 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
-using EntityFrameworkCoreLab.Persistence.Mappers;
+using EntityFrameworkCoreLab.Persistence.Mappers.Amazon;
 using EntityFrameworkCoreLab.Persistence.Mappers.Ebay;
 using EbayCustomer = EntityFrameworkCoreLab.Persistence.DataTransferObjects.Ebay.Customer;
 
