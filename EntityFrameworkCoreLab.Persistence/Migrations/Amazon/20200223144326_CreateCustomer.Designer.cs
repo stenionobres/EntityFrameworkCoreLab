@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EntityFrameworkCoreLab.Persistence.Migrations
+namespace EntityFrameworkCoreLab.Persistence.Migrations.Amazon
 {
     [DbContext(typeof(AmazonCodeFirstDbContext))]
     [Migration("20200223144326_CreateCustomer")]

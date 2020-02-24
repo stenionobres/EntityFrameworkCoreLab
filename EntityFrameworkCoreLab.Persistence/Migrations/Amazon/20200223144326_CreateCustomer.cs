@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace EntityFrameworkCoreLab.Persistence.Migrations
+namespace EntityFrameworkCoreLab.Persistence.Migrations.Amazon
 {
     public partial class CreateCustomer : Migration
     {

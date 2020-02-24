@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EntityFrameworkCoreLab.Persistence.Migrations
+namespace EntityFrameworkCoreLab.Persistence.Migrations.Amazon
 {
     [DbContext(typeof(AmazonCodeFirstDbContext))]
     partial class AmazonCodeFirstDbContextModelSnapshot : ModelSnapshot
