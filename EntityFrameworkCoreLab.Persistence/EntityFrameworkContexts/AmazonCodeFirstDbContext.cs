@@ -9,6 +9,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
                                                   Encrypt=False;Trusted_Connection=False;Connection Timeout=3000;";
 
         public DbSet<Customer> Customer { get; set; }
+        public DbSet<DTODataType> DTODataType { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
