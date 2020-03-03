@@ -15,6 +15,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
             optionsBuilder.UseSqlServer(ConnectionString);
         }
 
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+
     }
 }

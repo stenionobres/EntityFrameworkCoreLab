@@ -14,7 +14,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Ebay
             {
                 using (var ebayDatabaseFirstContext = new EbayDatabaseFirstDbContext())
                 {
-                    ebayDatabaseFirstContext.Customers.Add(customer);
+                    ebayDatabaseFirstContext.Customer.Add(customer);
                     ebayDatabaseFirstContext.SaveChanges();
                 }
             }
