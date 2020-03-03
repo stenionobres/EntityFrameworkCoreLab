@@ -11,6 +11,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<Customer> Customer { get; set; }
         public DbSet<DTODataType> DTODataType { get; set; }
         public DbSet<Product> Product { get; set; }
+        public DbSet<ShippingRate> ShippingRate { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
