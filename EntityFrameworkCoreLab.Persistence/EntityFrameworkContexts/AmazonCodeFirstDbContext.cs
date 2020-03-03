@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
 {
@@ -13,6 +14,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
 
             optionsBuilder.UseSqlServer(ConnectionString);
         }
-        
+
+        public DbSet<Customer> Customer { get; set; }
     }
 }

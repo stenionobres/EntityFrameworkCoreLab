@@ -12,7 +12,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Amazon
             {
                 using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
                 {
-                    amazonCodeFirstContext.Customers.Add(customer);
+                    amazonCodeFirstContext.Customer.Add(customer);
                     amazonCodeFirstContext.SaveChanges();
                 }
             }

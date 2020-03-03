@@ -16,7 +16,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Amazon
             {
                 // if id of Entity is 0, the EntityState will be Added and data will inserted in database
 
-                amazonCodeFirstContext.Customers.Update(customer);
+                amazonCodeFirstContext.Customer.Update(customer);
                 amazonCodeFirstContext.SaveChanges();
             }
         }
@@ -42,7 +42,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Amazon
 
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
-                var customer = amazonCodeFirstContext.Customers.FirstOrDefault(c => c.Id.Equals(customerId));
+                var customer = amazonCodeFirstContext.Customer.FirstOrDefault(c => c.Id.Equals(customerId));
                 customer.Name = newCustomerName;
                 amazonCodeFirstContext.SaveChanges();
             }
@@ -64,7 +64,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Amazon
 
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
-                amazonCodeFirstContext.Customers.Update(customer);
+                amazonCodeFirstContext.Customer.Update(customer);
                 amazonCodeFirstContext.Entry(customer).State = Microsoft.EntityFrameworkCore.EntityState.Unchanged;
                 amazonCodeFirstContext.SaveChanges();
             }
@@ -88,7 +88,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Amazon
 
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
-                amazonCodeFirstContext.Customers.Update(customer);
+                amazonCodeFirstContext.Customer.Update(customer);
                 amazonCodeFirstContext.Entry(customer).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                 amazonCodeFirstContext.SaveChanges();
             }

@@ -14,7 +14,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Amazon
 
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
-                amazonCodeFirstContext.Customers.Remove(customer);
+                amazonCodeFirstContext.Customer.Remove(customer);
                 amazonCodeFirstContext.SaveChanges();
             }
         }
@@ -36,7 +36,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Amazon
 
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
-                amazonCodeFirstContext.Customers.Remove(customer);
+                amazonCodeFirstContext.Customer.Remove(customer);
                 amazonCodeFirstContext.Entry(customer).State = Microsoft.EntityFrameworkCore.EntityState.Unchanged;
                 amazonCodeFirstContext.SaveChanges();
             }
@@ -60,7 +60,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Amazon
 
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
-                amazonCodeFirstContext.Customers.Remove(customer);
+                amazonCodeFirstContext.Customer.Remove(customer);
                 amazonCodeFirstContext.Entry(customer).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                 amazonCodeFirstContext.SaveChanges();
             }
