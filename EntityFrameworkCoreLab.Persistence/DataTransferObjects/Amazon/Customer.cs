@@ -7,6 +7,9 @@ namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
     public class Customer
     {
         public int Id { get; set; }
+        
+        [Required]
+        [MaxLength(80)]
         public string Name { get; set; }
 
         [Column(TypeName = "date")]
@@ -17,6 +20,7 @@ namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
         public string Email { get; set; }
 
         [Required]
+        [MaxLength(11)]
         public string Cpf { get; set; }
     }
 }
