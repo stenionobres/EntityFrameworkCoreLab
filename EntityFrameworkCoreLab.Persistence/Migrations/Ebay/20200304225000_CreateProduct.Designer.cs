@@ -4,14 +4,16 @@ using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EntityFrameworkCoreLab.Persistence.Migrations.Ebay
 {
     [DbContext(typeof(EbayDatabaseFirstDbContext))]
-    partial class EbayDatabaseFirstDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200304225000_CreateProduct")]
+    partial class CreateProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
