@@ -52,7 +52,7 @@ namespace EntityFrameworkCoreLab.Persistence.Migrations.Amazon
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon.DTODataType", b =>
+            modelBuilder.Entity("EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.DTODataType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

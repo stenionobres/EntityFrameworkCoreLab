@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
+namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments
 {
     public class DTODataType
     {
