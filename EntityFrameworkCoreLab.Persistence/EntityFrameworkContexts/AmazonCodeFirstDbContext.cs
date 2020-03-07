@@ -10,7 +10,6 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
                                                   Encrypt=False;Trusted_Connection=False;Connection Timeout=3000;";
 
         public DbSet<Customer> Customer { get; set; }
-        public DbSet<DTODataType> DTODataType { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ShippingRate> ShippingRate { get; set; }
 
