@@ -1,4 +1,5 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments;
+using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToManyRelation;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
@@ -9,6 +10,8 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
                                                   Encrypt=False;Trusted_Connection=False;Connection Timeout=3000;";
 
         public DbSet<DTODataType> DTODataType { get; set; }
+        public DbSet<PrincipalEntityByConventionOTM> PrincipalEntityByConventionOTM { get; set; }
+        public DbSet<DependentEntityByConventionOTM> DependentEntityByConventionOTM { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
