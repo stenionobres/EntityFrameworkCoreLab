@@ -232,48 +232,6 @@ namespace EntityFrameworkCoreLab.Persistence.Migrations.Experiments
                     b.ToTable("PrincipalEntityByFluentApiOTM");
                 });
 
-            modelBuilder.Entity("EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToOneRelation.DependentEntityByConventionOTO", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("FirstProperty")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("SecondProperty")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DependentEntityByConventionOTO");
-                });
-
-            modelBuilder.Entity("EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToOneRelation.PrincipalEntityByConventionOTO", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DependentEntityByConventionOTOId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FirstProperty")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SecondProperty")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DependentEntityByConventionOTOId")
-                        .IsUnique();
-
-                    b.ToTable("PrincipalEntityByConventionOTO");
-                });
-
             modelBuilder.Entity("EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToManyRelation.DependentEntityByConventionOTM", b =>
                 {
                     b.HasOne("EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToManyRelation.PrincipalEntityByConventionOTM", null)
@@ -297,15 +255,6 @@ namespace EntityFrameworkCoreLab.Persistence.Migrations.Experiments
                     b.HasOne("EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToManyRelation.PrincipalEntityByFluentApiOTM", null)
                         .WithMany("DependentsEntitiesByFluentApiOTM")
                         .HasForeignKey("ForeignKeyToPrincipalEntity")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToOneRelation.PrincipalEntityByConventionOTO", b =>
-                {
-                    b.HasOne("EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToOneRelation.DependentEntityByConventionOTO", null)
-                        .WithOne("PrincipalEntityByConventionOTO")
-                        .HasForeignKey("EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToOneRelation.PrincipalEntityByConventionOTO", "DependentEntityByConventionOTOId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
