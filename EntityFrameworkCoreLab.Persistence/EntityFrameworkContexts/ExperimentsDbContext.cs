@@ -1,5 +1,6 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments;
 using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToManyRelation;
+using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToOneRelation;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
@@ -16,6 +17,8 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<DependentEntityByDataAnnotationOTM> DependentEntityByDataAnnotationOTM { get; set; }
         public DbSet<PrincipalEntityByFluentApiOTM> PrincipalEntityByFluentApiOTM { get; set; }
         public DbSet<DependentEntityByFluentApiOTM> DependentEntityByFluentApiOTM { get; set; }
+        public DbSet<PrincipalEntityByConventionOTO> PrincipalEntityByConventionOTO { get; set; }
+        public DbSet<DependentEntityByConventionOTO> DependentEntityByConventionOTO { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
