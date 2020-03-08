@@ -19,6 +19,8 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<DependentEntityByFluentApiOTM> DependentEntityByFluentApiOTM { get; set; }
         public DbSet<PrincipalEntityByConventionOTO> PrincipalEntityByConventionOTO { get; set; }
         public DbSet<DependentEntityByConventionOTO> DependentEntityByConventionOTO { get; set; }
+        public DbSet<PrincipalEntityByDataAnnotationOTO> PrincipalEntityByDataAnnotationOTO { get; set; }
+        public DbSet<DependentEntityByDataAnnotationOTO> DependentEntityByDataAnnotationOTO { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
