@@ -6,6 +6,5 @@ namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.One
         public int Id { get; set; }
         public int FirstProperty { get; set; }
         public decimal SecondProperty { get; set; }
-        public PrincipalEntityByConventionOTO PrincipalEntityByConventionOTO { get; set; }
     }
 }
