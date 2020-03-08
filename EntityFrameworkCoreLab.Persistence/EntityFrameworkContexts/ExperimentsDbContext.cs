@@ -21,6 +21,8 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<DependentEntityByConventionOTO> DependentEntityByConventionOTO { get; set; }
         public DbSet<PrincipalEntityByDataAnnotationOTO> PrincipalEntityByDataAnnotationOTO { get; set; }
         public DbSet<DependentEntityByDataAnnotationOTO> DependentEntityByDataAnnotationOTO { get; set; }
+        public DbSet<PrincipalEntityByFluentApiOTO> PrincipalEntityByFluentApiOTO { get; set; }
+        public DbSet<DependentEntityByFluentApiOTO> DependentEntityByFluentApiOTO { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -35,6 +37,10 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
                         .HasMany(p => p.DependentsEntitiesByFluentApiOTM)
                         .WithOne()
                         .HasForeignKey(d => d.ForeignKeyToPrincipalEntity);
+
+            modelBuilder.Entity<PrincipalEntityByFluentApiOTO>()
+                        .HasOne(p => p.DependentEntityByFluentApiOTO);
+                        
         }
     }
 }
