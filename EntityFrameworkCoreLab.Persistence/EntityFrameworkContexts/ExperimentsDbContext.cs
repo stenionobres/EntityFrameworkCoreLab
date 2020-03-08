@@ -14,12 +14,22 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<DependentEntityByConventionOTM> DependentEntityByConventionOTM { get; set; }
         public DbSet<PrincipalEntityByDataAnnotationOTM> PrincipalEntityByDataAnnotationOTM { get; set; }
         public DbSet<DependentEntityByDataAnnotationOTM> DependentEntityByDataAnnotationOTM { get; set; }
+        public DbSet<PrincipalEntityByFluentApiOTM> PrincipalEntityByFluentApiOTM { get; set; }
+        public DbSet<DependentEntityByFluentApiOTM> DependentEntityByFluentApiOTM { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (optionsBuilder.IsConfigured) return;
 
             optionsBuilder.UseSqlServer(ConnectionString);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PrincipalEntityByFluentApiOTM>()
+                        .HasMany(p => p.DependentsEntitiesByFluentApiOTM)
+                        .WithOne()
+                        .HasForeignKey(d => d.ForeignKeyToPrincipalEntity);
         }
     }
 }
