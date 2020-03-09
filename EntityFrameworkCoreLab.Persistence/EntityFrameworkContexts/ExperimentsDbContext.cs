@@ -27,6 +27,9 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<PrincipalEntityByConventionMTM> PrincipalEntityByConventionMTM { get; set; }
         public DbSet<MiddleEntityByConventionMTM> MiddleEntityByConventionMTM { get; set; }
         public DbSet<DependentEntityByConventionMTM> DependentEntityByConventionMTM { get; set; }
+        public DbSet<PrincipalEntityByDataAnnotationMTM> PrincipalEntityByDataAnnotationMTM { get; set; }
+        public DbSet<MiddleEntityByDataAnnotationMTM> MiddleEntityByDataAnnotationMTM { get; set; }
+        public DbSet<DependentEntityByDataAnnotationMTM> DependentEntityByDataAnnotationMTM { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
