@@ -30,6 +30,9 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<PrincipalEntityByDataAnnotationMTM> PrincipalEntityByDataAnnotationMTM { get; set; }
         public DbSet<MiddleEntityByDataAnnotationMTM> MiddleEntityByDataAnnotationMTM { get; set; }
         public DbSet<DependentEntityByDataAnnotationMTM> DependentEntityByDataAnnotationMTM { get; set; }
+        public DbSet<PrincipalEntityByFluentApiMTM> PrincipalEntityByFluentApiMTM { get; set; }
+        public DbSet<MiddleEntityByFluentApiMTM> MiddleEntityByFluentApiMTM { get; set; }
+        public DbSet<DependentEntityByFluentApiMTM> DependentEntityByFluentApiMTM { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -47,7 +50,17 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
 
             modelBuilder.Entity<PrincipalEntityByFluentApiOTO>()
                         .HasOne(p => p.DependentEntityByFluentApiOTO);
-                        
+
+            modelBuilder.Entity<MiddleEntityByFluentApiMTM>()
+                        .HasOne(p => p.PrincipalEntityByFluentApiMTM)
+                        .WithMany(m => m.MiddleEntitiesByFluentApiMTM)
+                        .HasForeignKey(m => m.ForeignKeyToPrincipalEntity);
+
+            modelBuilder.Entity<MiddleEntityByFluentApiMTM>()
+                      .HasOne(p => p.DependentEntityByFluentApiMTM)
+                      .WithMany(m => m.MiddleEntitiesByFluentApiMTM)
+                      .HasForeignKey(m => m.ForeignKeyToDependentEntity);
+
         }
     }
 }
