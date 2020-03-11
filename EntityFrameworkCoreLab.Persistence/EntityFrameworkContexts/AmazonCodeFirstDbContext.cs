@@ -1,5 +1,4 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
-using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
@@ -12,6 +11,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ShippingRate> ShippingRate { get; set; }
+        public DbSet<Address> Address { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
