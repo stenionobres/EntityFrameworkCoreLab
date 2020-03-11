@@ -22,5 +22,8 @@ namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
         [Required]
         [MaxLength(11)]
         public string Cpf { get; set; }
+
+        [Required]
+        public Address Address { get; set; }
     }
 }
