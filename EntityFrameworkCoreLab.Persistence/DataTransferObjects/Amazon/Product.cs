@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
@@ -17,5 +18,6 @@ namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
 
         [Column(TypeName = "decimal(6,2)")]
         public decimal Price { get; set; }
+        public IList<CartProduct> CartProducts { get; set; }
     }
 }
