@@ -12,6 +12,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<Product> Product { get; set; }
         public DbSet<ShippingRate> ShippingRate { get; set; }
         public DbSet<Address> Address { get; set; }
+        public DbSet<Cart> Cart { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
