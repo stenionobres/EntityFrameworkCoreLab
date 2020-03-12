@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
@@ -10,5 +11,6 @@ namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
         [Column(TypeName = "date")]
         public DateTime PurchaseDate { get; set; }
         public int CustomerId { get; set; }
+        public IList<CartProduct> CartProducts { get; set; }
     }
 }
