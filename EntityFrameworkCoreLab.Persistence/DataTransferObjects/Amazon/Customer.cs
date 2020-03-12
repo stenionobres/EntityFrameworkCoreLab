@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,5 +26,7 @@ namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
 
         [Required]
         public Address Address { get; set; }
+
+        public IList<Cart> Carts { get; set; }
     }
 }
