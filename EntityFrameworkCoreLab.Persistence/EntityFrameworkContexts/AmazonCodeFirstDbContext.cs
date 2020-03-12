@@ -23,6 +23,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>().HasIndex(c => c.Cpf).IsUnique();
+            modelBuilder.Entity<Cart>().Property(c => c.Id).ValueGeneratedNever();
         }
     }
 }
