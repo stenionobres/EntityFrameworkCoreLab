@@ -13,6 +13,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<ShippingRate> ShippingRate { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Cart> Cart { get; set; }
+        public DbSet<CartProduct> CartProduct { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,6 +26,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         {
             modelBuilder.Entity<Customer>().HasIndex(c => c.Cpf).IsUnique();
             modelBuilder.Entity<Cart>().Property(c => c.Id).ValueGeneratedNever();
+            modelBuilder.Entity<CartProduct>().HasKey(c => new { c.CartId, c.ProductId });
         }
 
     }
