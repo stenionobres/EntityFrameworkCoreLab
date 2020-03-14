@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
 {
+    [Table("Cart", Schema = "sales")]
     public class Cart
     {
         public int Id { get; set; }
