@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Ebay
 {
+    [Table("Address", Schema = "common")]
     public class Address
     {
         public int Id { get; set; }
