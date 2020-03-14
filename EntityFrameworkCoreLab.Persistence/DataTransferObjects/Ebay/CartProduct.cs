@@ -1,6 +1,8 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
 namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Ebay
 {
+    [Table("CartProduct", Schema = "sales")]
     public class CartProduct
     {
         public int CartId { get; set; }
