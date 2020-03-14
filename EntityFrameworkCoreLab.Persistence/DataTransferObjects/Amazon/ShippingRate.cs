@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
 {
+    [Table("ShippingRate", Schema = "common")]
     public class ShippingRate
     {
         public int Id { get; set; }
