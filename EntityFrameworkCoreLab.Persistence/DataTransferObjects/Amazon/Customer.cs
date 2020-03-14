@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
 {
+    [Table("Customer", Schema = "common")]
     public class Customer
     {
         public int Id { get; set; }
