@@ -1,6 +1,15 @@
 # Entity Framework Core Lab
 
-Documentação em Português pt-BR
+Aplicação criada com o principal objetivo de explorar os recursos e características do Entity Framework Core.
+
+Nesta aplicação foram experimentados diversos cenários reais de uso baseados em um mini modelo de dados voltado para ecommerce.
+
+Após os estudos de caso, as principais conclusões foram documentadas neste arquivo e servem como referência de uso e fonte de consulta.
+
+**Versões utilizadas:**
+
+    * .Net Core 3.1;
+    * Entity Framework Core 3.1.2;
 
 ## Como iniciar?
 
