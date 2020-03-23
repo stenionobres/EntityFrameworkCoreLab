@@ -17,7 +17,11 @@ Instruções para iniciar e executar a aplicação em sua máquina local
 
 ## Pré-requisitos
 
-O que precisa ser instalado na máquina para extender e depurar o projeto
+O que precisa ser instalado na máquina para extender e depurar o projeto:
+
+    Visual Studio Community 2019;
+    Net Core SDK 3.1;
+    SQL Server
 
 ## Requisitos do projeto
 
