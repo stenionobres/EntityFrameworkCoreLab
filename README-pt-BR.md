@@ -8,8 +8,8 @@ Após os estudos de caso, as principais conclusões foram documentadas neste arq
 
 **Versões utilizadas:**
 
-    * .Net Core 3.1;
-    * Entity Framework Core 3.1.2;
+     Net Core 3.1;
+     Entity Framework Core 3.1.2;
 
 ## Como iniciar?
 
