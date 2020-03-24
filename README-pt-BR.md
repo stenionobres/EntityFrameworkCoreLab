@@ -25,11 +25,11 @@ O que precisa ser instalado na máquina para extender e depurar o projeto:
 
 ## Requisitos do projeto
 
-A fim de experimentar os recursos do Entity Framework Core e estabelecer as melhores e mais eficientes práticas de uso alguns requisitos foram estabelecidos.
+A fim de experimentar os recursos do Entity Framework Core e estabelecer as melhores e mais eficientes práticas de uso, alguns requisitos foram estabelecidos.
 
 Estes requisitos tem como objetivo aproximar o estudo de caso a um cenário real de uso onde diversas características do framework devem ser exploradas.
 
-Abaixo são listados quais requisitos a aplicação deveria atender:
+Abaixo são listados quais requisitos a solução atende:
 
     Uso de múltiplos bancos de dados;
     Uso de múltiplos schemas;
