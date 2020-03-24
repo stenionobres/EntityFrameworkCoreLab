@@ -55,6 +55,13 @@ Abaixo são listados quais requisitos a solução atende:
 
 ## Estratégias no uso de migrações
 
+Nessa seção são descritas as características dos comandos para se fazer uso de migrações e de que forma eles podem ser melhor utilizados.
+
+As migrações podem ser utilizadas tanto na estratégia **Model First** quanto na estratégia **Database First**.
+
+Os comandos listados estão no formato de uso no **Package Manager Console**. É necessário que no projeto tenha a dependência ``Microsoft.EntityFrameworkCore.Tools`` assim como foi descrito na sessão [Estrutura do projeto](#estrutura-do-projeto) 
+
+
 ## Estratégias nos relacionamentos
 
 ## Considerações sobre performance
