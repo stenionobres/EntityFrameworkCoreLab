@@ -10,6 +10,8 @@ Após os estudos de caso, as principais conclusões foram documentadas neste arq
 
      Net Core 3.1;
      Entity Framework Core 3.1.2;
+     Entity.Framework.Core.Sql.Server 3.1.2;
+     Microsoft.EntityFrameworkCore.Tools 3.1.2;
 
 ## Como iniciar?
 
