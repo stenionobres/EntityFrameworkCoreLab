@@ -65,7 +65,7 @@ Os comandos listados estão no formato de uso no **Package Manager Console**. É
 
 ### Arquivo ModelSnapshot
 
-Migrações criam um snapshot do schema atual do banco de dados no arquivo ``Migrations/<DbContextName>
+Migrações criam um **snapshot** do schema atual do banco de dados no arquivo ``Migrations/<DbContextName>ModelSnapshot.cs``. Quando uma migração é adicionada, EF Core determina quais mudanças serão aplicadas comparando o modelo de dados com o arquivo de snapshot.
 
 ### Principais comandos no uso de migrações
 
