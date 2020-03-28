@@ -115,6 +115,29 @@ Gera o script sql de um determinado arquivo de migração independente de estar 
 
 ## Estratégias nos relacionamentos
 
+### Um para Um (1 x 1)
+
+Por padrão o EF Core cria um campo que pode assumir **valores nulos** na base de dados. Esse campo é chave estrangeira para a tabela dependente e assume o padrão de exclusão ``ReferentialAction.Restrict``. Caso seja inserida a ``DataAnnotation [Required]`` assume o padrão de exclusão ``ReferentialAction.Cascade``.
+
+Pode ser feito de duas formas:
+
+1 - Uma propriedade na classe principal referenciando a classe dependente com uma propriedade na classe dependente que representa a chave da principal;
+
+2 - O inverso. Uma propriedade na classe principal que representa a chave da dependente com uma propriedade na classe dependente referenciando a classe principal;
+
+### Um para N (1 x N)
+
+Caso não exista o id da entidade principal na entidade dependente o EF Core a insere como `shadow property`. É recomendado inserir a propriedade id que referencia a entidade principal para fins de maior clareza no modelo de dados.
+
+### N para N (N x N)
+
+Por padrão o EF Core não define as duas chaves estrangeiras na tabela associativa como chave primária composta. Deve ser adicionada uma chave extra ou usada uma configuração para definir os dois campos como chave. Exemplo:
+	
+	modelBuilder.Entity<BookCategory>().HasKey(bc => new { bc.BookId, bc.CategoryId });  
+	 
+Não é necessário incluir a classe que representa a tabela associativa no DbSet para que ela seja criada no banco de dados.
+
+
 ## Considerações sobre performance
 
 ## Dicas rápidas
