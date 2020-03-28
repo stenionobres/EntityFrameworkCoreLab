@@ -63,6 +63,16 @@ As migrações podem ser utilizadas tanto na estratégia **Model First** quanto 
 
 Os comandos listados estão no formato de uso no **Package Manager Console**. É necessário que no projeto tenha a dependência ``Microsoft.EntityFrameworkCore.Tools`` assim como foi descrito na sessão [Estrutura do projeto](#estrutura-do-projeto) 
 
+### Critérios de geração de migrações
+
+O EF Core estabelece alguns critérios para geração de migrações, que consequentemente geram alterações no banco de dados. Os critérios são:
+
+* Mudança nas propriedades das classes de entidade, por exemplo, o nome da propriedade ou inclusão de uma nova propriedade;
+
+* Mudança nas configurações do EF Core, por exemplo, mudar a configuração de algum relacionamento entre tabelas;
+
+* Mudança nas propriedades **DbSet** em algum **DbContext** da aplicação. Essa mudança pode ser a alteração do nome dessa propriedade ou inclusão de uma nova propriedade.
+
 ### Arquivo ModelSnapshot
 
 Migrações criam um **snapshot** do schema atual do banco de dados no arquivo ``Migrations/<DbContextName>ModelSnapshot.cs``. Quando uma migração é adicionada, EF Core determina quais mudanças serão aplicadas comparando o modelo de dados com o arquivo de snapshot.
