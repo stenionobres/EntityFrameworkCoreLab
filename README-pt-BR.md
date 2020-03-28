@@ -152,6 +152,25 @@ Não é necessário incluir a classe que representa a tabela associativa no DbSe
 
 ## Dicas rápidas
 
+### Índices
+
+**Criar um índice**
+    
+    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp); 
+
+**Criar índice com múltiplos campos**
+
+    modelBuilder.Entity<MyEntity>().HasIndex(p => new {p.MyProp01, p.MyProp02}); 
+
+**Criar índice nomeado**
+
+    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).HasName("Index_MyProp");
+
+**Criar índice único (unique key)**
+
+    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).IsUnique();
+
+
 ## Autores
 
 * **Stenio Nobres** - [Github](https://github.com/stenionobres)
