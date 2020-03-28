@@ -170,6 +170,19 @@ Não é necessário incluir a classe que representa a tabela associativa no DbSe
 
     modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).IsUnique();
 
+### Schemas e Tabelas
+
+**Aplicar schema e nome de tabela (Data Annotation)**
+
+    [Table("TableName", Schema = "SchemaName")]
+    public class MyEntity
+    {
+
+    }
+
+**Aplicar schema e nome de tabela (Fluent API)**
+
+    modelBuilder.Entity<MyEntity>().ToTable("TableName", "SchemaName");
 
 ## Autores
 
