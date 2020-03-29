@@ -125,6 +125,34 @@ Gera o script sql de um determinado arquivo de migração independente de estar 
 
 ## Estratégias nos relacionamentos
 
+Nessa seção é discutido as formas que os relacionamentos entre tabelas podem ser feitos utilizando o EF Core. Para isso podem ser utilizadas as estratégias: ``By Convention, Data annotation e Fluent API``.
+
+A forma que estes relacionamentos podem ser feitos estão implementados na namespace ``Experiments`` do projeto ``EntityFrameworkCoreLab.Persistence``. Abaixo é apresentada uma imagem com as namespaces em destaque:
+
+![image info](./readme-pictures/relationship-experiments.jpg)
+
+Para entender melhor como os relacionamentos são realizados é preciso descrever os tipos de entidades participantes: ``Principal Entity, Middle Entity and Dependent Entity``.
+
+* **Principal Entity**: Contém a propriedade chave na qual a Dependent Entity faz referência via chave estrangeira.
+* **Middle Entity**: Entidade que associa a Principal Entity e Dependent Entity em um relacionamento N para N.
+* **Dependent Entity**: Contém a propriedade de chave estrangeira que faz referência para a Principal Entity
+
+As entidades são especificadas nas pastas: ``ManyToManyRelation, OneToManyRelation e OneToOneRelation``. O nome das entidades seguem a seguinte regra de nomenclatura:
+
+    <Tipo da entidade><estratégia de relacionamento><sigla do tipo de relacionamento>.cs
+
+**Tipo da entidade**: Principal Entity, Middle Entity e Dependent Entity;
+
+**Estratégia de relacionamento**: By Convention, Data annotation e Fluent API;
+
+**Sigla do tipo de relacionamento**: OTO (one to one), OTM (one to many), MTM (many to many).
+
+**Exemplo de nome de entidade:** ``PrincipalEntityByConventionOTM.cs``
+
+    A experiência do autor na criação e desenvolvimento deste projeto aponta que a melhor estratégia para criação de relacionamentos entre entidades é a *By Convention*. O projeto se torna mais simples e intuitivo no entendimento.
+
+Abaixo são citadas algumas características importantes de cada tipo de relacionamento.
+
 ### Um para Um (1 x 1)
 
 Por padrão o EF Core cria um campo que pode assumir **valores nulos** na base de dados. Esse campo é chave estrangeira para a tabela dependente e assume o padrão de exclusão ``ReferentialAction.Restrict``. Caso seja inserida a ``DataAnnotation [Required]`` assume o padrão de exclusão ``ReferentialAction.Cascade``.
