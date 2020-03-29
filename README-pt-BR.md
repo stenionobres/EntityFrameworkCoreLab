@@ -87,6 +87,8 @@ O EF Core estabelece alguns critérios para geração de migrações, que conseq
 
 * Mudança nas propriedades **DbSet** em algum **DbContext** da aplicação. Essa mudança pode ser a alteração do nome dessa propriedade ou inclusão de uma nova propriedade.
 
+>Para efeitos de migração as estratégias de configuração do modelo de dados no EF Core possuem **ordem de precedência** ao gerar alterações no banco de dados. Na sequência as estratégias são citadas por ordem de precedência: **By Convention, Data Annotation e Fluent API**. Baseado nisso é correto afirmar que a mesma configuração feita via Fluent API ou Data Annotation, a configuração que foi feita via Fluent API vai ser utilizada ao ser gerada a migração. 
+
 ### Arquivo ModelSnapshot
 
 Migrações criam um **snapshot** do schema atual do banco de dados no arquivo ``Migrations/<DbContextName>ModelSnapshot.cs``. Quando uma migração é adicionada, EF Core determina quais mudanças serão aplicadas comparando o modelo de dados com o arquivo de snapshot.
