@@ -184,6 +184,14 @@ Não é necessário incluir a classe que representa a tabela associativa no DbSe
 
     modelBuilder.Entity<MyEntity>().ToTable("TableName", "SchemaName");
 
+**Valores padrões em colunas**
+
+    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValue(3);
+
+    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValueSql("getdate()");
+
+
+
 ## Autores
 
 * **Stenio Nobres** - [Github](https://github.com/stenionobres)
