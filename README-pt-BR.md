@@ -149,7 +149,7 @@ As entidades são especificadas nas pastas: ``ManyToManyRelation, OneToManyRelat
 
 **Exemplo de nome de entidade:** ``PrincipalEntityByConventionOTM.cs``
 
-    A experiência do autor na criação e desenvolvimento deste projeto aponta que a melhor estratégia para criação de relacionamentos entre entidades é a *By Convention*. O projeto se torna mais simples e intuitivo no entendimento.
+>A experiência do autor na criação e desenvolvimento deste projeto aponta que a melhor estratégia para criação de relacionamentos entre entidades é a **By Convention**. O projeto se torna mais simples e intuitivo no entendimento.
 
 Abaixo são citadas algumas características importantes de cada tipo de relacionamento.
 
