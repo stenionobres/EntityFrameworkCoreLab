@@ -248,7 +248,7 @@ Não é necessário incluir a classe que representa a tabela associativa no DbSe
 
     modelBuilder.Entity<MyEntity>().HasKey(p => new { p.MyProp01, p.MyProp02 });
 
-
+## Principais lições aprendidas
 
 ## Autores
 
