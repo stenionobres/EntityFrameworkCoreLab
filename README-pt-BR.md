@@ -190,6 +190,20 @@ Não é necessário incluir a classe que representa a tabela associativa no DbSe
 
     modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValueSql("getdate()");
 
+### Chaves primárias
+
+**Criar tabela sem chave primária**
+
+    modelBuilder.Entity<MyEntity>().HasNoKey();
+
+**Criar tabela com chave primária sem autoincremento**
+
+    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).ValueGeneratedNever();
+
+**Criar tabela com chave primária composta**
+
+    modelBuilder.Entity<MyEntity>().HasKey(p => new { p.MyProp01, p.MyProp02 });
+
 
 
 ## Autores
