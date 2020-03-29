@@ -53,7 +53,21 @@ Abaixo são listados quais requisitos a solução atende:
 
 ## Estrutura do projeto
 
-## Database First x Model First
+## Model First x Database First 
+
+As duas principais estratégias para manipulação, atualização e criação de schema de banco de dados utilizando o EF Core são: ``Model First e Database First``.
+
+A estratégia que o autor recomenda que seja utilizada é a **Model First**, entretanto em algumas situações é necessário trabalhar com um banco de dados já definido, com modelo físico já criado. Nesse cenário o EF Core possibilita que seja usada a estratégia **Database First** para uso da base de dados.
+
+Baseado nisso é importante que as três estratégias de configuração do modelo de dados disponibilizadas pelo EF Core sejam explicadas:
+
+* **By Convention**: regras simples adotadas nos tipos e nomes das propriedades para configuração do schema da base de dados. Não atende todos os cenários de configuração;
+* **Data annotation**: um conjunto de annotations que podem ser usadas nas classes de entidade e propriedades para configuração;
+* **Fluent API**: pode ser utilizada ao sobrescrever o método ``OnModelCreating`` da classe que extende o ``DbContext``. Trata-se da forma mais poderosa e flexível para configuração do modelo de dados, entretanto a configuração pode ficar mais verbosa e complexa.
+
+Um problema observado com a estratégia ``Database First`` é que ela cria muito código desnecessário ou ``boilerplate code``, deixando o modelo de dados criado na aplicação mais complexo e muitas vezes difícil de se entender.
+
+Pensando nisso, baseado nos testes e experimentos feitos no projeto foi estabelecida uma forma de trabalhar com tabelas e views já existentes usando todo o poder da estratégia **Model First**.
 
 ## Estratégias no uso de migrações
 
