@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Faker.Net" Version="1.3.77" />
+    <PackageReference Include="NBuilder" Version="6.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EntityFrameworkCoreLab.Persistence\EntityFrameworkCoreLab.Persistence.csproj" />
   </ItemGroup>
 
