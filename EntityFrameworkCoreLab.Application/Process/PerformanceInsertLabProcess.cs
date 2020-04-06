@@ -3,7 +3,6 @@ using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
 using EntityFrameworkCoreLab.Persistence.Mappers.Performance;
 using FizzWare.NBuilder;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -24,15 +23,16 @@ namespace EntityFrameworkCoreLab.Application.Process
             var rowCutOffToTableWithTenThousandRows = Faker.RandomNumber.Next(11_000, 14_000);
             
             var tenInsertTimes = new List<long>();
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
 
-            using(var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
-                new AmazonAddressInsertLabMapper().CleanAddressData(amazonCodeFirstContext);
+                amazonAddressInsertLabMapper.CleanAddressData(amazonCodeFirstContext);
 
                 foreach (var address in fifteenThousandAddress)
                 {
                     var insertTime = useDbSetToSave
-                                     ? InsertAddressWithDbSet(amazonCodeFirstContext, address)
+                                     ? amazonAddressInsertLabMapper.InsertAddressWithDbSet(amazonCodeFirstContext, address)
                                      : InsertAddressWithDbContext(amazonCodeFirstContext, address);
 
                     rowsInserted++;
@@ -89,13 +89,14 @@ namespace EntityFrameworkCoreLab.Application.Process
             var rowCutOffToTableWithTenThousandRows = Faker.RandomNumber.Next(11_000, 14_000);
 
             var tenInsertTimes = new List<long>();
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
 
-            new AmazonAddressInsertLabMapper().CleanAddressData();
+            amazonAddressInsertLabMapper.CleanAddressData();
 
             foreach (var address in fifteenThousandAddress)
             {
                 var insertTime = useDbSetToSave
-                                 ? InsertAddressWithDbSetWithDbContextRecycle(address)
+                                 ? amazonAddressInsertLabMapper.InsertAddressWithDbSet(address)
                                  : InsertAddressWithDbContextWithDbContextRecycle(address);
 
                 rowsInserted++;
@@ -189,38 +190,7 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return city;
         }
-
-        private long InsertAddressWithDbSet(AmazonCodeFirstDbContext amazonCodeFirstContext, Address address)
-        {
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-
-            amazonCodeFirstContext.Address.Add(address);
-            amazonCodeFirstContext.SaveChanges();
-
-            stopwatch.Stop();
-
-            return stopwatch.ElapsedMilliseconds;
-        }
-
-        private long InsertAddressWithDbSetWithDbContextRecycle(Address address)
-        {
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-
-            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
-            {
-                amazonCodeFirstContext.Address.Add(address);
-                amazonCodeFirstContext.SaveChanges();
-            }
-
-            stopwatch.Stop();
-
-            return stopwatch.ElapsedMilliseconds;
-        }
-
+        
         private long InsertAddressWithDbContext(AmazonCodeFirstDbContext amazonCodeFirstContext, Address address)
         {
             var stopwatch = new Stopwatch();
