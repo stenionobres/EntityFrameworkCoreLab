@@ -42,5 +42,27 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
 
             return stopwatch.ElapsedMilliseconds;
         }
+
+        public long InsertAddressWithDbContext(Address address)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                return InsertAddressWithDbContext(amazonCodeFirstContext, address);
+            }
+        }
+
+        public long InsertAddressWithDbContext(AmazonCodeFirstDbContext amazonCodeFirstContext, Address address)
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            amazonCodeFirstContext.Add(address);
+            amazonCodeFirstContext.SaveChanges();
+
+            stopwatch.Stop();
+
+            return stopwatch.ElapsedMilliseconds;
+        }
     }
 }

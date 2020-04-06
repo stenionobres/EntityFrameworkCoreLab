@@ -4,7 +4,6 @@ using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
 using EntityFrameworkCoreLab.Persistence.Mappers.Performance;
 using FizzWare.NBuilder;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace EntityFrameworkCoreLab.Application.Process
@@ -33,7 +32,7 @@ namespace EntityFrameworkCoreLab.Application.Process
                 {
                     var insertTime = useDbSetToSave
                                      ? amazonAddressInsertLabMapper.InsertAddressWithDbSet(amazonCodeFirstContext, address)
-                                     : InsertAddressWithDbContext(amazonCodeFirstContext, address);
+                                     : amazonAddressInsertLabMapper.InsertAddressWithDbContext(amazonCodeFirstContext, address);
 
                     rowsInserted++;
 
@@ -97,7 +96,7 @@ namespace EntityFrameworkCoreLab.Application.Process
             {
                 var insertTime = useDbSetToSave
                                  ? amazonAddressInsertLabMapper.InsertAddressWithDbSet(address)
-                                 : InsertAddressWithDbContextWithDbContextRecycle(address);
+                                 : amazonAddressInsertLabMapper.InsertAddressWithDbContext(address);
 
                 rowsInserted++;
 
@@ -189,37 +188,6 @@ namespace EntityFrameworkCoreLab.Application.Process
             }
 
             return city;
-        }
-        
-        private long InsertAddressWithDbContext(AmazonCodeFirstDbContext amazonCodeFirstContext, Address address)
-        {
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-
-            amazonCodeFirstContext.Add(address);
-            amazonCodeFirstContext.SaveChanges();
-
-            stopwatch.Stop();
-
-            return stopwatch.ElapsedMilliseconds;
-        }
-
-        private long InsertAddressWithDbContextWithDbContextRecycle(Address address)
-        {
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-
-            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
-            {
-                amazonCodeFirstContext.Add(address);
-                amazonCodeFirstContext.SaveChanges();
-            }
-
-            stopwatch.Stop();
-
-            return stopwatch.ElapsedMilliseconds;
         }
 
         private bool IsRowToBeComputed(int rowNumberInserted, int rowCutOff)
