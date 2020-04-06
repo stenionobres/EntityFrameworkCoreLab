@@ -13,7 +13,7 @@ namespace EntityFrameworkCoreLab.Application.Process
     {
         private const int _tenRegisters = 10;
 
-        public InsertTimeStatistics GetInsertTimeStatisticsWithDbSet()
+        public InsertTimeStatistics GetInsertTimeStatistics(bool useDbSetToSave)
         {
             var insertTimeStatistics = new InsertTimeStatistics();
             var rowsInserted = 0;
@@ -31,7 +31,10 @@ namespace EntityFrameworkCoreLab.Application.Process
 
                 foreach (var address in fifteenThousandAddress)
                 {
-                    var insertTime = InsertAddressWithDbSet(amazonCodeFirstContext, address);
+                    var insertTime = useDbSetToSave
+                                     ? InsertAddressWithDbSet(amazonCodeFirstContext, address)
+                                     : InsertAddressWithDbContext(amazonCodeFirstContext, address);
+
                     rowsInserted++;
 
                     if (IsRowToBeComputed(rowsInserted, rowCutOffToEmptyTable))
@@ -72,6 +75,73 @@ namespace EntityFrameworkCoreLab.Application.Process
                     
                 }
             }
+
+            return insertTimeStatistics;
+        }
+
+        public InsertTimeStatistics GetInsertTimeStatisticsWithDbContextRecycle(bool useDbSetToSave)
+        {
+            var insertTimeStatistics = new InsertTimeStatistics();
+            var rowsInserted = 0;
+            var fifteenThousandAddress = MakeFifteenThousandAddress();
+            var rowCutOffToEmptyTable = Faker.RandomNumber.Next(5, 100);
+            var rowCutOffToTableWithFiveThousandRows = Faker.RandomNumber.Next(6_000, 9_000);
+            var rowCutOffToTableWithTenThousandRows = Faker.RandomNumber.Next(11_000, 14_000);
+
+            var tenInsertTimes = new List<long>();
+
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                amazonCodeFirstContext.Database.ExecuteSqlInterpolated($"delete from common.Address where Id > 3");
+                amazonCodeFirstContext.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT ('common.Address', RESEED, 3)");
+            }
+
+            foreach (var address in fifteenThousandAddress)
+            {
+                var insertTime = useDbSetToSave
+                                 ? InsertAddressWithDbSetWithDbContextRecycle(address)
+                                 : InsertAddressWithDbContextWithDbContextRecycle(address);
+
+                rowsInserted++;
+
+                if (IsRowToBeComputed(rowsInserted, rowCutOffToEmptyTable))
+                {
+                    tenInsertTimes.Add(insertTime);
+
+                    if (tenInsertTimes.Count == _tenRegisters)
+                    {
+                        var insertTimesAverage = Enumerable.Average(tenInsertTimes);
+                        insertTimeStatistics.MillisecondsAverageBasedOnTenInsertsWithEmptyTable = insertTimesAverage;
+                        tenInsertTimes.Clear();
+                    }
+                }
+
+                if (IsRowToBeComputed(rowsInserted, rowCutOffToTableWithFiveThousandRows))
+                {
+                    tenInsertTimes.Add(insertTime);
+
+                    if (tenInsertTimes.Count == _tenRegisters)
+                    {
+                        var insertTimesAverage = Enumerable.Average(tenInsertTimes);
+                        insertTimeStatistics.MillisecondsAverageBasedOnTenInsertsWithTableWithFiveThousandsRows = insertTimesAverage;
+                        tenInsertTimes.Clear();
+                    }
+                }
+
+                if (IsRowToBeComputed(rowsInserted, rowCutOffToTableWithTenThousandRows))
+                {
+                    tenInsertTimes.Add(insertTime);
+
+                    if (tenInsertTimes.Count == _tenRegisters)
+                    {
+                        var insertTimesAverage = Enumerable.Average(tenInsertTimes);
+                        insertTimeStatistics.MillisecondsAverageBasedOnTenInsertsWithTableWithTenThousandsRows = insertTimesAverage;
+                        tenInsertTimes.Clear();
+                    }
+                }
+
+            }
+            
 
             return insertTimeStatistics;
         }
@@ -132,6 +202,54 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             amazonCodeFirstContext.Address.Add(address);
             amazonCodeFirstContext.SaveChanges();
+
+            stopwatch.Stop();
+
+            return stopwatch.ElapsedMilliseconds;
+        }
+
+        private long InsertAddressWithDbSetWithDbContextRecycle(Address address)
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                amazonCodeFirstContext.Address.Add(address);
+                amazonCodeFirstContext.SaveChanges();
+            }
+
+            stopwatch.Stop();
+
+            return stopwatch.ElapsedMilliseconds;
+        }
+
+        private long InsertAddressWithDbContext(AmazonCodeFirstDbContext amazonCodeFirstContext, Address address)
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            amazonCodeFirstContext.Add(address);
+            amazonCodeFirstContext.SaveChanges();
+
+            stopwatch.Stop();
+
+            return stopwatch.ElapsedMilliseconds;
+        }
+
+        private long InsertAddressWithDbContextWithDbContextRecycle(Address address)
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                amazonCodeFirstContext.Add(address);
+                amazonCodeFirstContext.SaveChanges();
+            }
 
             stopwatch.Stop();
 
