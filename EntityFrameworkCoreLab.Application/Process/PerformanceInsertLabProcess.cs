@@ -1,6 +1,7 @@
 ﻿using EntityFrameworkCoreLab.Application.DataTransferObjects;
 using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
+using EntityFrameworkCoreLab.Persistence.Mappers.Performance;
 using FizzWare.NBuilder;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -26,8 +27,7 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             using(var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
-                amazonCodeFirstContext.Database.ExecuteSqlInterpolated($"delete from common.Address where Id > 3");
-                amazonCodeFirstContext.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT ('common.Address', RESEED, 3)");
+                new AmazonAddressInsertLabMapper().CleanAddressData(amazonCodeFirstContext);
 
                 foreach (var address in fifteenThousandAddress)
                 {
@@ -90,11 +90,7 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             var tenInsertTimes = new List<long>();
 
-            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
-            {
-                amazonCodeFirstContext.Database.ExecuteSqlInterpolated($"delete from common.Address where Id > 3");
-                amazonCodeFirstContext.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT ('common.Address', RESEED, 3)");
-            }
+            new AmazonAddressInsertLabMapper().CleanAddressData();
 
             foreach (var address in fifteenThousandAddress)
             {
