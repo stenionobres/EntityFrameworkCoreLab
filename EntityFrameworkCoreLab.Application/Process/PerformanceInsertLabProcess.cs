@@ -142,6 +142,22 @@ namespace EntityFrameworkCoreLab.Application.Process
             return insertTimeStatistics;
         }
 
+        public decimal GetInsertTimeStatisticsAddRange(bool useDbSetToSave)
+        {
+            var fifteenThousandAddress = MakeFifteenThousandAddress();
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+
+            amazonAddressInsertLabMapper.CleanAddressData();
+
+            var insertTimeAllRecords = useDbSetToSave
+                                       ? amazonAddressInsertLabMapper.InsertAddressWithDbSetWithAddRange(fifteenThousandAddress)
+                                       : amazonAddressInsertLabMapper.InsertAddressWithDbContextWithAddRange(fifteenThousandAddress);
+
+            var insertTime = decimal.Divide(insertTimeAllRecords, fifteenThousandAddress.Count());
+
+            return insertTime;
+        }
+
         private IEnumerable<Address> MakeFifteenThousandAddress()
         {
             var address = Builder<Address>.CreateListOfSize(15_000)
