@@ -158,9 +158,48 @@ namespace EntityFrameworkCoreLab.Application.Process
             return insertTime;
         }
 
+        public decimal GetInsertTimeStatisticsAddRangeWithDbContextRecycle(bool useDbSetToSave)
+        {
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+            var fiveThousandInsertTimes = new List<decimal>();
+            
+            amazonAddressInsertLabMapper.CleanAddressData();
+
+            for (int i = 0; i < 3; i++)
+            {
+                var fiveThousandAddress = MakeFiveThousandAddress();
+
+                using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+                {
+                    var fiveThousandInsertTime = useDbSetToSave
+                                                ? amazonAddressInsertLabMapper.InsertAddressWithDbSetWithAddRange(amazonCodeFirstContext, fiveThousandAddress)
+                                                : amazonAddressInsertLabMapper.InsertAddressWithDbContextWithAddRange(amazonCodeFirstContext, fiveThousandAddress);
+
+                    fiveThousandInsertTimes.Add(fiveThousandInsertTime);
+                }
+            }
+
+            var fiveThousandInsertTimeAverage = Enumerable.Average(fiveThousandInsertTimes);
+            var insertTime = decimal.Divide(fiveThousandInsertTimeAverage, 5_000);
+
+            return insertTime;
+        }
+
         private IEnumerable<Address> MakeFifteenThousandAddress()
         {
             var address = Builder<Address>.CreateListOfSize(15_000)
+                                          .All()
+                                          .With(a => a.Id = 0)
+                                          .With(a => a.Street = GetStreet())
+                                          .With(a => a.ZipPostCode = GetZipCode())
+                                          .With(a => a.City = GetCity())
+                                          .Build();
+            return address;
+        }
+
+        private IEnumerable<Address> MakeFiveThousandAddress()
+        {
+            var address = Builder<Address>.CreateListOfSize(5_000)
                                           .All()
                                           .With(a => a.Id = 0)
                                           .With(a => a.Street = GetStreet())
