@@ -185,6 +185,130 @@ namespace EntityFrameworkCoreLab.Application.Process
             return insertTime;
         }
 
+        public InsertTimeStatistics GetInsertTimeStatisticsWithExecuteSqlInterpolated()
+        {
+            var insertTimeStatistics = new InsertTimeStatistics();
+            var rowsInserted = 0;
+            var fifteenThousandAddress = MakeFifteenThousandAddress();
+            var rowCutOffToEmptyTable = Faker.RandomNumber.Next(5, 100);
+            var rowCutOffToTableWithFiveThousandRows = Faker.RandomNumber.Next(6_000, 9_000);
+            var rowCutOffToTableWithTenThousandRows = Faker.RandomNumber.Next(11_000, 14_000);
+
+            var tenInsertTimes = new List<long>();
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                amazonAddressInsertLabMapper.CleanAddressData(amazonCodeFirstContext);
+
+                foreach (var address in fifteenThousandAddress)
+                {
+                    var insertTime = amazonAddressInsertLabMapper.InsertAddressWithExecuteSqlInterpolated(amazonCodeFirstContext, address);
+
+                    rowsInserted++;
+
+                    if (IsRowToBeComputed(rowsInserted, rowCutOffToEmptyTable))
+                    {
+                        tenInsertTimes.Add(insertTime);
+
+                        if (tenInsertTimes.Count == _tenRegisters)
+                        {
+                            var insertTimesAverage = Enumerable.Average(tenInsertTimes);
+                            insertTimeStatistics.MillisecondsAverageBasedOnTenInsertsWithEmptyTable = insertTimesAverage;
+                            tenInsertTimes.Clear();
+                        }
+                    }
+
+                    if (IsRowToBeComputed(rowsInserted, rowCutOffToTableWithFiveThousandRows))
+                    {
+                        tenInsertTimes.Add(insertTime);
+
+                        if (tenInsertTimes.Count == _tenRegisters)
+                        {
+                            var insertTimesAverage = Enumerable.Average(tenInsertTimes);
+                            insertTimeStatistics.MillisecondsAverageBasedOnTenInsertsWithTableWithFiveThousandsRows = insertTimesAverage;
+                            tenInsertTimes.Clear();
+                        }
+                    }
+
+                    if (IsRowToBeComputed(rowsInserted, rowCutOffToTableWithTenThousandRows))
+                    {
+                        tenInsertTimes.Add(insertTime);
+
+                        if (tenInsertTimes.Count == _tenRegisters)
+                        {
+                            var insertTimesAverage = Enumerable.Average(tenInsertTimes);
+                            insertTimeStatistics.MillisecondsAverageBasedOnTenInsertsWithTableWithTenThousandsRows = insertTimesAverage;
+                            tenInsertTimes.Clear();
+                        }
+                    }
+
+                }
+            }
+
+            return insertTimeStatistics;
+        }
+
+        public InsertTimeStatistics GetInsertTimeStatisticsWithExecuteSqlInterpolatedWithDbContextRecycle()
+        {
+            var insertTimeStatistics = new InsertTimeStatistics();
+            var rowsInserted = 0;
+            var fifteenThousandAddress = MakeFifteenThousandAddress();
+            var rowCutOffToEmptyTable = Faker.RandomNumber.Next(5, 100);
+            var rowCutOffToTableWithFiveThousandRows = Faker.RandomNumber.Next(6_000, 9_000);
+            var rowCutOffToTableWithTenThousandRows = Faker.RandomNumber.Next(11_000, 14_000);
+            var tenInsertTimes = new List<long>();
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+
+            amazonAddressInsertLabMapper.CleanAddressData();
+            
+            foreach (var address in fifteenThousandAddress)
+            {
+                var insertTime = amazonAddressInsertLabMapper.InsertAddressWithExecuteSqlInterpolated(address);
+
+                rowsInserted++;
+
+                if (IsRowToBeComputed(rowsInserted, rowCutOffToEmptyTable))
+                {
+                    tenInsertTimes.Add(insertTime);
+
+                    if (tenInsertTimes.Count == _tenRegisters)
+                    {
+                        var insertTimesAverage = Enumerable.Average(tenInsertTimes);
+                        insertTimeStatistics.MillisecondsAverageBasedOnTenInsertsWithEmptyTable = insertTimesAverage;
+                        tenInsertTimes.Clear();
+                    }
+                }
+
+                if (IsRowToBeComputed(rowsInserted, rowCutOffToTableWithFiveThousandRows))
+                {
+                    tenInsertTimes.Add(insertTime);
+
+                    if (tenInsertTimes.Count == _tenRegisters)
+                    {
+                        var insertTimesAverage = Enumerable.Average(tenInsertTimes);
+                        insertTimeStatistics.MillisecondsAverageBasedOnTenInsertsWithTableWithFiveThousandsRows = insertTimesAverage;
+                        tenInsertTimes.Clear();
+                    }
+                }
+
+                if (IsRowToBeComputed(rowsInserted, rowCutOffToTableWithTenThousandRows))
+                {
+                    tenInsertTimes.Add(insertTime);
+
+                    if (tenInsertTimes.Count == _tenRegisters)
+                    {
+                        var insertTimesAverage = Enumerable.Average(tenInsertTimes);
+                        insertTimeStatistics.MillisecondsAverageBasedOnTenInsertsWithTableWithTenThousandsRows = insertTimesAverage;
+                        tenInsertTimes.Clear();
+                    }
+                }
+
+            }
+
+            return insertTimeStatistics;
+        }
+
         private IEnumerable<Address> MakeFifteenThousandAddress()
         {
             var address = Builder<Address>.CreateListOfSize(15_000)
