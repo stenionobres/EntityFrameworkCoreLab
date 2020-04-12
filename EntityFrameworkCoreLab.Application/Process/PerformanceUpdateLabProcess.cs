@@ -156,6 +156,30 @@ namespace EntityFrameworkCoreLab.Application.Process
             return updateTimeStatistics;
         }
 
+        public decimal GetUpdateTimeStatisticsAddRange(bool useDbSetToSave)
+        {
+            var fifteenThousandAddressWithoutId = MakeFifteenThousandAddress(generateIncrementalId: false);
+            var fifteenThousandAddress = MakeFifteenThousandAddress(generateIncrementalId: true);
+
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+            var amazonAddressUpdateLabMapper = new AmazonAddressUpdateLabMapper();
+
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                amazonAddressInsertLabMapper.CleanAddressData(amazonCodeFirstContext);
+                amazonAddressInsertLabMapper.InsertAddressWithDbSetWithAddRange(fifteenThousandAddressWithoutId);
+
+                var updateTimeAllRecords = useDbSetToSave
+                                           ? amazonAddressUpdateLabMapper.UpdateAddressWithDbSetWithAddRange(fifteenThousandAddress)
+                                           : amazonAddressUpdateLabMapper.UpdateAddressWithDbContextWithAddRange(fifteenThousandAddress);
+
+                var updateTime = decimal.Divide(updateTimeAllRecords, fifteenThousandAddress.Count());
+
+                return updateTime;
+            }
+
+        }
+
         private IEnumerable<Address> MakeFifteenThousandAddress(bool generateIncrementalId)
         {
             if (generateIncrementalId)
@@ -167,7 +191,7 @@ namespace EntityFrameworkCoreLab.Application.Process
                 return Builder<Address>.CreateListOfSize(15_000)
                                        .All()
                                        .With(a => a.Id = GetId(generator))
-                                       .With(a => a.Street = GetStreet())
+                                       .With(a => a.Street = "Updated Street")
                                        .With(a => a.ZipPostCode = GetZipCode())
                                        .With(a => a.City = GetCity())
                                        .Build();
