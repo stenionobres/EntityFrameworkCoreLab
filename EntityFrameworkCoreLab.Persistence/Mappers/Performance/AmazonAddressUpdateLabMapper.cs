@@ -6,6 +6,22 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
 {
     public class AmazonAddressUpdateLabMapper
     {
+        public long UpdateAddressWithDbSet(Address address)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                return UpdateAddressWithDbSet(amazonCodeFirstContext, address);
+            }
+        }
+
+        public long UpdateAddressWithDbContext(Address address)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                return UpdateAddressWithDbContext(amazonCodeFirstContext, address);
+            }
+        }
+
         public long UpdateAddressWithDbSet(AmazonCodeFirstDbContext amazonCodeFirstContext, Address address)
         {
             var stopwatch = new Stopwatch();
