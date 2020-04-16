@@ -216,6 +216,138 @@ namespace EntityFrameworkCoreLab.Application.Process
             return insertTime;
         }
 
+        public UpdateTimeStatistics GetUpdateTimeStatisticsWithExecuteSqlInterpolated()
+        {
+            var updateTimeStatistics = new UpdateTimeStatistics();
+            var rowsUpdated = 0;
+            var fifteenThousandAddressWithoutId = MakeFifteenThousandAddress(generateIncrementalId: false);
+            var fifteenThousandAddress = MakeFifteenThousandAddress(generateIncrementalId: true);
+            var rowCutOffToEmptyTable = Faker.RandomNumber.Next(5, 100);
+            var rowCutOffToTableWithFiveThousandRows = Faker.RandomNumber.Next(6_000, 9_000);
+            var rowCutOffToTableWithTenThousandRows = Faker.RandomNumber.Next(11_000, 14_000);
+
+            var tenUpdateTimes = new List<long>();
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+            var amazonAddressUpdateLabMapper = new AmazonAddressUpdateLabMapper();
+
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                amazonAddressInsertLabMapper.CleanAddressData(amazonCodeFirstContext);
+                amazonAddressInsertLabMapper.InsertAddressWithDbSetWithAddRange(fifteenThousandAddressWithoutId);
+
+                foreach (var address in fifteenThousandAddress)
+                {
+                    var updateTime = amazonAddressUpdateLabMapper.UpdateAddressWithExecuteSqlInterpolated(amazonCodeFirstContext, address);
+
+                    rowsUpdated++;
+
+                    if (IsRowToBeComputed(rowsUpdated, rowCutOffToEmptyTable))
+                    {
+                        tenUpdateTimes.Add(updateTime);
+
+                        if (tenUpdateTimes.Count == _tenRegisters)
+                        {
+                            var updateTimesAverage = Enumerable.Average(tenUpdateTimes);
+                            updateTimeStatistics.MillisecondsAverageBasedOnTenUpdatesWithEmptyTable = updateTimesAverage;
+                            tenUpdateTimes.Clear();
+                        }
+                    }
+
+                    if (IsRowToBeComputed(rowsUpdated, rowCutOffToTableWithFiveThousandRows))
+                    {
+                        tenUpdateTimes.Add(updateTime);
+
+                        if (tenUpdateTimes.Count == _tenRegisters)
+                        {
+                            var updateTimesAverage = Enumerable.Average(tenUpdateTimes);
+                            updateTimeStatistics.MillisecondsAverageBasedOnTenUpdatesWithTableWithFiveThousandsRows = updateTimesAverage;
+                            tenUpdateTimes.Clear();
+                        }
+                    }
+
+                    if (IsRowToBeComputed(rowsUpdated, rowCutOffToTableWithTenThousandRows))
+                    {
+                        tenUpdateTimes.Add(updateTime);
+
+                        if (tenUpdateTimes.Count == _tenRegisters)
+                        {
+                            var updateTimesAverage = Enumerable.Average(tenUpdateTimes);
+                            updateTimeStatistics.MillisecondsAverageBasedOnTenUpdatesWithTableWithTenThousandsRows = updateTimesAverage;
+                            tenUpdateTimes.Clear();
+                        }
+                    }
+
+                }
+            }
+
+            return updateTimeStatistics;
+        }
+
+        public UpdateTimeStatistics GetUpdateTimeStatisticsWithExecuteSqlInterpolatedWithDbContextRecycle()
+        {
+            var updateTimeStatistics = new UpdateTimeStatistics();
+            var rowsUpdated = 0;
+            var fifteenThousandAddressWithoutId = MakeFifteenThousandAddress(generateIncrementalId: false);
+            var fifteenThousandAddress = MakeFifteenThousandAddress(generateIncrementalId: true);
+            var rowCutOffToEmptyTable = Faker.RandomNumber.Next(5, 100);
+            var rowCutOffToTableWithFiveThousandRows = Faker.RandomNumber.Next(6_000, 9_000);
+            var rowCutOffToTableWithTenThousandRows = Faker.RandomNumber.Next(11_000, 14_000);
+
+            var tenUpdateTimes = new List<long>();
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+            var amazonAddressUpdateLabMapper = new AmazonAddressUpdateLabMapper();
+
+            amazonAddressInsertLabMapper.CleanAddressData();
+            amazonAddressInsertLabMapper.InsertAddressWithDbSetWithAddRange(fifteenThousandAddressWithoutId);
+
+            foreach (var address in fifteenThousandAddress)
+            {
+                var updateTime = amazonAddressUpdateLabMapper.UpdateAddressWithExecuteSqlInterpolated(address);
+
+                rowsUpdated++;
+
+                if (IsRowToBeComputed(rowsUpdated, rowCutOffToEmptyTable))
+                {
+                    tenUpdateTimes.Add(updateTime);
+
+                    if (tenUpdateTimes.Count == _tenRegisters)
+                    {
+                        var updateTimesAverage = Enumerable.Average(tenUpdateTimes);
+                        updateTimeStatistics.MillisecondsAverageBasedOnTenUpdatesWithEmptyTable = updateTimesAverage;
+                        tenUpdateTimes.Clear();
+                    }
+                }
+
+                if (IsRowToBeComputed(rowsUpdated, rowCutOffToTableWithFiveThousandRows))
+                {
+                    tenUpdateTimes.Add(updateTime);
+
+                    if (tenUpdateTimes.Count == _tenRegisters)
+                    {
+                        var updateTimesAverage = Enumerable.Average(tenUpdateTimes);
+                        updateTimeStatistics.MillisecondsAverageBasedOnTenUpdatesWithTableWithFiveThousandsRows = updateTimesAverage;
+                        tenUpdateTimes.Clear();
+                    }
+                }
+
+                if (IsRowToBeComputed(rowsUpdated, rowCutOffToTableWithTenThousandRows))
+                {
+                    tenUpdateTimes.Add(updateTime);
+
+                    if (tenUpdateTimes.Count == _tenRegisters)
+                    {
+                        var updateTimesAverage = Enumerable.Average(tenUpdateTimes);
+                        updateTimeStatistics.MillisecondsAverageBasedOnTenUpdatesWithTableWithTenThousandsRows = updateTimesAverage;
+                        tenUpdateTimes.Clear();
+                    }
+                }
+
+            }
+            
+
+            return updateTimeStatistics;
+        }
+
         private IEnumerable<Address> MakeFifteenThousandAddress(bool generateIncrementalId)
         {
             if (generateIncrementalId)

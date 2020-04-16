@@ -1,5 +1,7 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -93,6 +95,36 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
             stopwatch.Stop();
 
             return stopwatch.ElapsedMilliseconds;
+        }
+
+        public long UpdateAddressWithExecuteSqlInterpolated(Address address)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                return UpdateAddressWithExecuteSqlInterpolated(amazonCodeFirstContext, address);
+            }
+        }
+
+        public long UpdateAddressWithExecuteSqlInterpolated(AmazonCodeFirstDbContext amazonCodeFirstContext, Address address)
+        {
+            var updateAddressSql = GetUpdateAddressSql(address);
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            amazonCodeFirstContext.Database.ExecuteSqlInterpolated(updateAddressSql);
+
+            stopwatch.Stop();
+
+            return stopwatch.ElapsedMilliseconds;
+        }
+
+        private FormattableString GetUpdateAddressSql(Address address)
+        {
+            return $@"update common.Address set Street={address.Street}, 
+                                                ZipPostCode={address.ZipPostCode}, 
+                                                City={address.City}
+                      where Id={address.Id}";
         }
     }
 }
