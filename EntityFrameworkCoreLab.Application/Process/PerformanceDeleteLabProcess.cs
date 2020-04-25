@@ -146,6 +146,29 @@ namespace EntityFrameworkCoreLab.Application.Process
             return deleteTimeStatistics;
         }
 
+        public decimal GetDeleteTimeStatisticsAddRange(bool useDbSetToSave)
+        {
+            var fifteenThousandAddressWithoutId = MakeFifteenThousandAddress(generateIncrementalId: false);
+            var fifteenThousandAddress = MakeFifteenThousandAddress(generateIncrementalId: true);
+
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+            var amazonAddressDeleteLabMapper = new AmazonAddressDeleteLabMapper();
+
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                amazonAddressInsertLabMapper.CleanAddressData(amazonCodeFirstContext);
+                amazonAddressInsertLabMapper.InsertAddressWithDbSetWithAddRange(fifteenThousandAddressWithoutId);
+
+                var deleteTimeAllRecords = useDbSetToSave
+                                           ? amazonAddressDeleteLabMapper.DeleteAddressWithDbSetWithAddRange(fifteenThousandAddress)
+                                           : amazonAddressDeleteLabMapper.DeleteAddressWithDbContextWithAddRange(fifteenThousandAddress);
+
+                var deleteTime = decimal.Divide(deleteTimeAllRecords, fifteenThousandAddress.Count());
+
+                return deleteTime;
+            }
+        }
+
         private IEnumerable<Address> MakeFifteenThousandAddress(bool generateIncrementalId)
         {
             if (generateIncrementalId)

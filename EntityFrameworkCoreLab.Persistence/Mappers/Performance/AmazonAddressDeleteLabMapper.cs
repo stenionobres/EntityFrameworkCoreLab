@@ -1,5 +1,6 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
@@ -19,6 +20,22 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
                 return DeleteAddressWithDbContext(amazonCodeFirstContext, address);
+            }
+        }
+
+        public long DeleteAddressWithDbSetWithAddRange(IEnumerable<Address> address)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                return DeleteAddressWithDbSetWithAddRange(amazonCodeFirstContext, address);
+            }
+        }
+
+        public long DeleteAddressWithDbContextWithAddRange(IEnumerable<Address> address)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                return DeleteAddressWithDbContextWithAddRange(amazonCodeFirstContext, address);
             }
         }
 
@@ -43,6 +60,34 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
             stopwatch.Start();
 
             amazonCodeFirstContext.Remove(address);
+            amazonCodeFirstContext.SaveChanges();
+
+            stopwatch.Stop();
+
+            return stopwatch.ElapsedMilliseconds;
+        }
+
+        public long DeleteAddressWithDbSetWithAddRange(AmazonCodeFirstDbContext amazonCodeFirstContext, IEnumerable<Address> address)
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            amazonCodeFirstContext.Address.RemoveRange(address);
+            amazonCodeFirstContext.SaveChanges();
+
+            stopwatch.Stop();
+
+            return stopwatch.ElapsedMilliseconds;
+        }
+
+        public long DeleteAddressWithDbContextWithAddRange(AmazonCodeFirstDbContext amazonCodeFirstContext, IEnumerable<Address> address)
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            amazonCodeFirstContext.RemoveRange(address);
             amazonCodeFirstContext.SaveChanges();
 
             stopwatch.Stop();
