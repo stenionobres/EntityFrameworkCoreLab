@@ -1,9 +1,6 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
 {

@@ -22,7 +22,7 @@ namespace EntityFrameworkCoreLab.Application.Process
             var rowCutOffToTableWithFiveThousandRows = Faker.RandomNumber.Next(6_000, 9_000);
             var rowCutOffToTableWithTenThousandRows = Faker.RandomNumber.Next(11_000, 14_000);
 
-            var tenUpdateTimes = new List<long>();
+            var tenDeleteTimes = new List<long>();
             var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
             var amazonAddressDeleteLabMapper = new AmazonAddressDeleteLabMapper();
 
@@ -42,37 +42,37 @@ namespace EntityFrameworkCoreLab.Application.Process
 
                     if (IsRowToBeComputed(rowsDeleted, rowCutOffToEmptyTable))
                     {
-                        tenUpdateTimes.Add(updateTime);
+                        tenDeleteTimes.Add(updateTime);
 
-                        if (tenUpdateTimes.Count == _tenRegisters)
+                        if (tenDeleteTimes.Count == _tenRegisters)
                         {
-                            var deleteTimesAverage = Enumerable.Average(tenUpdateTimes);
+                            var deleteTimesAverage = Enumerable.Average(tenDeleteTimes);
                             deleteTimeStatistics.MillisecondsAverageBasedOnTenDeletesWithEmptyTable = deleteTimesAverage;
-                            tenUpdateTimes.Clear();
+                            tenDeleteTimes.Clear();
                         }
                     }
 
                     if (IsRowToBeComputed(rowsDeleted, rowCutOffToTableWithFiveThousandRows))
                     {
-                        tenUpdateTimes.Add(updateTime);
+                        tenDeleteTimes.Add(updateTime);
 
-                        if (tenUpdateTimes.Count == _tenRegisters)
+                        if (tenDeleteTimes.Count == _tenRegisters)
                         {
-                            var deleteTimesAverage = Enumerable.Average(tenUpdateTimes);
+                            var deleteTimesAverage = Enumerable.Average(tenDeleteTimes);
                             deleteTimeStatistics.MillisecondsAverageBasedOnTenDeletesWithTableWithFiveThousandsRows = deleteTimesAverage;
-                            tenUpdateTimes.Clear();
+                            tenDeleteTimes.Clear();
                         }
                     }
 
                     if (IsRowToBeComputed(rowsDeleted, rowCutOffToTableWithTenThousandRows))
                     {
-                        tenUpdateTimes.Add(updateTime);
+                        tenDeleteTimes.Add(updateTime);
 
-                        if (tenUpdateTimes.Count == _tenRegisters)
+                        if (tenDeleteTimes.Count == _tenRegisters)
                         {
-                            var deleteTimesAverage = Enumerable.Average(tenUpdateTimes);
+                            var deleteTimesAverage = Enumerable.Average(tenDeleteTimes);
                             deleteTimeStatistics.MillisecondsAverageBasedOnTenDeletesWithTableWithTenThousandsRows = deleteTimesAverage;
-                            tenUpdateTimes.Clear();
+                            tenDeleteTimes.Clear();
                         }
                     }
                 }
