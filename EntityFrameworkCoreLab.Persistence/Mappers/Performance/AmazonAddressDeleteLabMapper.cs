@@ -1,5 +1,7 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -36,6 +38,14 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
                 return DeleteAddressWithDbContextWithAddRange(amazonCodeFirstContext, address);
+            }
+        }
+
+        public long DeleteAddressWithExecuteSqlInterpolated(Address address)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                return DeleteAddressWithExecuteSqlInterpolated(amazonCodeFirstContext, address);
             }
         }
 
@@ -93,6 +103,25 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
             stopwatch.Stop();
 
             return stopwatch.ElapsedMilliseconds;
+        }
+
+        public long DeleteAddressWithExecuteSqlInterpolated(AmazonCodeFirstDbContext amazonCodeFirstContext, Address address)
+        {
+            var deleteAddressSql = GetDeleteAddressSql(address);
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            amazonCodeFirstContext.Database.ExecuteSqlInterpolated(deleteAddressSql);
+
+            stopwatch.Stop();
+
+            return stopwatch.ElapsedMilliseconds;
+        }
+
+        private FormattableString GetDeleteAddressSql(Address address)
+        {
+            return $@"delete from common.Address where Id={address.Id}";
         }
     }
 }
