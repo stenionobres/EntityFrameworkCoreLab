@@ -9,6 +9,22 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
 {
     public class AmazonAddressDeleteLabMapper
     {
+        public long DeleteAddressWithDbSet(Address address)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                return DeleteAddressWithDbSet(amazonCodeFirstContext, address);
+            }
+        }
+
+        public long DeleteAddressWithDbContext(Address address)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                return DeleteAddressWithDbContext(amazonCodeFirstContext, address);
+            }
+        }
+
         public long DeleteAddressWithDbSet(AmazonCodeFirstDbContext amazonCodeFirstContext, Address address)
         {
             var stopwatch = new Stopwatch();

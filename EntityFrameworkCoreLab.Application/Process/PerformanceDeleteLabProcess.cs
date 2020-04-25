@@ -81,6 +81,71 @@ namespace EntityFrameworkCoreLab.Application.Process
             return deleteTimeStatistics;
         }
 
+        public DeleteTimeStatistics GetDeleteTimeStatisticsWithDbContextRecycle(bool useDbSetToSave)
+        {
+            var deleteTimeStatistics = new DeleteTimeStatistics();
+            var rowsDeleted = 0;
+            var fifteenThousandAddressWithoutId = MakeFifteenThousandAddress(generateIncrementalId: false);
+            var fifteenThousandAddress = MakeFifteenThousandAddress(generateIncrementalId: true);
+            var rowCutOffToEmptyTable = Faker.RandomNumber.Next(5, 100);
+            var rowCutOffToTableWithFiveThousandRows = Faker.RandomNumber.Next(6_000, 9_000);
+            var rowCutOffToTableWithTenThousandRows = Faker.RandomNumber.Next(11_000, 14_000);
+
+            var tenDeleteTimes = new List<long>();
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+            var amazonAddressDeleteLabMapper = new AmazonAddressDeleteLabMapper();
+
+            amazonAddressInsertLabMapper.CleanAddressData();
+            amazonAddressInsertLabMapper.InsertAddressWithDbSetWithAddRange(fifteenThousandAddressWithoutId);
+
+            foreach (var address in fifteenThousandAddress)
+            {
+                var deleteTime = useDbSetToSave
+                                 ? amazonAddressDeleteLabMapper.DeleteAddressWithDbSet(address)
+                                 : amazonAddressDeleteLabMapper.DeleteAddressWithDbContext(address);
+
+                rowsDeleted++;
+
+                if (IsRowToBeComputed(rowsDeleted, rowCutOffToEmptyTable))
+                {
+                    tenDeleteTimes.Add(deleteTime);
+
+                    if (tenDeleteTimes.Count == _tenRegisters)
+                    {
+                        var deleteTimesAverage = Enumerable.Average(tenDeleteTimes);
+                        deleteTimeStatistics.MillisecondsAverageBasedOnTenDeletesWithEmptyTable = deleteTimesAverage;
+                        tenDeleteTimes.Clear();
+                    }
+                }
+
+                if (IsRowToBeComputed(rowsDeleted, rowCutOffToTableWithFiveThousandRows))
+                {
+                    tenDeleteTimes.Add(deleteTime);
+
+                    if (tenDeleteTimes.Count == _tenRegisters)
+                    {
+                        var deleteTimesAverage = Enumerable.Average(tenDeleteTimes);
+                        deleteTimeStatistics.MillisecondsAverageBasedOnTenDeletesWithTableWithFiveThousandsRows = deleteTimesAverage;
+                        tenDeleteTimes.Clear();
+                    }
+                }
+
+                if (IsRowToBeComputed(rowsDeleted, rowCutOffToTableWithTenThousandRows))
+                {
+                    tenDeleteTimes.Add(deleteTime);
+
+                    if (tenDeleteTimes.Count == _tenRegisters)
+                    {
+                        var deleteTimesAverage = Enumerable.Average(tenDeleteTimes);
+                        deleteTimeStatistics.MillisecondsAverageBasedOnTenDeletesWithTableWithTenThousandsRows = deleteTimesAverage;
+                        tenDeleteTimes.Clear();
+                    }
+                }
+            }
+
+            return deleteTimeStatistics;
+        }
+
         private IEnumerable<Address> MakeFifteenThousandAddress(bool generateIncrementalId)
         {
             if (generateIncrementalId)
