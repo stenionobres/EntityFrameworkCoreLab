@@ -169,6 +169,42 @@ namespace EntityFrameworkCoreLab.Application.Process
             }
         }
 
+        public decimal GetDeleteTimeStatisticsAddRangeWithDbContextRecycle(bool useDbSetToSave)
+        {
+            var fifteenThousandAddressWithoutId = MakeFifteenThousandAddress(generateIncrementalId: false);
+
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+            var amazonAddressDeleteLabMapper = new AmazonAddressDeleteLabMapper();
+            var fiveThousandUpdatesTimes = new List<decimal>();
+
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                amazonAddressInsertLabMapper.CleanAddressData(amazonCodeFirstContext);
+            }
+
+            amazonAddressInsertLabMapper.InsertAddressWithDbSetWithAddRange(fifteenThousandAddressWithoutId);
+
+            for (int i = 0; i < 3; i++)
+            {
+                var fiveThousandAddress = MakeFiveThousandAddress((i * 5000) + 4);
+
+                using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+                {
+                    var fiveThousandUpdateTime = useDbSetToSave
+                                                 ? amazonAddressDeleteLabMapper.DeleteAddressWithDbSetWithAddRange(amazonCodeFirstContext, fiveThousandAddress)
+                                                 : amazonAddressDeleteLabMapper.DeleteAddressWithDbContextWithAddRange(amazonCodeFirstContext, fiveThousandAddress);
+
+                    fiveThousandUpdatesTimes.Add(fiveThousandUpdateTime);
+                }
+
+            }
+
+            var fiveThousandUpdateTimeAverage = Enumerable.Average(fiveThousandUpdatesTimes);
+            var insertTime = decimal.Divide(fiveThousandUpdateTimeAverage, 5_000);
+
+            return insertTime;
+        }
+
         private IEnumerable<Address> MakeFifteenThousandAddress(bool generateIncrementalId)
         {
             if (generateIncrementalId)
@@ -194,6 +230,22 @@ namespace EntityFrameworkCoreLab.Application.Process
                                    .With(a => a.ZipPostCode = GetZipCode())
                                    .With(a => a.City = GetCity())
                                    .Build();
+        }
+
+        private IEnumerable<Address> MakeFiveThousandAddress(int nextIdToGenerate)
+        {
+            var generator = new SequentialGenerator<int>();
+
+            generator.StartingWith(nextValueToGenerate: nextIdToGenerate);
+
+            var address = Builder<Address>.CreateListOfSize(5_000)
+                                          .All()
+                                          .With(a => a.Id = GetId(generator))
+                                          .With(a => a.Street = GetStreet())
+                                          .With(a => a.ZipPostCode = GetZipCode())
+                                          .With(a => a.City = GetCity())
+                                          .Build();
+            return address;
         }
 
         private int GetId(SequentialGenerator<int> generator)
