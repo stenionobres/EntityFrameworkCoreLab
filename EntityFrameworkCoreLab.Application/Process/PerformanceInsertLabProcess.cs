@@ -309,6 +309,32 @@ namespace EntityFrameworkCoreLab.Application.Process
             return insertTimeStatistics;
         }
 
+        public decimal GetInsertTimeWithBulkOperation()
+        {
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+            var fifteenThousandAddress = MakeFifteenThousandAddressIlist();
+
+            amazonAddressInsertLabMapper.CleanAddressData();
+
+            var insertTimeAllRecords = amazonAddressInsertLabMapper.InsertAddressWithBulkOperation(fifteenThousandAddress);
+
+            var insertTime = decimal.Divide(insertTimeAllRecords, fifteenThousandAddress.Count());
+
+            return insertTime;
+        }
+
+        private IList<Address> MakeFifteenThousandAddressIlist()
+        {
+            var address = Builder<Address>.CreateListOfSize(15_000)
+                                          .All()
+                                          .With(a => a.Id = 0)
+                                          .With(a => a.Street = GetStreet())
+                                          .With(a => a.ZipPostCode = GetZipCode())
+                                          .With(a => a.City = GetCity())
+                                          .Build();
+            return address;
+        }
+
         private IEnumerable<Address> MakeFifteenThousandAddress()
         {
             var address = Builder<Address>.CreateListOfSize(15_000)
