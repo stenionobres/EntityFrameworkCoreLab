@@ -1,4 +1,5 @@
-﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
+﻿using EFCore.BulkExtensions;
+using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,6 +39,22 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
                 return UpdateAddressWithDbContextWithAddRange(amazonCodeFirstContext, address);
+            }
+        }
+
+        public long UpdateAddressWithBulkOperation(IList<Address> addresses)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var stopwatch = new Stopwatch();
+
+                stopwatch.Start();
+
+                amazonCodeFirstContext.BulkUpdate(addresses);
+
+                stopwatch.Stop();
+
+                return stopwatch.ElapsedMilliseconds;
             }
         }
 

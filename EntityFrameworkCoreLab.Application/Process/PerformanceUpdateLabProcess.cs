@@ -348,6 +348,24 @@ namespace EntityFrameworkCoreLab.Application.Process
             return updateTimeStatistics;
         }
 
+        public decimal GetUpdateTimeWithBulkOperation()
+        {
+            var fifteenThousandAddressWithoutId = MakeFifteenThousandAddress(generateIncrementalId: false);
+            var fifteenThousandAddressIlist = MakeFifteenThousandAddressIlist();
+
+            var amazonAddressInsertLabMapper = new AmazonAddressInsertLabMapper();
+            var amazonAddressUpdateLabMapper = new AmazonAddressUpdateLabMapper();
+
+            amazonAddressInsertLabMapper.CleanAddressData();
+            amazonAddressInsertLabMapper.InsertAddressWithDbSetWithAddRange(fifteenThousandAddressWithoutId);
+
+            var updateTimeAllRecords = amazonAddressUpdateLabMapper.UpdateAddressWithBulkOperation(fifteenThousandAddressIlist);
+
+            var updateTime = decimal.Divide(updateTimeAllRecords, fifteenThousandAddressIlist.Count());
+
+            return updateTime;
+        }
+
         private IEnumerable<Address> MakeFifteenThousandAddress(bool generateIncrementalId)
         {
             if (generateIncrementalId)
@@ -389,6 +407,21 @@ namespace EntityFrameworkCoreLab.Application.Process
                                           .With(a => a.City = GetCity())
                                           .Build();
             return address;
+        }
+
+        private IList<Address> MakeFifteenThousandAddressIlist()
+        {
+            var generator = new SequentialGenerator<int>();
+
+            generator.StartingWith(nextValueToGenerate: 4);
+
+            return Builder<Address>.CreateListOfSize(15_000)
+                                    .All()
+                                    .With(a => a.Id = GetId(generator))
+                                    .With(a => a.Street = "Updated Street")
+                                    .With(a => a.ZipPostCode = GetZipCode())
+                                    .With(a => a.City = GetCity())
+                                    .Build();
         }
 
         private int GetId(SequentialGenerator<int> generator)
