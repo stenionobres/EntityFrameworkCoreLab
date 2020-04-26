@@ -1,4 +1,5 @@
-﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
+﻿using EFCore.BulkExtensions;
+using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -46,6 +47,22 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Performance
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
                 return DeleteAddressWithExecuteSqlInterpolated(amazonCodeFirstContext, address);
+            }
+        }
+
+        public long DeleteAddressWithBulkOperation(IList<Address> addresses)
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var stopwatch = new Stopwatch();
+
+                stopwatch.Start();
+
+                amazonCodeFirstContext.BulkDelete(addresses);
+
+                stopwatch.Stop();
+
+                return stopwatch.ElapsedMilliseconds;
             }
         }
 
