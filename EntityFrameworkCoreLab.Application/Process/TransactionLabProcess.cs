@@ -26,7 +26,7 @@ namespace EntityFrameworkCoreLab.Application.Process
             }
             catch (Exception ex)
             {
-                // The records don't be inserted because que SaveChanges was used after the error record was added
+                // The records don't be inserted because SaveChanges was used after the error record was added
                 throw;
             }
             
@@ -51,7 +51,7 @@ namespace EntityFrameworkCoreLab.Application.Process
             }
             catch (Exception ex)
             {
-                // The first two records will be inserted because que SaveChanges was used before the error record was added
+                // The first two records will be inserted because SaveChanges was used before the error record was added
                 throw;
             }
         }
@@ -75,7 +75,7 @@ namespace EntityFrameworkCoreLab.Application.Process
             }
             catch (Exception ex)
             {
-                // The records don't be inserted because que SaveChanges was used after the error record was added
+                // The records don't be inserted because SaveChanges was used after the error record was added
                 throw;
             }
         }
