@@ -31,5 +31,29 @@ namespace EntityFrameworkCoreLab.Application.Process
             }
             
         }
+
+        public void InsertAddressWithAddWithoutTransactionSaveChangesBefore()
+        {
+            var ebayTransactionLabMapper = new EbayTransactionLabMapper();
+
+            ebayTransactionLabMapper.CleanAddressData();
+
+            var address = new List<Address>()
+            {
+                new Address() { Street = "5000 Gandy Street", ZipPostCode = "13057", City = "East Syracuse" },
+                new Address() { Street = "354 Cemetery Street", ZipPostCode = "95004", City = "Aromas" },
+                new Address() { Street = "2031 Reppert Coal Road", ZipPostCode = "45232", City = "Cincinnati" } // Street larger than the field in the database 
+            };
+
+            try
+            {
+                ebayTransactionLabMapper.InsertAddressWithAddWithoutTransactionSaveChangesBefore(address);
+            }
+            catch (Exception ex)
+            {
+                // The first two records will be inserted because que SaveChanges was used before the error record was added
+                throw;
+            }
+        }
     }
 }
