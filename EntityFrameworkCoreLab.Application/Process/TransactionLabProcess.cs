@@ -7,7 +7,7 @@ namespace EntityFrameworkCoreLab.Application.Process
 {
     public class TransactionLabProcess
     {
-        public void InsertAddressWithAddWithoutTransaction()
+        public void InsertAddressWithAddWithoutTransactionSaveChangesAfter()
         {
             var ebayTransactionLabMapper = new EbayTransactionLabMapper();
 
