@@ -52,6 +52,15 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Transaction
             }
         }
 
+        public void InsertAddressWithAddRangeWithoutTransaction(IEnumerable<Address> addresses)
+        {
+            using (var ebayDatabaseFirstContext = new EbayDatabaseFirstDbContext())
+            {
+                ebayDatabaseFirstContext.Address.AddRange(addresses);
+                ebayDatabaseFirstContext.SaveChanges();
+            }
+        }
+
         private void InsertAddressWithAdd(EbayDatabaseFirstDbContext ebayDatabaseFirstContext, Address address)
         {
             ebayDatabaseFirstContext.Address.Add(address);
