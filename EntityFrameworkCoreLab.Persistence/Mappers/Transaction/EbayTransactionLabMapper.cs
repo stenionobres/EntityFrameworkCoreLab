@@ -1,9 +1,7 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Ebay;
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EntityFrameworkCoreLab.Persistence.Mappers.Transaction
 {
@@ -75,6 +73,17 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Transaction
 
                     transaction.Commit();
                 }
+            }
+        }
+
+        public void InsertCustomerAndAddressWithAddRangeWithoutTransaction(IEnumerable<Customer> customers, IEnumerable<Address> addresses)
+        {
+            using (var ebayDatabaseFirstContext = new EbayDatabaseFirstDbContext())
+            {
+                ebayDatabaseFirstContext.Address.AddRange(addresses);
+                ebayDatabaseFirstContext.Customer.AddRange(customers);
+
+                ebayDatabaseFirstContext.SaveChanges();
             }
         }
 
