@@ -28,6 +28,8 @@ namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon
         [Required]
         public Address Address { get; set; }
 
+        public int AddressId { get; set; }
+
         public IList<Cart> Carts { get; set; }
     }
 }
