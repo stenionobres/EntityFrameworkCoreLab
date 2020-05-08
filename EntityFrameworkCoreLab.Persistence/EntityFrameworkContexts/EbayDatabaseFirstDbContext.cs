@@ -1,4 +1,5 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Ebay;
+using EntityFrameworkCoreLab.Persistence.EntityTypeConfigurations.Ebay;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
@@ -26,7 +27,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>().HasIndex(c => c.Cpf).IsUnique();
-            modelBuilder.Entity<Cart>().Property(c => c.Id).ValueGeneratedNever();
+            modelBuilder.ApplyConfiguration(new CartTypeConfiguration());
             modelBuilder.Entity<CartProduct>().HasKey(c => new { c.CartId, c.ProductId });
             modelBuilder.Entity<ProductShippingRate>().HasKey(p => new { p.ProductId, p.ShippingRateId });
         }

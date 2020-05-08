@@ -1,4 +1,5 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
+using EntityFrameworkCoreLab.Persistence.EntityTypeConfigurations.Amazon;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
@@ -25,7 +26,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().HasIndex(c => c.Cpf).IsUnique();
+            modelBuilder.ApplyConfiguration(new CustomerTypeConfiguration());
             modelBuilder.Entity<Cart>().Property(c => c.Id).ValueGeneratedNever();
             modelBuilder.Entity<CartProduct>().HasKey(c => new { c.CartId, c.ProductId });
             modelBuilder.Entity<ProductShippingRate>().HasKey(p => new { p.ProductId, p.ShippingRateId });
