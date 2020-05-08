@@ -194,6 +194,43 @@ Não é necessário incluir a classe que representa a tabela associativa no DbSe
 
 ## Considerações sobre performance
 
+
+### INSERT
+
+| **INSERT BENCHMARK**             |  DbSet  | DbContext |
+| -------------------------------- |:-------:|:---------:|
+| **Add**                          | 11,63*  |  10,51*   |
+| **Add with Recycle**             |  9,56   |  12,11    |
+| **AddRange**                     |  0,25   |   0,24    |
+| **AddRange with Recycle**        |  0,25   |   0,23    |
+| **ExecuteSql**                   |    -    |   5,13    |
+| **ExecuteSql with Recycle**      |    -    |   7,67    |
+| **Bulk Operation**               |    -    |   0,02    |
+
+### UPDATE
+
+| **UPDATE BENCHMARK**             |  DbSet  | DbContext |
+| -------------------------------- |:-------:|:---------:|
+| **Add**                          |  9,06*  |  13,27*   |
+| **Add with Recycle**             |  9,23   |  10,00    |
+| **AddRange**                     |  0,23   |   0,23    |
+| **AddRange with Recycle**        |  0,24   |   0,22    |
+| **ExecuteSql**                   |    -    |   6,11    |
+| **ExecuteSql with Recycle**      |    -    |   5,57    |
+| **Bulk Operation**               |    -    |   0,03    |
+
+### DELETE
+
+| **DELETE BENCHMARK**             |  DbSet  | DbContext |
+| -------------------------------- |:-------:|:---------:|
+| **Add**                          | 23,90*  |  29,27*   |
+| **Add with Recycle**             | 24,33   |  28,30    |
+| **AddRange**                     |  0,20   |   0,21    |
+| **AddRange with Recycle**        |  0,17   |   0,16    |
+| **ExecuteSql**                   |    -    |   5,43    |
+| **ExecuteSql with Recycle**      |    -    |   5,90    |
+| **Bulk Operation**               |    -    |   0,03    |
+
 ## Dicas rápidas
 
 ### Índices
