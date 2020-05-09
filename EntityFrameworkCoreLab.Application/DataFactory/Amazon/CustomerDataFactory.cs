@@ -8,14 +8,14 @@ namespace EntityFrameworkCoreLab.Application.DataFactory.Amazon
 {
     public class CustomerDataFactory
     {
-        public static IEnumerable<Customer> Make(int quantityOfCustomers)
+        public static IEnumerable<Customer> Make(int quantity)
         {
             const int nextUnusedAddressIdInDatabase = 4;
             var generator = new SequentialGenerator<int>();
 
             generator.StartingWith(nextValueToGenerate: nextUnusedAddressIdInDatabase);
 
-            var customers = Builder<Customer>.CreateListOfSize(quantityOfCustomers)
+            var customers = Builder<Customer>.CreateListOfSize(quantity)
                                        .All()
                                        .With(a => a.Id = 0)
                                        .With(a => a.Name = Faker.Name.FullName())
