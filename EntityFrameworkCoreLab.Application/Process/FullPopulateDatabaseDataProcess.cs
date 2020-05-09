@@ -15,13 +15,15 @@ namespace EntityFrameworkCoreLab.Application.Process
             var shippingRates = ShippingRateDataFactory.Make();
             var productsShippingRates = ProductShippingRateDataFactory.Make(1_500, shippingRates.Count());
             var customers = CustomerDataFactory.Make(500);
+            var carts = CartDataFactory.Make(50_000, 500);
             var dtoAmazonDatabaseData = new DTOAmazonDatabaseData() 
             {
                 Adresses = addresses,
                 Products = products,
                 ShippingRates = shippingRates,
                 ProductsShippingRates = productsShippingRates,
-                Customers = customers
+                Customers = customers,
+                Carts = carts
             };
 
             fullPopulateDatabaseDataMapper.CleanDataOfAllTables();

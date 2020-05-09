@@ -41,6 +41,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.PopulateData
                 amazonCodeFirstDbContext.Product.AddRange(amazonDatabaseData.Products);
                 amazonCodeFirstDbContext.ShippingRate.AddRange(amazonDatabaseData.ShippingRates);
                 amazonCodeFirstDbContext.Customer.AddRange(amazonDatabaseData.Customers);
+                amazonCodeFirstDbContext.Cart.AddRange(amazonDatabaseData.Carts);
 
                 amazonCodeFirstDbContext.SaveChanges();
             }
@@ -48,7 +49,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.PopulateData
             using (var amazonCodeFirstDbContext = new AmazonCodeFirstDbContext())
             {
                 amazonCodeFirstDbContext.ProductShippingRate.AddRange(amazonDatabaseData.ProductsShippingRates);
-                
+
                 amazonCodeFirstDbContext.SaveChanges();
             }
         }
