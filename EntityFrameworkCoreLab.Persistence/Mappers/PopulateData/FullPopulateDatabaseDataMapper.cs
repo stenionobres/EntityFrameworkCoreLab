@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCoreLab.Persistence.Mappers.PopulateData
 {
@@ -8,7 +7,29 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.PopulateData
     {
         public void CleanDataOfAllTables()
         {
+            using (var amazonCodeFirstDbContext = new AmazonCodeFirstDbContext())
+            {
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"delete from common.Address where Id > 3");
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT ('common.Address', RESEED, 3)");
 
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"delete from common.ShippingRate");
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT ('common.ShippingRate', RESEED, 0)");
+
+                // common.ProductShippingRate hasn't identity auto increment field
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"delete from common.ProductShippingRate");
+
+                // sales.CartProduct hasn't identity auto increment field
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"delete from sales.CartProduct");
+
+                // sales.Cart hasn't identity auto increment field
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"delete from sales.Cart");
+
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"delete from common.Product");
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT ('common.Product', RESEED, 0)");
+
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"delete from common.Customer where Id > 5");
+                amazonCodeFirstDbContext.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT ('common.Customer', RESEED, 5)");
+            }
         }
 
         public void FullPopulateDatabase()

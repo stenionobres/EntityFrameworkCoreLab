@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EntityFrameworkCoreLab.Persistence.Mappers.PopulateData;
 
 namespace EntityFrameworkCoreLab.Application.Process
 {
@@ -8,7 +6,7 @@ namespace EntityFrameworkCoreLab.Application.Process
     {
         public void FullPopulateDatabaseWithFakeData()
         {
-
+            new FullPopulateDatabaseDataMapper().CleanDataOfAllTables();
         }
     }
 }
