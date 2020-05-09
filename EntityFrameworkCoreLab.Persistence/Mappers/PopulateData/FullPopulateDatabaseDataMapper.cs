@@ -1,4 +1,5 @@
-﻿using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
+﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments;
+using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCoreLab.Persistence.Mappers.PopulateData
@@ -32,9 +33,14 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.PopulateData
             }
         }
 
-        public void FullPopulateDatabase()
+        public void FullPopulateDatabase(DTOAmazonDatabaseData amazonDatabaseData)
         {
+            using (var amazonCodeFirstDbContext = new AmazonCodeFirstDbContext())
+            {
+                amazonCodeFirstDbContext.Address.AddRange(amazonDatabaseData.Adresses);
 
+                amazonCodeFirstDbContext.SaveChanges();
+            }
         }
     }
 }
