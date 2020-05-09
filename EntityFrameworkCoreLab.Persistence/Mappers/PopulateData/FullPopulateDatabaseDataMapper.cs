@@ -38,6 +38,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.PopulateData
             using (var amazonCodeFirstDbContext = new AmazonCodeFirstDbContext())
             {
                 amazonCodeFirstDbContext.Address.AddRange(amazonDatabaseData.Adresses);
+                amazonCodeFirstDbContext.Product.AddRange(amazonDatabaseData.Products);
 
                 amazonCodeFirstDbContext.SaveChanges();
             }
