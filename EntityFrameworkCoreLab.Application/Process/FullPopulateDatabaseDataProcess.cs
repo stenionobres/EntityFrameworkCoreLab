@@ -11,10 +11,12 @@ namespace EntityFrameworkCoreLab.Application.Process
             var fullPopulateDatabaseDataMapper = new FullPopulateDatabaseDataMapper();
             var addresses = AddressDataFactory.Make(500);
             var products = ProductDataFactory.Make(1_500);
+            var shippingRates = ShippingRateDataFactory.Make();
             var dtoAmazonDatabaseData = new DTOAmazonDatabaseData() 
             {
                 Adresses = addresses,
-                Products = products
+                Products = products,
+                ShippingRates = shippingRates
             };
 
             fullPopulateDatabaseDataMapper.CleanDataOfAllTables();

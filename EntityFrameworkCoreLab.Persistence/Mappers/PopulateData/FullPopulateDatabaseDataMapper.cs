@@ -39,6 +39,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.PopulateData
             {
                 amazonCodeFirstDbContext.Address.AddRange(amazonDatabaseData.Adresses);
                 amazonCodeFirstDbContext.Product.AddRange(amazonDatabaseData.Products);
+                amazonCodeFirstDbContext.ShippingRate.AddRange(amazonDatabaseData.ShippingRates);
 
                 amazonCodeFirstDbContext.SaveChanges();
             }
