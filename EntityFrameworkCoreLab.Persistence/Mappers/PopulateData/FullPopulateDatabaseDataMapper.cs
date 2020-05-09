@@ -43,6 +43,13 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.PopulateData
 
                 amazonCodeFirstDbContext.SaveChanges();
             }
+
+            using (var amazonCodeFirstDbContext = new AmazonCodeFirstDbContext())
+            {
+                amazonCodeFirstDbContext.ProductShippingRate.AddRange(amazonDatabaseData.ProductsShippingRates);
+                
+                amazonCodeFirstDbContext.SaveChanges();
+            }
         }
     }
 }
