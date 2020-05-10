@@ -2,7 +2,6 @@
 using FizzWare.NBuilder;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EntityFrameworkCoreLab.Application.DataFactory.Amazon
 {

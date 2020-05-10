@@ -1,8 +1,6 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using FizzWare.NBuilder;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EntityFrameworkCoreLab.Application.DataFactory.Amazon
 {
@@ -16,14 +14,14 @@ namespace EntityFrameworkCoreLab.Application.DataFactory.Amazon
             generator.StartingWith(nextValueToGenerate: nextUnusedAddressIdInDatabase);
 
             var customers = Builder<Customer>.CreateListOfSize(quantity)
-                                       .All()
-                                       .With(a => a.Id = 0)
-                                       .With(a => a.Name = Faker.Name.FullName())
-                                       .With(a => a.Birthday = Faker.Identification.DateOfBirth())
-                                       .With(a => a.Email = Faker.Internet.Email())
-                                       .With(a => a.Cpf = GetCpf())
-                                       .With(a => a.AddressId = generator.Generate())
-                                       .Build();
+                                             .All()
+                                             .With(a => a.Id = 0)
+                                             .With(a => a.Name = Faker.Name.FullName())
+                                             .With(a => a.Birthday = Faker.Identification.DateOfBirth())
+                                             .With(a => a.Email = Faker.Internet.Email())
+                                             .With(a => a.Cpf = GetCpf())
+                                             .With(a => a.AddressId = generator.Generate())
+                                             .Build();
 
             return customers;
         }
