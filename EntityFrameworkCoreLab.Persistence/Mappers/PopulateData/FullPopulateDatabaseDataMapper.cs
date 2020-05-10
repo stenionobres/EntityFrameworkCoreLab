@@ -42,6 +42,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.PopulateData
                 amazonCodeFirstDbContext.ShippingRate.AddRange(amazonDatabaseData.ShippingRates);
                 amazonCodeFirstDbContext.Customer.AddRange(amazonDatabaseData.Customers);
                 amazonCodeFirstDbContext.Cart.AddRange(amazonDatabaseData.Carts);
+                amazonCodeFirstDbContext.CartProduct.AddRange(amazonDatabaseData.CartProducts);
 
                 amazonCodeFirstDbContext.SaveChanges();
             }

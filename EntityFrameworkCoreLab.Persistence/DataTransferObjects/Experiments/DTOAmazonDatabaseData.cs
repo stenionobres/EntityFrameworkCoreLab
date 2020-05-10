@@ -11,5 +11,6 @@ namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments
         public IEnumerable<ProductShippingRate> ProductsShippingRates { get; set; }
         public IEnumerable<Customer> Customers { get; set; }
         public IEnumerable<Cart> Carts { get; set; }
+        public IEnumerable<CartProduct> CartProducts { get; set; }
     }
 }
