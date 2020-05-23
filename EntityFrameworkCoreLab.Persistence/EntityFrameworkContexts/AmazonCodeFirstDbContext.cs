@@ -1,6 +1,9 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.EntityTypeConfigurations.Amazon;
+using EntityFrameworkCoreLab.Persistence.Log;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
 {
@@ -8,6 +11,9 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
     {
         private const string ConnectionString = @"Server=192.168.1.14,22331;Database=AmazonCodeFirst;User ID=sa;Password=sqlserver.252707;
                                                   Encrypt=False;Trusted_Connection=False;Connection Timeout=3000;";
+
+        public static readonly ILoggerFactory LoggerFactoryToConsole = LoggerFactory.Create(builder => builder.AddConsole());
+        public static readonly ILoggerFactory LoggerFactoryToFile = new LoggerFactory(new[] { new FileLoggerProvider(writer: new StreamWriter("efcore_log.txt", append: true)) });
 
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Product> Product { get; set; }
@@ -23,6 +29,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
             if (optionsBuilder.IsConfigured) return;
 
             optionsBuilder.UseSqlServer(ConnectionString);
+            optionsBuilder.UseLoggerFactory(LoggerFactoryToFile);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
