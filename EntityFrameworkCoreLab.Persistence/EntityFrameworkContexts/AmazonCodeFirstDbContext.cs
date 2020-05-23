@@ -16,6 +16,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         public DbSet<Cart> Cart { get; set; }
         public DbSet<CartProduct> CartProduct { get; set; }
         public DbSet<ProductShippingRate> ProductShippingRate { get; set; }
+        public DbSet<SalesInsights> SalesInsights { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,6 +31,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
             modelBuilder.Entity<Cart>().Property(c => c.Id).ValueGeneratedNever();
             modelBuilder.Entity<CartProduct>().HasKey(c => new { c.CartId, c.ProductId });
             modelBuilder.Entity<ProductShippingRate>().HasKey(p => new { p.ProductId, p.ShippingRateId });
+            modelBuilder.Entity<SalesInsights>().ToView("SalesInsights", "sales");
         }
     }
 }
