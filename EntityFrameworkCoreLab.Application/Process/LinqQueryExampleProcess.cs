@@ -19,5 +19,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return customers;
         }
+
+        public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInWhere()
+        {
+            var customers = new LinqQueryExampleMapper().GetCustomersWithAddressAndCartsBasedInWhere();
+
+            return customers;
+        }
     }
 }
