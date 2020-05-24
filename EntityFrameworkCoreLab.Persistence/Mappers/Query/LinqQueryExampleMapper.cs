@@ -23,7 +23,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
 
                 var data = query.ToList();
 
-                return data.Select(d => d.customer);
+                return data.Select(d => d.customer).Distinct();
             }
         }
     }
