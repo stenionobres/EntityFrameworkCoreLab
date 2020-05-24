@@ -1,8 +1,6 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.Mappers.Query;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EntityFrameworkCoreLab.Application.Process
 {
@@ -11,6 +9,13 @@ namespace EntityFrameworkCoreLab.Application.Process
         public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInInnerJoin()
         {
             var customers = new LinqQueryExampleMapper().GetCustomersWithAddressAndCartsBasedInInnerJoin();
+
+            return customers;
+        }
+
+        public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInLeftJoin()
+        {
+            var customers = new LinqQueryExampleMapper().GetCustomersWithAddressAndCartsBasedInLeftJoin();
 
             return customers;
         }
