@@ -157,5 +157,26 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
                 return data.Select(d => d.customer).Distinct();
             }
         }
+
+        public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInWhereWithOperatorLIKE()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from customer in amazonCodeFirstContext.Customer
+                            join cart in amazonCodeFirstContext.Cart
+                                on customer.Id equals cart.CustomerId
+                            join address in amazonCodeFirstContext.Address
+                                on customer.AddressId equals address.Id
+                            where customer.Name.StartsWith("Sta") || customer.Name.Contains("wel") || customer.Name.EndsWith("nes")
+                            select new
+                            {
+                                customer, address, cart
+                            };
+
+                var data = query.ToList();
+
+                return data.Select(d => d.customer).Distinct();
+            }
+        }
     }
 }
