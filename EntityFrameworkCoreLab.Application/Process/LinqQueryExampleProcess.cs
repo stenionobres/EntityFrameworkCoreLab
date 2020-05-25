@@ -90,9 +90,9 @@ namespace EntityFrameworkCoreLab.Application.Process
             return customers;
         }
 
-        public IEnumerable<KeyValuePair<int, int>> GetCustomersWithAddressAndCartsWithGROUPBY()
+        public IEnumerable<KeyValuePair<int, int>> GetCustomersIdsAndCartsQuantityWithGROUPBY()
         {
-            var customers = new LinqQueryExampleMapper().GetCustomersWithAddressAndCartsWithGROUPBY();
+            var customers = new LinqQueryExampleMapper().GetCustomersIdsAndCartsQuantityWithGROUPBY();
 
             return customers;
         }

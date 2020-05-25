@@ -267,7 +267,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
             }
         }
 
-        public IEnumerable<KeyValuePair<int, int>> GetCustomersWithAddressAndCartsWithGROUPBY()
+        public IEnumerable<KeyValuePair<int, int>> GetCustomersIdsAndCartsQuantityWithGROUPBY()
         {
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
