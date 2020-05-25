@@ -191,6 +191,31 @@ Por padrão o EF Core não define as duas chaves estrangeiras na tabela associat
 	 
 Não é necessário incluir a classe que representa a tabela associativa no DbSet para que ela seja criada no banco de dados.
 
+## Considerações sobre inserts, updates e deletes
+
+### EF Core Entity State
+
+Uma breve explicação sobre o EF Core Entity State tem como objetivo ajudar no entendimento do que acontece quando uma entidades são adicionadas, atualizadas ou excluídas da base de dados.
+
+Quando uma entidade é lida ela é `trackeada` por padrão pelo EF Core, isto é conhecido como `tracked entity`.
+
+    Tracked entities: são instâncias de entidades que foram lidas da base de dados usando uma consulta que não inclui o método AsNoTracking. Alternativamente depois que uma entidade é usada em um método do EF Core (Add, Update ou Delete) a entidade é trackeada.
+
+Todas as entidades trackeadas possuem uma propriedade chamada `State`. O State de uma entidade pode ser obtido usando o seguinte comando:
+
+    context.Entry(someEntityInstance).State
+
+Abaixo é apresentada uma lista dos possíveis States e o que acontece quando o método `SaveChanges` é executado:
+
+* Added - A entidade não existe no banco de dados. SaveChanges a insere.
+* Unchanged - A entidade existe no banco de dados e não foi modificada no cliente. SaveChanges a ignora.
+* Modified - A entidade existe no banco de dados e foi modificada no cliente. SaveChanges a atualiza.
+* Deleted - A entidade existe no banco de dados e foi deletada. SaveChanges a deleta.
+* Detached - A entidade não está "trackeada". SaveChanges a ignora.
+
+Normalmente o `State` não é alterado diretamente, para isso são utilizados diversos comandos do EF Core que garantem que tudo vai ser alterado corretamente.
+
+
 
 ## Considerações sobre performance
 
