@@ -312,7 +312,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
             }
         }
 
-        public IEnumerable<KeyValuePair<int, DateTime>> GetCustomersIdsAndCartPurchaseDateWithMAX()
+        public IEnumerable<KeyValuePair<int, DateTime>> GetCustomersIdsAndCartPurchaseDateWithGROUPBYMAX()
         {
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {

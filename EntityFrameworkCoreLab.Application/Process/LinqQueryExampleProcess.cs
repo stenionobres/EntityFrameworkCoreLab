@@ -105,9 +105,9 @@ namespace EntityFrameworkCoreLab.Application.Process
             return customers;
         }
 
-        public IEnumerable<KeyValuePair<int, DateTime>> GetCustomersIdsAndCartPurchaseDateWithMAX()
+        public IEnumerable<KeyValuePair<int, DateTime>> GetCustomersIdsAndCartPurchaseDateWithGROUPBYMAX()
         {
-            var customers = new LinqQueryExampleMapper().GetCustomersIdsAndCartPurchaseDateWithMAX();
+            var customers = new LinqQueryExampleMapper().GetCustomersIdsAndCartPurchaseDateWithGROUPBYMAX();
 
             return customers;
         }
