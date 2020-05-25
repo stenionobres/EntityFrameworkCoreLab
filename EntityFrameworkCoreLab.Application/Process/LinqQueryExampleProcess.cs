@@ -75,5 +75,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return customersNames;
         }
+
+        public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInWhereWithOperatorBETWEEN()
+        {
+            var customers = new LinqQueryExampleMapper().GetCustomersWithAddressAndCartsBasedInWhereWithOperatorBETWEEN();
+
+            return customers;
+        }
     }
 }
