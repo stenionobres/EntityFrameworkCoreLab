@@ -82,5 +82,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return customers;
         }
+
+        public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInWhereWithORDERBY()
+        {
+            var customers = new LinqQueryExampleMapper().GetCustomersWithAddressAndCartsBasedInWhereWithORDERBY();
+
+            return customers;
+        }
     }
 }
