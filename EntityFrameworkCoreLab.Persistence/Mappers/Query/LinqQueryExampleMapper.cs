@@ -288,5 +288,28 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
                 return data;
             }
         }
+
+        public IEnumerable<KeyValuePair<int, int>> GetCustomersIdsAndCartsQuantityWithHAVING()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from customer in amazonCodeFirstContext.Customer
+                            join cart in amazonCodeFirstContext.Cart
+                                on customer.Id equals cart.CustomerId
+                            join address in amazonCodeFirstContext.Address
+                                on customer.AddressId equals address.Id
+                            group customer by customer.Id into groupingCustomer
+                            where groupingCustomer.Count() > 100
+                            select new KeyValuePair<int, int>
+                            (
+                                groupingCustomer.Key,
+                                groupingCustomer.Count()
+                            );
+
+                var data = query.ToList();
+
+                return data;
+            }
+        }
     }
 }

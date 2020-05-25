@@ -96,5 +96,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return customers;
         }
+
+        public IEnumerable<KeyValuePair<int, int>> GetCustomersIdsAndCartsQuantityWithHAVING()
+        {
+            var customers = new LinqQueryExampleMapper().GetCustomersIdsAndCartsQuantityWithHAVING();
+
+            return customers;
+        }
     }
 }
