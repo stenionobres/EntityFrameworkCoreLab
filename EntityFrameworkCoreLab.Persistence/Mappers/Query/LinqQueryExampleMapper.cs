@@ -349,5 +349,23 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
                 return data;
             }
         }
+
+        public IEnumerable<KeyValuePair<int, DateTime>> GetCustomersIdsAndCartPurchaseDateWithGROUPBYMIN()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from cart in amazonCodeFirstContext.Cart
+                            group cart by cart.CustomerId into groupingCart
+                            select new KeyValuePair<int, DateTime>
+                            (
+                                groupingCart.Key,
+                                groupingCart.Min(g => g.PurchaseDate)
+                            );
+
+                var data = query.ToList();
+
+                return data;
+            }
+        }
     }
 }

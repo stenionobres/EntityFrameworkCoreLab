@@ -118,5 +118,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return customerId;
         }
+
+        public IEnumerable<KeyValuePair<int, DateTime>> GetCustomersIdsAndCartPurchaseDateWithGROUPBYMIN()
+        {
+            var customers = new LinqQueryExampleMapper().GetCustomersIdsAndCartPurchaseDateWithGROUPBYMIN();
+
+            return customers;
+        }
     }
 }
