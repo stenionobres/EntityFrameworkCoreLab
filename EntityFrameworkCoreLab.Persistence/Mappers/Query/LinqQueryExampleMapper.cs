@@ -329,5 +329,25 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
                 return data;
             }
         }
+
+        public int GetCustomerIdWithMAX()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query =  from customer in amazonCodeFirstContext.Customer
+                             join cart in amazonCodeFirstContext.Cart
+                                 on customer.Id equals cart.CustomerId
+                             join address in amazonCodeFirstContext.Address
+                                 on customer.AddressId equals address.Id
+                             select new 
+                             { 
+                                 customer, address, cart 
+                             };
+
+                var data = query.Max(x => x.customer.Id);
+
+                return data;
+            }
+        }
     }
 }

@@ -111,5 +111,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return customers;
         }
+
+        public int GetCustomerIdWithMAX()
+        {
+            var customerId = new LinqQueryExampleMapper().GetCustomerIdWithMAX();
+
+            return customerId;
+        }
     }
 }
