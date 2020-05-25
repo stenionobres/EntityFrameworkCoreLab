@@ -246,7 +246,7 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
             }
         }
 
-        public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInWhereWithORDERBY()
+        public IEnumerable<Customer> GetCustomersWithAddressAndCartsWithORDERBY()
         {
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
             {
