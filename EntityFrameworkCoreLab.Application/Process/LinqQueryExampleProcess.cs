@@ -125,5 +125,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return customers;
         }
+
+        public int GetCustomerIdWithMIN()
+        {
+            var customerId = new LinqQueryExampleMapper().GetCustomerIdWithMIN();
+
+            return customerId;
+        }
     }
 }
