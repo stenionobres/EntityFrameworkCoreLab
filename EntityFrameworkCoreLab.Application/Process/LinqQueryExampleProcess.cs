@@ -89,5 +89,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return customers;
         }
+
+        public IEnumerable<KeyValuePair<int, int>> GetCustomersWithAddressAndCartsWithGROUPBY()
+        {
+            var customers = new LinqQueryExampleMapper().GetCustomersWithAddressAndCartsWithGROUPBY();
+
+            return customers;
+        }
     }
 }
