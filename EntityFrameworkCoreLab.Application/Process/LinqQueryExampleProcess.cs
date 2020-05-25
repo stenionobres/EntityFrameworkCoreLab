@@ -1,5 +1,6 @@
 ﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Amazon;
 using EntityFrameworkCoreLab.Persistence.Mappers.Query;
+using System;
 using System.Collections.Generic;
 
 namespace EntityFrameworkCoreLab.Application.Process
@@ -100,6 +101,13 @@ namespace EntityFrameworkCoreLab.Application.Process
         public IEnumerable<KeyValuePair<int, int>> GetCustomersIdsAndCartsQuantityWithHAVING()
         {
             var customers = new LinqQueryExampleMapper().GetCustomersIdsAndCartsQuantityWithHAVING();
+
+            return customers;
+        }
+
+        public IEnumerable<KeyValuePair<int, DateTime>> GetCustomersIdsAndCartPurchaseDateWithMAX()
+        {
+            var customers = new LinqQueryExampleMapper().GetCustomersIdsAndCartPurchaseDateWithMAX();
 
             return customers;
         }
