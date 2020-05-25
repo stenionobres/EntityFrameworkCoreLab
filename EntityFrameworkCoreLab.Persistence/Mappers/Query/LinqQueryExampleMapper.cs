@@ -203,5 +203,22 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
                 return data.Select(d => d.customer).Distinct();
             }
         }
+
+        public IEnumerable<string> GetCustomersNamesWithDistinct()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = (from customer in amazonCodeFirstContext.Customer
+                             join cart in amazonCodeFirstContext.Cart
+                                 on customer.Id equals cart.CustomerId
+                             join address in amazonCodeFirstContext.Address
+                                 on customer.AddressId equals address.Id
+                             select new { customer.Name }).Distinct();
+
+                var data = query.ToList();
+
+                return data.Select(d => d.Name);
+            }
+        }
     }
 }

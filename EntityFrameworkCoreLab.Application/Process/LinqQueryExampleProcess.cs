@@ -68,5 +68,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return customers;
         }
+
+        public IEnumerable<string> GetCustomersNamesWithDistinct()
+        {
+            var customersNames = new LinqQueryExampleMapper().GetCustomersNamesWithDistinct();
+
+            return customersNames;
+        }
     }
 }
