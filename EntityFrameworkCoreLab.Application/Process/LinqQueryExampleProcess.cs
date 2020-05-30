@@ -139,5 +139,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return carts;
         }
+
+        public decimal GetQuantityItemsWithAVG()
+        {
+            var quantity = new LinqQueryExampleMapper().GetQuantityItemsWithAVG();
+
+            return quantity;
+        }
     }
 }

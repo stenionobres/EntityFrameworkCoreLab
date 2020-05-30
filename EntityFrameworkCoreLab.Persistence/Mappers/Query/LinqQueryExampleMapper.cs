@@ -407,5 +407,18 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
                 return data;
             }
         }
+
+        public decimal GetQuantityItemsWithAVG()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from cartProduct in amazonCodeFirstContext.CartProduct
+                            select cartProduct;
+
+                var data = query.Average(x => x.Quantity);
+
+                return (decimal)data;
+            }
+        }
     }
 }
