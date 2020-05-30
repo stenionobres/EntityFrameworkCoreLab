@@ -51,6 +51,10 @@ Abaixo são listados quais requisitos a solução atende:
 
 ## Modelo do banco de dados
 
+Abaixo é apresentada uma modelagem conceitual do banco de dados:
+
+![image info](./readme-pictures/ecommerce-conceitual.png)
+
 ## Estrutura do projeto
 
 ## Model First x Database First 
