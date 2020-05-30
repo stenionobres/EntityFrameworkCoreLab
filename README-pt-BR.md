@@ -51,11 +51,11 @@ Abaixo são listados quais requisitos a solução atende:
 
 ## Modelo do banco de dados
 
-Abaixo é apresentada uma modelagem conceitual do banco de dados:
+Abaixo é apresentada uma **modelagem conceitual** do banco de dados. A modelagem foi feita com o apoio da ferramenta [BrModelo](http://www.sis4.com/brModelo/).
 
 ![image info](./readme-pictures/ecommerce-conceitual.png)
 
-Neste diagrama é apresentada a modelagem lógica do banco de dados:
+Neste diagrama é apresentada a **modelagem lógica** do banco de dados. A modelagem foi feita com o apoio da ferramenta [SqlDBM](https://sqldbm.com/).
 
 ![image info](./readme-pictures/ecommerce-logical.jpg)
 
