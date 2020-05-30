@@ -453,5 +453,18 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
                 return data;
             }
         }
+
+        public int GetCartsQuantityWithCOUNT()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from cart in amazonCodeFirstContext.Cart
+                            select cart;
+
+                var data = query.Count();
+
+                return data;
+            }
+        }
     }
 }
