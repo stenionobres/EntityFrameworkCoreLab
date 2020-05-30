@@ -55,6 +55,10 @@ Abaixo é apresentada uma modelagem conceitual do banco de dados:
 
 ![image info](./readme-pictures/ecommerce-conceitual.png)
 
+Neste diagrama é apresentada a modelagem lógica do banco de dados:
+
+![image info](./readme-pictures/ecommerce-logical.jpg)
+
 ## Estrutura do projeto
 
 ## Model First x Database First 
