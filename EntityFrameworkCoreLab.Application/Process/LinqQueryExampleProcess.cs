@@ -153,5 +153,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return carts;
         }
+
+        public int GetQuantityItemsWithSUM()
+        {
+            var quantity = new LinqQueryExampleMapper().GetQuantityItemsWithSUM();
+
+            return quantity;
+        }
     }
 }

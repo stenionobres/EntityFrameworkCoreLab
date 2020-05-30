@@ -440,5 +440,18 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
                 return data;
             }
         }
+
+        public int GetQuantityItemsWithSUM()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from cartProduct in amazonCodeFirstContext.CartProduct
+                            select cartProduct;
+
+                var data = query.Sum(x => x.Quantity);
+
+                return data;
+            }
+        }
     }
 }
