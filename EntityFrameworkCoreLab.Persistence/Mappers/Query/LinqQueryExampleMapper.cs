@@ -420,5 +420,25 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
                 return (decimal)data;
             }
         }
+
+        public IEnumerable<KeyValuePair<int, int>> GetCartIdsAndQuantityItemsWithGROUPBYSUM()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from cart in amazonCodeFirstContext.Cart
+                            join cartProduct in amazonCodeFirstContext.CartProduct
+                                on cart.Id equals cartProduct.CartId
+                            group cartProduct by cartProduct.CartId into groupingCartProduct
+                            select new KeyValuePair<int, int>
+                            (
+                                groupingCartProduct.Key,
+                                groupingCartProduct.Sum(g => g.Quantity)
+                            );
+
+                var data = query.ToList();
+
+                return data;
+            }
+        }
     }
 }

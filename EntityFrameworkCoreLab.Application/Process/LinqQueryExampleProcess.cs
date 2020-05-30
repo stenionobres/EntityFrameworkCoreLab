@@ -146,5 +146,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return quantity;
         }
+
+        public IEnumerable<KeyValuePair<int, int>> GetCartIdsAndQuantityItemsWithGROUPBYSUM()
+        {
+            var carts = new LinqQueryExampleMapper().GetCartIdsAndQuantityItemsWithGROUPBYSUM();
+
+            return carts;
+        }
     }
 }
