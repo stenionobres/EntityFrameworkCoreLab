@@ -132,5 +132,12 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             return customerId;
         }
+
+        public IEnumerable<KeyValuePair<int, decimal>> GetCartIdsAndQuantityItemsWithGROUPBYAVG()
+        {
+            var carts = new LinqQueryExampleMapper().GetCartIdsAndQuantityItemsWithGROUPBYAVG();
+
+            return carts;
+        }
     }
 }

@@ -387,5 +387,25 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
                 return data;
             }
         }
+
+        public IEnumerable<KeyValuePair<int, decimal>> GetCartIdsAndQuantityItemsWithGROUPBYAVG()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from cart in amazonCodeFirstContext.Cart
+                            join cartProduct in amazonCodeFirstContext.CartProduct
+                                on cart.Id equals cartProduct.CartId
+                            group cartProduct by cartProduct.CartId into groupingCartProduct
+                            select new KeyValuePair<int, decimal>
+                            (
+                                groupingCartProduct.Key,
+                                (decimal)groupingCartProduct.Average(g => g.Quantity)
+                            );
+
+                var data = query.ToList();
+
+                return data;
+            }
+        }
     }
 }
