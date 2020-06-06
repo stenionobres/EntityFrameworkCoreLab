@@ -27,7 +27,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AddressTypeConfiguration());
-            modelBuilder.Entity<Customer>().HasIndex(c => c.Cpf).IsUnique();
+            modelBuilder.ApplyConfiguration(new CustomerTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CartTypeConfiguration());
             modelBuilder.Entity<CartProduct>().HasKey(c => new { c.CartId, c.ProductId });
             modelBuilder.Entity<ProductShippingRate>().HasKey(p => new { p.ProductId, p.ShippingRateId });

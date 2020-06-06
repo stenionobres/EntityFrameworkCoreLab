@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using EntityFrameworkCoreLab.Persistence.Auditing;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Ebay
 {
     [Table("Customer", Schema = "common")]
-    public class Customer
+    public class Customer : Auditable
     {
         public int Id { get; set; }
 
