@@ -9,6 +9,6 @@ namespace EntityFrameworkCoreLab.Persistence.Auditing
         public string UpdatedBy { get; set; }
         public DateTime UpdatedOn { get; set; }
         public string DeletedBy { get; set; }
-        public DateTime DeletedOn { get; set; }
+        public DateTime? DeletedOn { get; set; }
     }
 }
