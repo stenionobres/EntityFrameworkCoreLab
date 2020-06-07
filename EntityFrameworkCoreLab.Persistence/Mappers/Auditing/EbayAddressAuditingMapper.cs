@@ -24,5 +24,14 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Auditing
                 ebayDatabaseFirstDbContext.SaveChanges();
             }
         }
+
+        public void UpdateAddressesWithAuditing(IEnumerable<Address> addresses)
+        {
+            using (var ebayDatabaseFirstDbContext = new EbayDatabaseFirstDbContext())
+            {
+                ebayDatabaseFirstDbContext.Address.UpdateRange(addresses);
+                ebayDatabaseFirstDbContext.SaveChanges();
+            }
+        }
     }
 }

@@ -32,5 +32,34 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             ebayAddressAuditingMapper.InsertAddressesWithAuditing(addresses);
         }
+
+        public void UpdateAddressesWithAuditing()
+        {
+            var ebayAddressAuditingMapper = new EbayAddressAuditingMapper();
+            var addresses = new List<Address>();
+
+            InsertAddressesWithAuditing();
+
+            var address01 = new Address()
+            {
+                Id = 4,
+                Street = "4035 updated",
+                ZipPostCode = "04826-03",
+                City = "South Monserrate"
+            };
+
+            var address02 = new Address()
+            {
+                Id = 5,
+                Street = "00886 updated",
+                ZipPostCode = "66822-01",
+                City = "Lake Dave"
+            };
+
+            addresses.Add(address01);
+            addresses.Add(address02);
+
+            ebayAddressAuditingMapper.UpdateAddressesWithAuditing(addresses);
+        }
     }
 }
