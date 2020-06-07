@@ -69,8 +69,21 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
 
                 if (auditableEntity.State == EntityState.Deleted)
                 {
+                    auditableEntity.State = EntityState.Modified;
+
+                    // we also want to make sure that code is not inadvertly
+                    // modifying another columns 
+
+                    foreach (var auditableProperty in auditableEntity.Properties)
+                    {
+                        auditableProperty.IsModified = false;
+                    }
+
                     auditableEntity.Entity.DeletedOn = currentDate;
                     auditableEntity.Entity.DeletedBy = currentUser;
+                    
+                    auditableEntity.Property(p => p.DeletedOn).IsModified = true;
+                    auditableEntity.Property(p => p.DeletedBy).IsModified = true;
                 }
             }
         }

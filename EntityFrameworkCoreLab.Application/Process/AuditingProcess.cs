@@ -61,5 +61,21 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             ebayAddressAuditingMapper.UpdateAddressesWithAuditing(addresses);
         }
+
+        public void DeleteAddressesWithAuditing()
+        {
+            var ebayAddressAuditingMapper = new EbayAddressAuditingMapper();
+            var addresses = new List<Address>();
+
+            InsertAddressesWithAuditing();
+
+            var address01 = new Address() { Id = 4 };
+            var address02 = new Address() { Id = 5 };
+
+            addresses.Add(address01);
+            addresses.Add(address02);
+
+            ebayAddressAuditingMapper.DeleteAddressesWithAuditing(addresses);
+        }
     }
 }
