@@ -1,6 +1,8 @@
-﻿using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Ebay;
-using EntityFrameworkCoreLab.Persistence.EntityTypeConfigurations.Ebay;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
+using EntityFrameworkCoreLab.Persistence.Auditing;
+using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Ebay;
+using EntityFrameworkCoreLab.Persistence.EntityTypeConfigurations.Ebay;
 
 namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
 {
@@ -31,6 +33,46 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
             modelBuilder.ApplyConfiguration(new CartTypeConfiguration());
             modelBuilder.Entity<CartProduct>().HasKey(c => new { c.CartId, c.ProductId });
             modelBuilder.Entity<ProductShippingRate>().HasKey(p => new { p.ProductId, p.ShippingRateId });
+        }
+
+        public override int SaveChanges()
+        {
+            ApplyAuditing();
+            return base.SaveChanges();
+        }
+
+        private void ApplyAuditing()
+        {
+            foreach (var auditableEntity in ChangeTracker.Entries<Auditable>())
+            {
+                var currentDate = DateTime.Now;
+                string currentUser = "some_id_of_user";
+
+                if (auditableEntity.State == EntityState.Added || auditableEntity.State == EntityState.Modified)
+                {
+                    auditableEntity.Entity.UpdatedOn = currentDate;
+                    auditableEntity.Entity.UpdatedBy = currentUser;
+
+                    if (auditableEntity.State == EntityState.Added)
+                    {
+                        auditableEntity.Entity.CreatedOn = currentDate;
+                        auditableEntity.Entity.CreatedBy = currentUser;
+                    }
+                    else
+                    {
+                        // we also want to make sure that code is not inadvertly
+                        // modifying created date and created by columns 
+                        auditableEntity.Property(p => p.CreatedOn).IsModified = false;
+                        auditableEntity.Property(p => p.CreatedBy).IsModified = false;
+                    }
+                }
+
+                if (auditableEntity.State == EntityState.Deleted)
+                {
+                    auditableEntity.Entity.DeletedOn = currentDate;
+                    auditableEntity.Entity.DeletedBy = currentUser;
+                }
+            }
         }
 
     }
