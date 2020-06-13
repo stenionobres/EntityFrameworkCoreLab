@@ -2,6 +2,7 @@
 using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
 using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToOneRelation;
 using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToManyRelation;
+using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.ManyToManyRelation;
 
 namespace EntityFrameworkCoreLab.Persistence.Mappers.DisconnectedOperation
 {
@@ -35,6 +36,23 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.DisconnectedOperation
             }
         }
 
+        public void CleanAllRecordsFromPrincipalAndDependentEntitiesByConventionMTM()
+        {
+            using (var experimentsDbContext = new ExperimentsDbContext())
+            {
+                experimentsDbContext.Database.ExecuteSqlInterpolated($"delete from PrincipalEntityByConventionMTM");
+                experimentsDbContext.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT ('PrincipalEntityByConventionMTM', RESEED, 0)");
+
+                experimentsDbContext.Database.ExecuteSqlInterpolated($"delete from MiddleEntityByConventionMTM");
+                experimentsDbContext.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT ('MiddleEntityByConventionMTM', RESEED, 0)");
+
+                experimentsDbContext.Database.ExecuteSqlInterpolated($"delete from DependentEntityByConventionMTM");
+                experimentsDbContext.Database.ExecuteSqlInterpolated($"DBCC CHECKIDENT ('DependentEntityByConventionMTM', RESEED, 0)");
+
+                experimentsDbContext.SaveChanges();
+            }
+        }
+
         public void InsertEntitiesWithOneToOneRelationship(PrincipalEntityByConventionOTO principalEntityByConventionOTO)
         {
             using (var experimentsDbContext = new ExperimentsDbContext())
@@ -50,6 +68,26 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.DisconnectedOperation
             using (var experimentsDbContext = new ExperimentsDbContext())
             {
                 experimentsDbContext.PrincipalEntityByConventionOTM.AddRange(principalEntityByConventionOTM);
+                experimentsDbContext.SaveChanges();
+            }
+        }
+
+        public void InsertEntitiesWithManyToManyRelationship(PrincipalEntityByConventionMTM principalEntityByConventionMTM,
+                                                             DependentEntityByConventionMTM dependentEntityByConventionMTM)
+        {
+            using (var experimentsDbContext = new ExperimentsDbContext())
+            {
+                experimentsDbContext.PrincipalEntityByConventionMTM.AddRange(principalEntityByConventionMTM);
+                experimentsDbContext.DependentEntityByConventionMTM.AddRange(dependentEntityByConventionMTM);
+                experimentsDbContext.SaveChanges();
+
+                var middleEntityByConventionMTM = new MiddleEntityByConventionMTM()
+                {
+                    PrincipalEntityByConventionMTMId = principalEntityByConventionMTM.Id,
+                    DependentEntityByConventionMTMId = dependentEntityByConventionMTM.Id
+                };
+
+                experimentsDbContext.MiddleEntityByConventionMTM.AddRange(middleEntityByConventionMTM);
                 experimentsDbContext.SaveChanges();
             }
         }

@@ -2,6 +2,7 @@
 using EntityFrameworkCoreLab.Persistence.Mappers.DisconnectedOperation;
 using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToOneRelation;
 using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToManyRelation;
+using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.ManyToManyRelation;
 
 namespace EntityFrameworkCoreLab.Application.Process
 {
@@ -61,6 +62,27 @@ namespace EntityFrameworkCoreLab.Application.Process
             firstPrincipalEntityByConventionOTM.DependentsEntitiesByConventionOTM.Add(secondDependentEntityByConventionOTM);
 
             disconnectedInsertMapper.InsertEntitiesWithOneToManyRelationship(firstPrincipalEntityByConventionOTM);
+        }
+
+        public void InsertEntitiesWithManyToManyRelationship()
+        {
+            var disconnectedInsertMapper = new DisconnectedInsertMapper();
+
+            disconnectedInsertMapper.CleanAllRecordsFromPrincipalAndDependentEntitiesByConventionMTM();
+
+            var principalEntityByConventionMTM = new PrincipalEntityByConventionMTM()
+            {
+                FirstProperty = 100,
+                SecondProperty = "example that will add the two entities"
+            };
+
+            var dependentEntityByConventionMTM = new DependentEntityByConventionMTM()
+            {
+                FirstProperty = 100,
+                SecondProperty = 64.89m
+            };
+
+            disconnectedInsertMapper.InsertEntitiesWithManyToManyRelationship(principalEntityByConventionMTM, dependentEntityByConventionMTM);
         }
     }
 }
