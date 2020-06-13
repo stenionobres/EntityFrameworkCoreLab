@@ -87,7 +87,7 @@ Os comandos listados estão no formato de uso no **Package Manager Console**. É
 
 ### Critérios de geração de migrações
 
-O EF Core estabelece alguns critérios para geração de migrações, que consequentemente geram alterações no banco de dados. Os critérios são:
+O EF Core estabelece alguns critérios para geração de migrações, que consequentemente geram alterações no banco de dados. A execução de comandos para geração de migrações sempre vão compilar o **Target project** e o **Startup project**. Os critérios são:
 
 * Mudança nas propriedades das classes de entidade, por exemplo, o nome da propriedade ou inclusão de uma nova propriedade;
 
