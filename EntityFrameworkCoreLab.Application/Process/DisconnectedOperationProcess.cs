@@ -84,5 +84,22 @@ namespace EntityFrameworkCoreLab.Application.Process
 
             disconnectedInsertMapper.InsertEntitiesWithManyToManyRelationship(principalEntityByConventionMTM, dependentEntityByConventionMTM);
         }
+
+        public void UpdateEntitiesWithOneToOneRelationship()
+        {
+            InsertEntitiesWithOneToOneRelationship();
+
+            var disconnectedUpdateMapper = new DisconnectedUpdateMapper();
+
+            var firstPrincipalEntityByConventionOTO = new PrincipalEntityByConventionOTO()
+            {
+                Id = 1,
+                FirstProperty = 100,
+                SecondProperty = "example that will update the entities",
+                DependentEntityByConventionOTO = new DependentEntityByConventionOTO() { FirstProperty = 85, SecondProperty = 55.22m }
+            };
+
+            disconnectedUpdateMapper.UpdateEntitiesWithOneToOneRelationship(firstPrincipalEntityByConventionOTO);
+        }
     }
 }
