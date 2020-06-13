@@ -1,6 +1,7 @@
 ﻿using EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts;
 using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToOneRelation;
 using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToManyRelation;
+using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.ManyToManyRelation;
 
 namespace EntityFrameworkCoreLab.Persistence.Mappers.DisconnectedOperation
 {
@@ -21,6 +22,15 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.DisconnectedOperation
             using (var experimentsDbContext = new ExperimentsDbContext())
             {
                 experimentsDbContext.PrincipalEntityByConventionOTM.UpdateRange(principalEntityByConventionOTM);
+                experimentsDbContext.SaveChanges();
+            }
+        }
+
+        public void UpdateEntitiesWithManyToManyRelationship(MiddleEntityByConventionMTM middleEntityByConventionMTM)
+        {
+            using (var experimentsDbContext = new ExperimentsDbContext())
+            {
+                experimentsDbContext.MiddleEntityByConventionMTM.UpdateRange(middleEntityByConventionMTM);
                 experimentsDbContext.SaveChanges();
             }
         }

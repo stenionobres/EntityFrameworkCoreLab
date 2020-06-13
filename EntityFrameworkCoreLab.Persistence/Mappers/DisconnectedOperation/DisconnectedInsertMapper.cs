@@ -92,5 +92,17 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.DisconnectedOperation
             }
         }
 
+        public void InsertEntitiesWithoutRelationship(PrincipalEntityByConventionMTM principalEntityByConventionMTM,
+                                                      DependentEntityByConventionMTM dependentEntityByConventionMTM)
+        {
+            using (var experimentsDbContext = new ExperimentsDbContext())
+            {
+                experimentsDbContext.PrincipalEntityByConventionMTM.AddRange(principalEntityByConventionMTM);
+                experimentsDbContext.DependentEntityByConventionMTM.AddRange(dependentEntityByConventionMTM);
+                experimentsDbContext.SaveChanges();
+
+            }
+        }
+
     }
 }
