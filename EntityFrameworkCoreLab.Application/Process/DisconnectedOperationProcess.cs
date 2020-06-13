@@ -1,5 +1,7 @@
-﻿using EntityFrameworkCoreLab.Persistence.Mappers.DisconnectedOperation;
+﻿using System.Collections.Generic;
+using EntityFrameworkCoreLab.Persistence.Mappers.DisconnectedOperation;
 using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToOneRelation;
+using EntityFrameworkCoreLab.Persistence.DataTransferObjects.Experiments.OneToManyRelation;
 
 namespace EntityFrameworkCoreLab.Application.Process
 {
@@ -28,6 +30,37 @@ namespace EntityFrameworkCoreLab.Application.Process
             };
 
             new DisconnectedInsertMapper().InsertEntitiesWithOneToOneRelationship(secondPrincipalEntityByConventionOTO);
+        }
+
+        public void InsertEntitiesWithOneToManyRelationship()
+        {
+            var disconnectedInsertMapper = new DisconnectedInsertMapper();
+
+            disconnectedInsertMapper.CleanAllRecordsFromPrincipalAndDependentEntitiesByConventionOTM();
+
+            var firstPrincipalEntityByConventionOTM = new PrincipalEntityByConventionOTM()
+            {
+                FirstProperty = 100,
+                SecondProperty = "example that will add the two entities"
+            };
+
+            var firstDependentEntityByConventionOTM = new DependentEntityByConventionOTM()
+            {
+                FirstProperty = 50,
+                SecondProperty = 556.89m
+            };
+
+            var secondDependentEntityByConventionOTM = new DependentEntityByConventionOTM()
+            {
+                FirstProperty = 100,
+                SecondProperty = 116.69m
+            };
+
+            firstPrincipalEntityByConventionOTM.DependentsEntitiesByConventionOTM = new List<DependentEntityByConventionOTM>();
+            firstPrincipalEntityByConventionOTM.DependentsEntitiesByConventionOTM.Add(firstDependentEntityByConventionOTM);
+            firstPrincipalEntityByConventionOTM.DependentsEntitiesByConventionOTM.Add(secondDependentEntityByConventionOTM);
+
+            disconnectedInsertMapper.InsertEntitiesWithOneToManyRelationship(firstPrincipalEntityByConventionOTM);
         }
     }
 }
