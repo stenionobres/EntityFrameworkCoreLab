@@ -12,6 +12,10 @@ Após os estudos de caso, as principais conclusões foram documentadas neste arq
      Entity Framework Core 3.1.2;
      Entity.Framework.Core.Sql.Server 3.1.2;
      Microsoft.EntityFrameworkCore.Tools 3.1.2;
+     EFCore.BulkExtensions 3.1.1;
+     Microsoft.Extensions.Logging.Console 3.1.2;
+     Faker.Net 1.3.77;
+     NBuilder 6.1.0;
 
 ## Como iniciar?
 
