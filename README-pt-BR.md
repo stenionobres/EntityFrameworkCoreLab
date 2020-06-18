@@ -56,11 +56,13 @@ Abaixo são listados quais requisitos a solução atende:
 
 ## Modelo do banco de dados
 
+A fim de exemplificar o uso do Entity Framework foi criado um mini **modelo de banco de dados que possui relacionamentos 1 x 1, 1 x N e N x N**. Esse modelo é voltado para ecommerce e se baseia principalmente em `Clientes` que moram em determinados `Endereços`, estes clientes por sua vez compram diversos `Produtos` e os produtos possuem `Taxas de Entrega` relacionadas.
+
 Abaixo é apresentada uma **modelagem conceitual** do banco de dados. A modelagem foi feita com o apoio da ferramenta [BrModelo](http://www.sis4.com/brModelo/).
 
 ![image info](./readme-pictures/ecommerce-conceitual.png)
 
-Neste diagrama é apresentada a **modelagem lógica** do banco de dados. A modelagem foi feita com o apoio da ferramenta [SqlDBM](https://sqldbm.com/).
+Neste diagrama é apresentada a **modelagem lógica** do banco de dados. A modelagem foi feita com o apoio da ferramenta [SqlDBM](https://sqldbm.com/). É importante observar que as tabelas foram divididas em dois esquemas: `common` e `sales`.
 
 ![image info](./readme-pictures/ecommerce-logical.jpg)
 
