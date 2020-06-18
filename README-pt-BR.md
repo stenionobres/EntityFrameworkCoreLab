@@ -48,6 +48,7 @@ Abaixo são listados quais requisitos a solução atende:
     Database seed com uso de migrações;
     Entidades que não utilizam chave auto-incremental;
     Avaliar e otimizar performance para operações com grande volume de dados;
+    Log de consultas e auditoria de dados;
 
 ## Modelo do banco de dados
 
