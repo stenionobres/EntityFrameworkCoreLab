@@ -364,6 +364,18 @@ Normalmente o `State` não é alterado diretamente, para isso são utilizados di
 
 ## Principais lições aprendidas
 
+## Referências utilizadas
+
+* [Entity Framework Core Official documentation](https://docs.microsoft.com/en-us/ef/core/index)
+* [Entity Framework Core in Action book](https://livebook.manning.com/book/entity-framework-core-in-action/about-this-book/)
+* [Entity Framework Core Tutorial](https://www.entityframeworktutorial.net/efcore/entity-framework-core.aspx)
+* [Learn Entity Framework Core](https://www.learnentityframeworkcore.com/)
+* [Blog of Entity Framework Core in Action Author - John P Smith](https://www.thereformedprogrammer.net/)
+* [Blog of Engineering Manager for Entity Framework - Arthur Vickers](https://blog.oneunicorn.com/)
+* [Entity Framework Core Specialist - Julie Lerman](http://thedatafarm.com/)
+* [Pluralsight - Entity Framework Core Path](https://www.pluralsight.com/paths/entity-framework-core)
+* [Pluralsight - Entity Framework Core in the Enterprise](https://app.pluralsight.com/library/courses/entity-framework-enterprise-update/table-of-contents)
+
 ## Autores
 
 * **Stenio Nobres** - [Github](https://github.com/stenionobres)
