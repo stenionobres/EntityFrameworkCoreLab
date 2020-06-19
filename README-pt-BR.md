@@ -95,6 +95,13 @@ Pensando nisso, baseado nos testes e experimentos feitos no projeto foi estabele
 
 ### Tabela de campos
 
+Essa tabela representa os tipos de campos C# para os tipos de campos no SqlServer. Os tamanhos dos campos são úteis para estabelecer o tipo e configuração mais adequada para cada situação, de forma a fazer um projeto físico do banco de dados mais adequado. 
+
+Com essa tabela é possível criar models para tabelas e/ou views já existentes no banco de forma a evitar o boilerplate code da estratégia Database First.
+
+A tabela nos faz chegar a duas conclusões importantes: todos os tipos numéricos são gerados como not null no SqlServer e os campos string são gerados como null.
+
+É possível verificar que de forma a tabela foi gerada consultando o código do model [DTODataType](./EntityFrameworkCoreLab.Persistence/DataTransferObjects/Experiments/DTODataType.cs).
 
 | **Tipo C#** |     **DataAnnotation**            |   **Tipo SqlServer**   | **Tamanho SqlServer** |
 |:-----------:|:---------------------------------:|:----------------------:|:---------------------:|
