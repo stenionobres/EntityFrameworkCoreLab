@@ -103,6 +103,8 @@ A tabela nos faz chegar a duas **conclusões importantes**: todos os **tipos num
 
 É possível verificar que de forma a tabela foi gerada consultando o código do model [DTODataType](./EntityFrameworkCoreLab.Persistence/DataTransferObjects/Experiments/DTODataType.cs).
 
+Arquivo de [migração](./EntityFrameworkCoreLab.Persistence/Migrations/Experiments/20200307214738_CreateDTODataType.cs) que gerou a tabela no campo a partir do model.
+
 | **Tipo C#** |     **DataAnnotation**            |   **Tipo SqlServer**   | **Tamanho SqlServer** |
 |:-----------:|:---------------------------------:|:----------------------:|:---------------------:|
 |     int     |          -                        |  int not null          |       4 bytes         |
