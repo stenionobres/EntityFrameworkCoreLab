@@ -308,7 +308,7 @@ Os dados abaixo são apresentados em **Milisegundos por registro**.
 
 ### INSERT
 
-Para consultar o código utilizado verifique a classe [PerformanceInsertLabProcess](https://github.com/stenionobres/EntityFrameworkCoreLab/blob/master/EntityFrameworkCoreLab.Application/Process/PerformanceInsertLabProcess.cs).
+Para consultar o código utilizado verifique a classe [PerformanceInsertLabProcess](./EntityFrameworkCoreLab.Application/Process/PerformanceInsertLabProcess.cs).
 
 | **INSERT BENCHMARK**             |  DbSet  | DbContext |
 | -------------------------------- |:-------:|:---------:|
@@ -324,7 +324,7 @@ Para consultar o código utilizado verifique a classe [PerformanceInsertLabProce
 
 ### UPDATE
 
-Para consultar o código utilizado verifique a classe [PerformanceUpdateLabProcess](https://github.com/stenionobres/EntityFrameworkCoreLab/blob/master/EntityFrameworkCoreLab.Application/Process/PerformanceUpdateLabProcess.cs).
+Para consultar o código utilizado verifique a classe [PerformanceUpdateLabProcess](./EntityFrameworkCoreLab.Application/Process/PerformanceUpdateLabProcess.cs).
 
 | **UPDATE BENCHMARK**             |  DbSet  | DbContext |
 | -------------------------------- |:-------:|:---------:|
@@ -340,7 +340,7 @@ Para consultar o código utilizado verifique a classe [PerformanceUpdateLabProce
 
 ### DELETE
 
-Para consultar o código utilizado verifique a classe [PerformanceDeleteLabProcess](https://github.com/stenionobres/EntityFrameworkCoreLab/blob/master/EntityFrameworkCoreLab.Application/Process/PerformanceDeleteLabProcess.cs).
+Para consultar o código utilizado verifique a classe [PerformanceDeleteLabProcess](./EntityFrameworkCoreLab.Application/Process/PerformanceDeleteLabProcess.cs).
 
 | **DELETE BENCHMARK**             |  DbSet  | DbContext |
 | -------------------------------- |:-------:|:---------:|
