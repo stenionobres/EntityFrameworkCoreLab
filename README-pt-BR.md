@@ -99,7 +99,7 @@ Essa tabela representa os tipos de campos C# para os tipos de campos no SqlServe
 
 Com essa tabela é possível criar models para tabelas e/ou views já existentes no banco de forma a evitar o boilerplate code da estratégia Database First.
 
-A tabela nos faz chegar a duas conclusões importantes: todos os tipos numéricos são gerados como not null no SqlServer e os campos string são gerados como null.
+A tabela nos faz chegar a duas **conclusões importantes**: todos os **tipos numéricos são gerados como not null** no SqlServer e os **campos string são gerados como null**.
 
 É possível verificar que de forma a tabela foi gerada consultando o código do model [DTODataType](./EntityFrameworkCoreLab.Persistence/DataTransferObjects/Experiments/DTODataType.cs).
 
