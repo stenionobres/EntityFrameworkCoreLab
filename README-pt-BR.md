@@ -271,8 +271,28 @@ Normalmente o `State` não é alterado diretamente, para isso são utilizados di
 
 ## Considerações sobre performance
 
+O objetivo dessa sessão é principalmente explorar as diversas possibilidades de manipulação de dados utilizando o EF Core no que diz respeito a performance.
+
+É importante avaliar os dados coletados do ponto de vista de `ordem de grandeza`, ou seja, se a estratégia A precisa de 10ms e a estratégia B precisa de 1ms para fazer a mesma operação, logo a estratégia B é mais performática. Entretanto, não significa que a estratégia B vai executar no mesmo tempo em um hardware diferente.
+
+Pensando nisso, não leve tanto em consideração o tempo gasto por cada estratégia e sim **quantas vezes ele é mais performática** em comparação com as outras.
+
+Foram feitas avaliações para as operações de Insert, Update e Delete. Para os testes foram utilizadas as seguintes formas de execução:
+
+* **Add**: avaliado o método que faz parte tanto do DbSet quanto do DbContext;
+* **AddRange**: avaliado o método que faz parte tanto do DbSet quanto do DbContext;
+* **ExecuteSql**: Uso de SQL puro por meio do DbContext;
+* **Bulk Operation**: Uso de Bulk operations no SQL Server por meio do DbContext e a extensão **EFCore.BulkExtensions**.
+
+As operações que são descritas como `with Recycle` significam que a instância do DbContext foi recriada para cada chamada ao banco de dados.
+
+Para fins de teste foram criados **15.000 endereços** utilizando as extensões **NBuilder** e **Faker.Net**.
+
+Os dados abaixo são apresentados em **Milisegundos por registro**.
 
 ### INSERT
+
+Para consultar o código utilizado verifique a classe [PerformanceInsertLabProcess](https://github.com/stenionobres/EntityFrameworkCoreLab/blob/master/EntityFrameworkCoreLab.Application/Process/PerformanceInsertLabProcess.cs).
 
 | **INSERT BENCHMARK**             |  DbSet  | DbContext |
 | -------------------------------- |:-------:|:---------:|
@@ -286,6 +306,8 @@ Normalmente o `State` não é alterado diretamente, para isso são utilizados di
 
 ### UPDATE
 
+Para consultar o código utilizado verifique a classe [PerformanceUpdateLabProcess](https://github.com/stenionobres/EntityFrameworkCoreLab/blob/master/EntityFrameworkCoreLab.Application/Process/PerformanceUpdateLabProcess.cs).
+
 | **UPDATE BENCHMARK**             |  DbSet  | DbContext |
 | -------------------------------- |:-------:|:---------:|
 | **Add**                          |  9,06*  |  13,27*   |
@@ -298,6 +320,8 @@ Normalmente o `State` não é alterado diretamente, para isso são utilizados di
 
 ### DELETE
 
+Para consultar o código utilizado verifique a classe [PerformanceDeleteLabProcess](https://github.com/stenionobres/EntityFrameworkCoreLab/blob/master/EntityFrameworkCoreLab.Application/Process/PerformanceDeleteLabProcess.cs).
+
 | **DELETE BENCHMARK**             |  DbSet  | DbContext |
 | -------------------------------- |:-------:|:---------:|
 | **Add**                          | 23,90*  |  29,27*   |
@@ -307,6 +331,13 @@ Normalmente o `State` não é alterado diretamente, para isso são utilizados di
 | **ExecuteSql**                   |    -    |   5,43    |
 | **ExecuteSql with Recycle**      |    -    |   5,90    |
 | **Bulk Operation**               |    -    |   0,03    |
+
+### Considerações sobre os dados 
+
+* O código utilizando Bulk Operation é o mais performático. Deve ser utilizado para grandes massas de dados que precisam ser processadas em um curto espaço de tempo; 
+* O fato de recriar ou não a instância do DbContext não provocou alterações no tempo gasto pelas operações;
+* O uso da chamada `SaveChanges` somente deve ser feita após a inclusão de todos dos dados no DbContext, o EF Core possui otimizações para que os dados sejam processados mais rapidamente.
+* Entre todas as estratégias, a que utiliza o `AddRange` mostrou ser a estratégia com o melhor custo benefício. Possui excelente performance utilizando somente recursos nativos do EF Core.
 
 ## Dicas rápidas
 
