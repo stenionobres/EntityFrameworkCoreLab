@@ -91,6 +91,45 @@ Um problema observado com a estratégia ``Database First`` é que ela cria muito
 
 Pensando nisso, baseado nos testes e experimentos feitos no projeto foi estabelecida uma forma de trabalhar com tabelas e views já existentes usando todo o poder da estratégia **Model First**.
 
+>Caso a tabela ou view já exista no banco de dados é possível criar o `Model` com base na estrutura do banco de dados. Após a criação desse model gera-se a migração normalmente, mas sua aplicação no banco de dados não é feita. Para evitar qualquer erro é feito um `Insert` na tabela `__EFMigrationsHistory` com o nome do arquivo de migração e versão do EF Core. Dessa forma o boilerplate code da estratégia Database First é evitado. `Mas, como fazer a tradução do campos do SqlServer para os tipos C#?` **Resposta**: utilizando a tabela de campos abaixo.
+
+### Tabela de campos
+
+
+| **Tipo C#** |     **DataAnnotation**            |   **Tipo SqlServer**   | **Tamanho SqlServer** |
+|:-----------:|:---------------------------------:|:----------------------:|:---------------------:|
+|     int     |          -                        |  int not null          |       4 bytes         |
+|     int?    |          -                        |     int null           |       4 bytes         |
+|    string   |          -                        | nvarchar(max) null     |         2GB*          |
+|    string   |        MaxLength(50)              |  nvarchar(50) null     |      100 bytes*       |
+|    string   |         Required                  | nvarchar(max) not null |         2GB*          |
+|   DateTime  | Column(TypeName = "date")         |   date not null        |       3 bytes         |
+|   DateTime? | Column(TypeName = "date")         |     date null          |       3 bytes         |
+|   DateTime  |           -                       | datetime2(7) not null  |       8 bytes**       |
+|   DateTime? |           -                       |  datetime2(7) null     |       8 bytes**       |
+|   TimeSpan  |           -                       |   time(7) not null     |       5 bytes***      |
+|   TimeSpan? |           -                       |     time(7) null       |       5 bytes***      |
+|    float    |           -                       |   real not null        |       4 bytes         |
+|    float?   |           -                       |      real null         |       4 bytes         |
+|   double    |           -                       |    float not null      |       8 bytes         |
+|   double?   |           -                       |      float null        |       8 bytes         |
+|     long    |           -                       |    bigint not null     |       8 bytes         |
+|     long?   |           -                       |      bigint null       |       8 bytes         |
+|   decimal   |           -                       | decimal(18,2) not null |       9 bytes         |
+|   decimal   | Column(TypeName = "decimal(6,2)") |  decimal(6,2) not null |       5 bytes         |
+|   decimal?  |           -                       |   decimal(18,2) null   |       9 bytes         |
+|    bool     |           -                       |   bit not null         |       2 bytes         |
+|    bool?    |           -                       |       bit null         |       2 bytes         |
+|    char     |           -                       | nvarchar(1) not null   |       2 bytes         |
+|    char?    |           -                       |    nvarchar(1) null    |       2 bytes         |
+|    byte[]   |           -                       |   varbinary(max) null  |         2GB*          |
+
+*Valor máximo que varia de acordo com o conteúdo do campo.
+
+**6 bytes para precisão menor que 3, 7 bytes para precisão entre 3 e 4. Todas as outras precisões precisam de 8 bytes.
+
+***3 bytes para precisão menor que 3, 4 bytes para precisão entre 3 e 4. Todas as outras precisões precisam de 5 bytes.
+
 ## Estratégias no uso de migrações
 
 Nessa seção são descritas as características dos comandos para se fazer uso de migrações e de que forma eles podem ser melhor utilizados.
@@ -160,43 +199,6 @@ Gera o script sql de todos arquivos de migração independente de estar ou não 
     Script-Migration -From <MigrationName> -To <MigrationName>
 
 Gera o script sql de um determinado arquivo de migração independente de estar ou não na tabela ``__EFMigrationsHistory``.
-
-### Tabela de campos
-
-
-| **Tipo C#** |     **DataAnnotation**            |   **Tipo SqlServer**   | **Tamanho SqlServer** |
-|:-----------:|:---------------------------------:|:----------------------:|:---------------------:|
-|     int     |          -                        |  int not null          |       4 bytes         |
-|     int?    |          -                        |     int null           |       4 bytes         |
-|    string   |          -                        | nvarchar(max) null     |         2GB*          |
-|    string   |        MaxLength(50)              |  nvarchar(50) null     |      100 bytes*       |
-|    string   |         Required                  | nvarchar(max) not null |         2GB*          |
-|   DateTime  | Column(TypeName = "date")         |   date not null        |       3 bytes         |
-|   DateTime? | Column(TypeName = "date")         |     date null          |       3 bytes         |
-|   DateTime  |           -                       | datetime2(7) not null  |       8 bytes**       |
-|   DateTime? |           -                       |  datetime2(7) null     |       8 bytes**       |
-|   TimeSpan  |           -                       |   time(7) not null     |       5 bytes***      |
-|   TimeSpan? |           -                       |     time(7) null       |       5 bytes***      |
-|    float    |           -                       |   real not null        |       4 bytes         |
-|    float?   |           -                       |      real null         |       4 bytes         |
-|   double    |           -                       |    float not null      |       8 bytes         |
-|   double?   |           -                       |      float null        |       8 bytes         |
-|     long    |           -                       |    bigint not null     |       8 bytes         |
-|     long?   |           -                       |      bigint null       |       8 bytes         |
-|   decimal   |           -                       | decimal(18,2) not null |       9 bytes         |
-|   decimal   | Column(TypeName = "decimal(6,2)") |  decimal(6,2) not null |       5 bytes         |
-|   decimal?  |           -                       |   decimal(18,2) null   |       9 bytes         |
-|    bool     |           -                       |   bit not null         |       2 bytes         |
-|    bool?    |           -                       |       bit null         |       2 bytes         |
-|    char     |           -                       | nvarchar(1) not null   |       2 bytes         |
-|    char?    |           -                       |    nvarchar(1) null    |       2 bytes         |
-|    byte[]   |           -                       |   varbinary(max) null  |         2GB*          |
-
-*Valor máximo que varia de acordo com o conteúdo do campo.
-
-**6 bytes para precisão menor que 3, 7 bytes para precisão entre 3 e 4. Todas as outras precisões precisam de 8 bytes.
-
-***3 bytes para precisão menor que 3, 4 bytes para precisão entre 3 e 4. Todas as outras precisões precisam de 5 bytes.
 
 ## Estratégias nos relacionamentos
 
