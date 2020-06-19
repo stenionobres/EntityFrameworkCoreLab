@@ -304,6 +304,8 @@ Para consultar o código utilizado verifique a classe [PerformanceInsertLabProce
 | **ExecuteSql with Recycle**      |    -    |   7,67    |
 | **Bulk Operation**               |    -    |   0,02    |
 
+*Com o uso da mesma instância do DbContext e chamadas sucessivas ao `SaveChanges` o tempo gasto por registro aumenta com o aumento de operações.
+
 ### UPDATE
 
 Para consultar o código utilizado verifique a classe [PerformanceUpdateLabProcess](https://github.com/stenionobres/EntityFrameworkCoreLab/blob/master/EntityFrameworkCoreLab.Application/Process/PerformanceUpdateLabProcess.cs).
@@ -318,6 +320,8 @@ Para consultar o código utilizado verifique a classe [PerformanceUpdateLabProce
 | **ExecuteSql with Recycle**      |    -    |   5,57    |
 | **Bulk Operation**               |    -    |   0,03    |
 
+*Com o uso da mesma instância do DbContext e chamadas sucessivas ao `SaveChanges` o tempo gasto por registro aumenta com o aumento de operações.
+
 ### DELETE
 
 Para consultar o código utilizado verifique a classe [PerformanceDeleteLabProcess](https://github.com/stenionobres/EntityFrameworkCoreLab/blob/master/EntityFrameworkCoreLab.Application/Process/PerformanceDeleteLabProcess.cs).
@@ -331,6 +335,8 @@ Para consultar o código utilizado verifique a classe [PerformanceDeleteLabProce
 | **ExecuteSql**                   |    -    |   5,43    |
 | **ExecuteSql with Recycle**      |    -    |   5,90    |
 | **Bulk Operation**               |    -    |   0,03    |
+
+*Com o uso da mesma instância do DbContext e chamadas sucessivas ao `SaveChanges` o tempo gasto por registro aumenta com o aumento de operações.
 
 ### Considerações sobre os dados 
 
