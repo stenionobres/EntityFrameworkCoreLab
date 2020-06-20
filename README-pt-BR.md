@@ -277,11 +277,13 @@ Uma breve explicação sobre o EF Core Entity State tem como objetivo ajudar no 
 
 Quando uma entidade é lida ela é `trackeada` por padrão pelo EF Core, isto é conhecido como `tracked entity`.
 
-    Tracked entities: são instâncias de entidades que foram lidas da base de dados usando uma consulta que não inclui o método AsNoTracking. Alternativamente depois que uma entidade é usada em um método do EF Core (Add, Update ou Delete) a entidade é trackeada.
+>Tracked entities: são instâncias de entidades que foram lidas da base de dados usando uma consulta que não inclui o método **AsNoTracking**. Alternativamente depois que uma entidade é usada em um método do EF Core (Add, Update ou Delete) a entidade é trackeada.
 
 Todas as entidades trackeadas possuem uma propriedade chamada `State`. O State de uma entidade pode ser obtido usando o seguinte comando:
 
     context.Entry(someEntityInstance).State
+
+Onde `context` é a instância da classe DbContext utilizada.
 
 Abaixo é apresentada uma lista dos possíveis States e o que acontece quando o método `SaveChanges` é executado:
 
