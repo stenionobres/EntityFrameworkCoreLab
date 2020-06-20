@@ -213,6 +213,10 @@ Gera o script sql de um determinado arquivo de migração independente de estar 
 
 Gera o script sql de todas as migrações existentes **com o benefício** de que o script sql gerado **verifica se as alterações de cada migração já foram aplicadas ao banco de dados**. É altamente recomendado utilizar essa estratégia para **aplicar mudanças em banco de dados de produção** com o objetivo de evitar possíveis erros e inconsistências que venham ocorrer durante a aplicação de migrações.
 
+### Database Seeding
+
+No arquivo de migração [DatabaseSeeding](./EntityFrameworkCoreLab.Persistence/Migrations/Amazon/20200404115959_DatabaseSeeding.cs) é apresentado um exemplo de carga no banco de dados por meio do uso de migração. Tanto as operações de `Insert, Update e Delete` são apresentadas.
+
 ## Estratégias nos relacionamentos
 
 Nessa seção é discutido as formas que os relacionamentos entre tabelas podem ser feitos utilizando o EF Core. Para isso podem ser utilizadas as estratégias: ``By Convention, Data annotation e Fluent API``.
