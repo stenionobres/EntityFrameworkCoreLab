@@ -89,21 +89,21 @@ Baseado nisso é importante que as três estratégias de configuração do model
 
 Um problema observado com a estratégia ``Database First`` é que ela cria muito código desnecessário ou ``boilerplate code``, deixando o modelo de dados criado na aplicação mais complexo e muitas vezes difícil de se entender.
 
-Pensando nisso, baseado nos testes e experimentos feitos no projeto foi estabelecida uma forma de trabalhar com tabelas e views já existentes usando todo o poder da estratégia **Model First**.
+Pensando nisso, baseado nos testes e experimentos feitos no projeto foi estabelecida uma forma de trabalhar com tabelas já existentes usando todo o poder da estratégia **Model First**.
 
->Caso a tabela ou view já exista no banco de dados é possível criar o `Model` com base na estrutura do banco de dados. Após a criação desse model gera-se a migração normalmente, mas sua aplicação no banco de dados não é feita. Para evitar qualquer erro é feito um `Insert` na tabela `__EFMigrationsHistory` com o nome do arquivo de migração e versão do EF Core. Dessa forma o boilerplate code da estratégia Database First é evitado. `Mas, como fazer a tradução do campos do SqlServer para os tipos C#?` **Resposta**: utilizando a tabela de campos abaixo.
+>Caso a tabela já exista no banco de dados é possível criar o `Model` com base na estrutura do banco de dados. Após a criação desse model gera-se a migração normalmente, mas sua aplicação no banco de dados não é feita. Para evitar qualquer erro é feito um `Insert` na tabela `__EFMigrationsHistory` com o nome do arquivo de migração e versão do EF Core. Dessa forma o boilerplate code da estratégia Database First é evitado. `Mas, como fazer a tradução do campos do SqlServer para os tipos C#?` **Resposta**: utilizando a tabela de campos abaixo.
 
 ### Tabela de campos
 
 Essa tabela representa os tipos de campos C# para os tipos de campos no SqlServer. Os tamanhos dos campos são úteis para estabelecer o tipo e configuração mais adequada para cada situação, de forma a fazer um projeto físico do banco de dados mais adequado. 
 
-Com essa tabela é possível criar models para tabelas e/ou views já existentes no banco de forma a evitar o boilerplate code da estratégia Database First.
+Com essa tabela é possível criar models para tabelas já existentes no banco de forma a evitar o boilerplate code da estratégia Database First.
 
 A tabela nos faz chegar a duas **conclusões importantes**: todos os **tipos numéricos são gerados como not null** no SqlServer e os **campos string são gerados como null**.
 
-É possível verificar que de forma a tabela foi gerada consultando o código do model [DTODataType](./EntityFrameworkCoreLab.Persistence/DataTransferObjects/Experiments/DTODataType.cs).
+É possível verificar a forma que a tabela foi gerada consultando o código do model [DTODataType](./EntityFrameworkCoreLab.Persistence/DataTransferObjects/Experiments/DTODataType.cs).
 
-Arquivo de [migração](./EntityFrameworkCoreLab.Persistence/Migrations/Experiments/20200307214738_CreateDTODataType.cs) que gerou a tabela no campo a partir do model.
+Arquivo de [migração](./EntityFrameworkCoreLab.Persistence/Migrations/Experiments/20200307214738_CreateDTODataType.cs) que gerou a tabela no banco a partir do model.
 
 | **Tipo C#** |     **DataAnnotation**            |   **Tipo SqlServer**   | **Tamanho SqlServer** |
 |:-----------:|:---------------------------------:|:----------------------:|:---------------------:|
