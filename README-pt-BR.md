@@ -381,6 +381,39 @@ A classe [TransactionLabProcess](./EntityFrameworkCoreLab.Application/Process/Tr
 
 Para ver um exemplo de uso de transação de forma `explícita` o método `InsertAddressWithAddWithTransactionSaveChangesBefore` da classe [EbayTransactionLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Transaction/EbayTransactionLabMapper.cs) deve ser usado como exemplo.
 
+## Views
+
+É possível utilizar views no EF Core seguindo os seguinte passos:
+
+1 - Cria-se o script sql da view;
+
+2 - Cria-se o **model** que irá representar a view na aplicação utilizando essa [Tabela](#tabela-de-campos)*;
+
+3 - Aplica-se o script de criação da view diretamente no banco de dados ou por meio de migração;
+
+4 - Realiza a inclusão de uma entrada para o model no DbContext e da instrução abaixo no método `OnModelCreating` do DbContext;
+
+    modelBuilder.Entity<TEntity>().ToView("ViewName", "schemaName");
+
+*A utilização da tabela é opcional, entretanto seu objetivo é aproximar o máximo possível os tipos e anotações do model com os tipos estabelecidos no banco de dados.
+
+As classes [SalesInsightsProcess](./EntityFrameworkCoreLab.Application/Process/SalesInsightsProcess.cs), [SalesInsights](./EntityFrameworkCoreLab.Persistence/DataTransferObjects/Amazon/SalesInsights.cs) e suas dependências apresentam um exemplo de uso de views. Neste exemplo a view foi criada diretamente no banco de dados sem o uso de migração.
+
+Abaixo é apresentado um exemplo de migração que realiza a criação de uma view:
+
+    public partial class CreateView : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql("create view SomeView as select * from SomeTable");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql("drop view SomeView");
+        }
+    }
+
 ## Log de consultas e comandos
 
 É possível utilizar a extensão [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.2) para captura de logs das operações aplicadas na base de dados.
