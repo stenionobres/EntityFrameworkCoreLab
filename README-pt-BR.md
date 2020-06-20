@@ -209,6 +209,10 @@ Gera o script sql de todos arquivos de migração independente de estar ou não 
 
 Gera o script sql de um determinado arquivo de migração independente de estar ou não na tabela ``__EFMigrationsHistory``.
 
+    Script-Migration -Idempotent -Context <ClassName of context>
+
+Gera o script sql de todas as migrações existentes **com o benefício** de que o script sql gerado **verifica se as alterações de cada migração já foram aplicadas ao banco de dados**. É altamente recomendado utilizar essa estratégia para **aplicar mudanças em banco de dados de produção** com o objetivo de evitar possíveis erros e inconsistências que venham ocorrer durante a aplicação de migrações.
+
 ## Estratégias nos relacionamentos
 
 Nessa seção é discutido as formas que os relacionamentos entre tabelas podem ser feitos utilizando o EF Core. Para isso podem ser utilizadas as estratégias: ``By Convention, Data annotation e Fluent API``.
