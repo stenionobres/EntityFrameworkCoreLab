@@ -295,6 +295,10 @@ Abaixo é apresentada uma lista dos possíveis States e o que acontece quando o 
 
 Normalmente o `State` não é alterado diretamente, para isso são utilizados diversos comandos do EF Core que garantem que tudo vai ser alterado corretamente.
 
+As classes [AmazonCustomerInsertLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Amazon/AmazonCustomerInsertLabMapper.cs), [AmazonCustomerUpdateLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Amazon/AmazonCustomerUpdateLabMapper.cs) e [AmazonCustomerDeleteLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Amazon/AmazonCustomerDeleteLabMapper.cs) apresentam exemplos de como os diversos estados da propriedade `State` influenciam nas operações enviadas a base de dados pelo DbContext. Para melhor interpretação é necessário atenção ao comentários inseridos no código.
+
+>É altamente recomendável que a propriedade **State** não seja alterada diretamente via código em aplicações reais.
+
 ## Exemplos de uso de insert/update
 
 A classe [DisconnectedOperationProcess](./EntityFrameworkCoreLab.Application/Process/DisconnectedOperationProcess.cs) e suas dependências apresentam exemplos de como se realizar inserts e updates em entidades com relacionamentos 1 x 1, 1 x N e N x N.
