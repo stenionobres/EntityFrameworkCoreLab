@@ -371,6 +371,16 @@ Para consultar o código utilizado verifique a classe [PerformanceDeleteLabProce
 * O uso da chamada `SaveChanges` somente deve ser feita após a inclusão de todos dos dados no DbContext, o EF Core possui otimizações para que os dados sejam processados mais rapidamente.
 * Entre todas as estratégias, a que utiliza o `AddRange` mostrou ser a estratégia com o melhor custo benefício. Possui excelente performance utilizando somente recursos nativos do EF Core.
 
+## Transações
+
+Por padrão a classe DbContext do EF Core executa as operações no banco de dados dentro de uma transação. Com base nisso, é possível fazer diversas chamadas aos métodos `Add/AddRange, Update/UpdateRange e Remove/RemoveRange` de uma mesma instância do DbContext que ao se fazer a chamada ao `SaveChanges` as operações vão ser executadas dentro de uma transação. Com base nisso, **na maioria dos cenários não é necessário utilizar transações de forma explícita no EF Core**.
+
+A classe [TransactionLabProcess](./EntityFrameworkCoreLab.Application/Process/TransactionLabProcess.cs) e [EbayTransactionLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Transaction/EbayTransactionLabMapper.cs) apresentam diversos exemplos que avaliam o comportamento de transações no DbContext. 
+
+É importante dar atenção a alguns `comentários` na classe [TransactionLabProcess](./EntityFrameworkCoreLab.Application/Process/TransactionLabProcess.cs) que explicam o comportamento de cada cenário avaliado. 
+
+Para ver um exemplo de uso de transação de forma `explícita` o método `InsertAddressWithAddWithTransactionSaveChangesBefore` da classe [EbayTransactionLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Transaction/EbayTransactionLabMapper.cs) deve ser usado como exemplo.
+
 ## Log de consultas e comandos
 
 É possível utilizar a extensão [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.2) para captura de logs das operações aplicadas na base de dados.
