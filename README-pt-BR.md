@@ -295,7 +295,11 @@ Abaixo é apresentada uma lista dos possíveis States e o que acontece quando o 
 
 Normalmente o `State` não é alterado diretamente, para isso são utilizados diversos comandos do EF Core que garantem que tudo vai ser alterado corretamente.
 
+## Exemplos de uso de insert/update
 
+A classe [DisconnectedOperationProcess](./EntityFrameworkCoreLab.Application/Process/DisconnectedOperationProcess.cs) e suas dependências apresentam exemplos de como se realizar inserts e updates em entidades com relacionamentos 1 x 1, 1 x N e N x N.
+
+As operações são realizadas de forma `desconectada` ou seja, as entidades ainda não foram trackeadas pelo DbContext. A classe [FullPopulateDatabaseDataProcess](./EntityFrameworkCoreLab.Application/Process/FullPopulateDatabaseDataProcess.cs) também apresenta um bom exemplo de como inserir dados em entidades.
 
 ## Considerações sobre performance
 
