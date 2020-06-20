@@ -363,6 +363,18 @@ Para consultar o código utilizado verifique a classe [PerformanceDeleteLabProce
 * O uso da chamada `SaveChanges` somente deve ser feita após a inclusão de todos dos dados no DbContext, o EF Core possui otimizações para que os dados sejam processados mais rapidamente.
 * Entre todas as estratégias, a que utiliza o `AddRange` mostrou ser a estratégia com o melhor custo benefício. Possui excelente performance utilizando somente recursos nativos do EF Core.
 
+## Log de consultas e comandos
+
+É possível utilizar a extensão [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.2) para captura de logs das operações aplicadas na base de dados.
+
+Este log pode ser apresentado tanto no console, ambiente de desenvolvimento, quanto registrado em um arquivo para conferência posterior. A principal utilidade desses logs é identificar algum erro ou eventual consulta que tenha problemas de performance. 
+
+Na classe [AmazonCodeFirstDbContext](./EntityFrameworkCoreLab.Persistence/EntityFrameworkContexts/AmazonCodeFirstDbContext.cs) foi feita uma implementação para apresentação do log em console por meio do uso da propriedade `LoggerFactoryToConsole`. 
+
+A implementação do log em arquivo foi feita por meio da propriedade `LoggerFactoryToFile` utilizando classes que extendem algumas interfaces do pacote de logs da Microsoft. Essas classes estão na namespace [Log](./EntityFrameworkCoreLab.Persistence/Log/).
+
+Para utilizar o log em arquivo basta usar a chamada `optionsBuilder.UseLoggerFactory(LoggerFactoryToFile)` no método `OnConfiguring` do DbContext.
+
 ## Dicas rápidas
 
 ### Índices
