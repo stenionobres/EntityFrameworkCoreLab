@@ -375,6 +375,12 @@ A implementação do log em arquivo foi feita por meio da propriedade `LoggerFac
 
 Para utilizar o log em arquivo basta usar a chamada `optionsBuilder.UseLoggerFactory(LoggerFactoryToFile)` no método `OnConfiguring` do DbContext.
 
+## Auditoria de dados
+
+Em algumas situações se faz necessário registrar a data de criação, atualização e as vezes de exclusão dos registros manipulados no banco de dados, assim como o usuário que fez essas operações.
+
+Com o objetivo de evitar duplicidades de código foi feita uma sobreescrita do método `SaveChanges` do DbContext [EbayDatabaseFirstDbContext](./EntityFrameworkCoreLab.Persistence/EntityFrameworkContexts/EbayDatabaseFirstDbContext.cs). Essa sobreescrita aplica os dados de auditoria no banco de dados para entidades que são do tipo [Auditable](./EntityFrameworkCoreLab.Persistence/Auditing/Auditable.cs). Um exemplo de entidade que utiliza a auditoria é a entidade [Customer](./EntityFrameworkCoreLab.Persistence/DataTransferObjects/Ebay/Customer.cs).
+
 ## Dicas rápidas
 
 ### Índices
