@@ -486,6 +486,12 @@ Com o objetivo de evitar duplicidades de código foi feita uma sobreescrita do m
 
     modelBuilder.Entity<MyEntity>().HasKey(p => new { p.MyProp01, p.MyProp02 });
 
+### Organizar Fluent API no DbContext
+
+Às vezes, com o passar do tempo, o uso da Fluent API no método `OnModelCreating` do DbContext pode deixar a classe com excesso de linhas, dificultando um pouco a manutenção e aumentando a complexidade.
+
+O EF Core possui um recurso para organizar melhor esse código. Trata-se do uso da interface `IEntityTypeConfiguration`. Um exemplo desse recurso é apresentado na classe [CustomerTypeConfiguration](./EntityFrameworkCoreLab.Persistence/EntityTypeConfigurations/Ebay/CustomerTypeConfiguration.cs), em que foram definidas algumas configurações da entidade. Essas configurações são aplicadas no [EbayDatabaseFirstDbContext](./EntityFrameworkCoreLab.Persistence/EntityFrameworkContexts/EbayDatabaseFirstDbContext.cs).
+
 ## Principais lições aprendidas
 
 ## Referências utilizadas
