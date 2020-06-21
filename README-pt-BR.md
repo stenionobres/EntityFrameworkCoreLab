@@ -501,6 +501,29 @@ Com o objetivo de evitar duplicidades de código foi feita uma sobreescrita do m
 
     modelBuilder.Entity<MyEntity>().HasKey(p => new { p.MyProp01, p.MyProp02 });
 
+### Uso de SQL Puro
+
+É possível utilizar sql puro com o Entity Framework Core caso haja necessidade. Basta para isso utilizar a seguinte chamada:
+
+    context.Database.ExecuteSqlInterpolated(stringSqlWithCommand)
+
+Onde `context` é a instância do DbContext utilizado e `stringSqlWithCommand` é o comando sql desejado. A chamada executa o comando sql na base de dados e retorna o número de linhas afetadas.
+
+É importante reforçar a importância de se evitar falhas no que se refere a `SQL Injection`. Para isso é importante utilizar `interpolação de strings` na construção do comando sql. O EF Core já traduz esse comando usando parâmetros que evitam erros de SQL Injection.
+
+Exemplo de comando sql que utiliza interpolação de strings:
+
+    context.Database.ExecuteSqlInterpolated($"delete from common.Address where Id={address.Id}")
+
+Caso deseje fazer a construção do comando em um método em separado o tipo de retorno `FormattableString` deve ser utilizado.
+
+      private FormattableString GetDeleteAddressSql(Address address)
+      {
+        return $"delete from common.Address where Id={address.Id}";
+      }
+
+**É importante reforçar de que o uso de SQL Puro com Entity Framework Core não é recomendável, sendo aconselhável somente em casos excepcionais.**
+
 ### Organizar Fluent API no DbContext
 
 Às vezes, com o passar do tempo, o uso da Fluent API no método `OnModelCreating` do DbContext pode deixar a classe com excesso de linhas, dificultando um pouco a manutenção e aumentando a complexidade.
