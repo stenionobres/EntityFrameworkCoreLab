@@ -24,10 +24,6 @@ Após os estudos de caso, as principais conclusões foram documentadas neste arq
 
 >[NBuilder 6.1.0](https://www.nuget.org/packages/NBuilder/6.1.0)
 
-## Como iniciar?
-
-Instruções para iniciar e executar a aplicação em sua máquina local
-
 ## Pré-requisitos
 
 O que precisa ser instalado na máquina para extender e depurar o projeto:
@@ -35,6 +31,15 @@ O que precisa ser instalado na máquina para extender e depurar o projeto:
     Visual Studio Community 2019;
     Net Core SDK 3.1;
     SQL Server
+
+## Como iniciar?
+
+* Instalar e/ou configurar todos os pré-requisitos citados acima;
+* Clonar o repositório na máquina local;
+* Criar os três bancos de dados usados na aplicação: AmazonCodeFirst, EbayDatabaseFirst e Experiments;
+* Baixar as dependências Nuget para a solução no Visual Studio;
+* Rodar as migrações para o banco de dados desejado com o comando: Update-Database -Context [ClassName of context];
+* Executar a chamada de alguma classe da namespace [Process](./EntityFrameworkCoreLab.Application/Process) no arquivo Program.cs
 
 ## Requisitos do projeto
 
