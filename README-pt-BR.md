@@ -388,7 +388,7 @@ Para consultar o código utilizado verifique a classe [PerformanceDeleteLabProce
 
 ## Considerações sobre selects
 
-O Entity Framework Core possui 4 estratégias para consulta de informações na base de dados, são elas: **Eager loading, Explicit loading, Select loading e Lazy loading**. Por padrão ao consultar uma entidade as classes relacionadas ou dependências não são carregadas nas consultas. Para carregar as classes relacionadas é preciso apontar para o EF Core explicitamente quais dependências devem ser selecionadas. Abaixo é apresentado um breve resumo de cada estratégia para consulta de dados no EF Core.
+O Entity Framework Core possui **4 estratégias para consulta de informações** na base de dados, são elas: **Eager loading, Explicit loading, Select loading e Lazy loading**. Por padrão ao consultar uma entidade as classes relacionadas ou dependências não são carregadas nas consultas. Para carregar as classes relacionadas é preciso apontar para o EF Core explicitamente quais dependências devem ser selecionadas. Abaixo é apresentado um breve resumo de cada estratégia para consulta de dados no EF Core.
 
 ### Eager loading
 
@@ -415,7 +415,9 @@ A desvantagem no seu uso é que o desenvolvedor precisa ter atenção e cuidado 
 
     var result = context.Books.Select(p => new {p.Title, p.Price, NumReviews = p.Reviews.Count}).First(); 
 
+### Qual estratégia utilizar?
 
+Após a leitura do capítulo 2 do livro **Entity Framework Core in Action** e o desenvolvimento de algumas consultas no [modelo de dados](#modelo-do-banco-de-dados) definido para esse estudo de caso, pode-se afirmar que a estratégia [Select loading](#select-loading) se mostra mais eficaz para a construção de queries usando o EF Core. Isso se deve ao fato de que com essa estratégia se tem boa flexibilidade e performance. No decorrer dessa documentação serão apresentados exemplos de construção de queries usando essa estratégia.
 
 ## Transações
 
