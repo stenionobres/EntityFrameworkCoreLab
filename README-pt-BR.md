@@ -386,6 +386,37 @@ Para consultar o código utilizado verifique a classe [PerformanceDeleteLabProce
 * O uso da chamada `SaveChanges` somente deve ser feita após a inclusão de todos dos dados no DbContext, o EF Core possui otimizações para que os dados sejam processados mais rapidamente.
 * Entre todas as estratégias, a que utiliza o `AddRange` mostrou ser a estratégia com o melhor custo benefício. Possui excelente performance utilizando somente recursos nativos do EF Core.
 
+## Considerações sobre selects
+
+O Entity Framework Core possui 4 estratégias para consulta de informações na base de dados, são elas: **Eager loading, Explicit loading, Select loading e Lazy loading**. Por padrão ao consultar uma entidade as classes relacionadas ou dependências não são carregadas nas consultas. Para carregar as classes relacionadas é preciso apontar para o EF Core explicitamente quais dependências devem ser selecionadas. Abaixo é apresentado um breve resumo de cada estratégia para consulta de dados no EF Core.
+
+### Eager loading
+
+Carrega a entidade relacionada na mesma consulta em que carrega a classe principal. O relacionamento na consulta SQL geralmente é expresso por meio do comando `LEFT JOIN`. Essa estratégia utiliza dois fluent métodos: `Include e ThenInclude`. Em alguns cenários o EF Core pode traduzir os comandos em mais de uma consulta no banco de dados. Exemplo:
+
+    var book = context.Books.Include(r => r.AuthorsLink).ThenInclude(r => r.Author);
+
+### Explicit loading
+
+Essa estratégia se caracteriza pela busca das entidades relacionadas após se ter carregado a entidade principal. É útil quando não se sabe ao certo quais relacionamentos se deseja carregar previamente. A desvantagem é que são feitas diversas chamadas ao banco de dados. Exemplo:
+
+    var book = context.Books.First();          
+    context.Entry(book).Collection(c => c.AuthorsLink).Load(); 
+
+### Lazy loading
+
+Carrega os dados e relacionamentos somente quando eles são realmente necessários. Na prática já se mostrou uma estratégia com sérias desvantagens se for mal utilizada. Para usá-la é necessário um conjunto de [configurações](https://docs.microsoft.com/en-US/ef/core/querying/related-data) que devem ser feitas na aplicação. Diversos autores não recomendam seu uso.
+
+### Select loading
+
+Técnica batizada com esse nome por **John P Smith** em seu livro [Entity Framework Core in Action](https://livebook.manning.com/book/entity-framework-core-in-action/about-this-book/), consiste na utilização de LINQ para construção das consultas. Sua grande vantagem é a flexibilidade na obtenção dos dados. 
+
+A desvantagem no seu uso é que o desenvolvedor precisa ter atenção e cuidado na construção da query para que o código não fique muito complexo e para que o EF Core consiga traduzir todos os comandos em SQL com boa performance. Isso pode ser acompanhado através do log de consultas gerado pelo EF Core. Exemplo:
+
+    var result = context.Books.Select(p => new {p.Title, p.Price, NumReviews = p.Reviews.Count}).First(); 
+
+
+
 ## Transações
 
 Por padrão a classe DbContext do EF Core executa as operações no banco de dados dentro de uma transação. Com base nisso, é possível fazer diversas chamadas aos métodos `Add/AddRange, Update/UpdateRange e Remove/RemoveRange` de uma mesma instância do DbContext que ao se fazer a chamada ao `SaveChanges` as operações vão ser executadas dentro de uma transação. Com base nisso, **na maioria dos cenários não é necessário utilizar transações de forma explícita no EF Core**.
