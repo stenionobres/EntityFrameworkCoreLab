@@ -419,6 +419,52 @@ A desvantagem no seu uso é que o desenvolvedor precisa ter atenção e cuidado 
 
 Após a leitura do capítulo 2 do livro **Entity Framework Core in Action** e o desenvolvimento de algumas consultas no [modelo de dados](#modelo-do-banco-de-dados) definido para esse estudo de caso, pode-se afirmar que a estratégia [Select loading](#select-loading) se mostra mais eficaz para a construção de queries usando o EF Core. Isso se deve ao fato de que com essa estratégia se tem boa flexibilidade e performance. No decorrer dessa documentação serão apresentados exemplos de construção de queries usando essa estratégia.
 
+### SQL puro em consultas
+
+É possível executar consultas com SQL puro utilizando o EF Core. Para isso o método `FromSqlInterpolated` deve ser utilizado. Este método com o uso de interpolação de strings já adiciona parâmetros a consulta com o objetivo de evitar falhas de SQL Injection. Exemplo:
+
+    var searchTerm = ".NET";
+
+    var blogs = context.Blogs.FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                       .AsNoTracking()
+                       .ToList();
+
+O uso de SQL puro com essa estratégia possui as seguintes limitações:
+
+* A consulta SQL deve retornar dados para todas as propriedades da entidade;
+* Os nomes das colunas no conjunto de resultados devem corresponder aos nomes das colunas para as quais as propriedades são mapeadas;
+* Somente é possível relacionar outras tabelas por meio do uso do método `Include`;
+
+Outra alternativa para uso de SQL puro é a utilização do método `GetDbConnection` para obtenção da conexão com o banco de dados e uso da api oferecida pelo ADO.NET. Exemplo:
+
+    var conn = context.Database.GetDbConnection();
+
+    try
+    {
+        conn.Open();
+        using (var command = conn.CreateCommand())
+        {
+            command.CommandText = "select * from dbo.Books
+            
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+
+    }
+    finally
+    {
+        conn.Close();
+    }
+
+
 ## Transações
 
 Por padrão a classe DbContext do EF Core executa as operações no banco de dados dentro de uma transação. Com base nisso, é possível fazer diversas chamadas aos métodos `Add/AddRange, Update/UpdateRange e Remove/RemoveRange` de uma mesma instância do DbContext que ao se fazer a chamada ao `SaveChanges` as operações vão ser executadas dentro de uma transação. Com base nisso, **na maioria dos cenários não é necessário utilizar transações de forma explícita no EF Core**.
