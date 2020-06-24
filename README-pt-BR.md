@@ -444,8 +444,8 @@ Outra alternativa para uso de SQL puro é a utilização do método `GetDbConnec
         conn.Open();
         using (var command = conn.CreateCommand())
         {
-            command.CommandText = "select * from dbo.Books
-            
+            command.CommandText = "select * from dbo.Books";
+
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
