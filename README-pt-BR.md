@@ -638,6 +638,28 @@ O EF Core possui um recurso para organizar melhor esse código. Trata-se do uso 
 
 ## Principais lições aprendidas
 
+* O Entity Framework Core 3.1 melhorou consideravelmente aspectos de facilidade de uso, robustez e performance em relação ao Entity Framework 6 e versões anteriores;
+
+* Apesar do EF Core facilitar muita coisa, aspectos como projeto de banco de dados e performance do SQL gerado não devem ser negligenciados. Se o seu projeto de banco de dados e consultas feitas são ruins o EF Core não vai fazer milagre;
+
+* O modelo de dados deve ser desacoplado de seu modelo de domínio da aplicação. Quase que 100% dos exemplos na internet ou materiais de referência pregam a ideia de utilizar o mesmo modelo. Isso é um grande erro arquitetural que na maioria das vezes vai gerar problemas na sua modelagem. Pensando nisso, utilize models que tem a única responsabilidade de gerar seu modelo de dados e carregar dados das consultas. Para objetos de negócio utilize outras classes, apesar do trabalho um pouco maior, isso deixa a aplicação com menos bugs e code smells no médio/longo prazo;
+
+* Programadores com pouca experiência em projeto de banco de dados, otimização de querys e no uso de ORMs apontavam o EF Core como vilão de performance. Verifique primeiramente esses itens antes de apontar o ORM como vilão da performance;
+
+* Para operações que envolvem a inserção/atualização/deleção de diversos registros, procure ir acumulando as N operações no DbContext e fazer uma única chamada ao SaveChanges. Além de já estarem em um contexto de transação o EF Core já possui otimizações para trabalho com registros em lote. O uso dos métodos que trabalham com coleções AddRange/UpdateRange/RemoveRange são bem mais eficientes do ponto de vista de performance;
+
+* Para operações que precisem fazer parte de uma única transação, basta realizar a chamada ao SaveChanges após as N chamadas de métodos do DbContext. Todas as operações já vão estar transacionadas;
+
+* O uso de LINQ se mostrou a ferramenta mais expressiva e flexível para construção de consultas. Entretanto, é preciso ter atenção no log de consultas gerado a fim de verificar se o SQL gerado precisa ser otimizado para cada situação;
+
+* Evite o uso de SQL puro com EF Core, o ORM tem justamente o objetivo de abstrair o SQL puro. Se perceber que a necessidade do SQL puro vem se tornando frequente procure melhorar seus conhecimentos no uso do framework ou migrar para uma solução usando [ADO.NET](https://docs.microsoft.com/en-US/dotnet/framework/data/adonet/ado-net-code-examples) ou [Dapper](https://github.com/StackExchange/Dapper);
+
+* Todo esse estudo de caso foi feito utilizando o SQL Server. Algumas implementações e/ou resultados podem mudar para outros SGBDs. Se o seu SGBD não for o SqlServer faça testes com o SGBD que você utiliza para ter resultados mais confiáveis;
+
+* O uso da estratégia Model First se mostrou mais confiável e gerou menos boilerplate code. O projeto fica mais limpo e intuitivo. Apesar de tudo, se estiver utilizando o Model First verifique as migrações geradas e como está ficando o projeto físico de banco de dados. Sempre surgem ajustes de acordo com a necessidade de cada negócio;
+
+* Para criação do modelo de dados e relacionamentos priorize o uso da estratégia ByConvention e depois DataAnnotation, deixe a estratégia FluentAPI para casos excepcionais. O projeto fica mais intuitivo e com menos código gerado para manutenção;
+
 ## Referências utilizadas
 
 * [Entity Framework Core Official documentation](https://docs.microsoft.com/en-us/ef/core/index)
