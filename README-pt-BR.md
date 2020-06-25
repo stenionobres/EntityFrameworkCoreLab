@@ -464,6 +464,33 @@ Outra alternativa para uso de SQL puro é a utilização do método `GetDbConnec
         conn.Close();
     }
 
+### Exemplos de consultas
+
+Foi apresentado nas sessões anteriores as diversas estratégias para se realizar consultas no Entity Framework Core. Uma delas é a `Select loading` que usa o LINQ para trazer as informações da base de dados. 
+
+Programadores iniciantes no EF Core ou em LINQ podem ter dificuldades em desenvolver tais consultas, visto que a sintaxe é um pouco diferente do SQL padrão que estão acostumados. Pensando nisso, essa sessão traz diversos exemplos de consultas, feitas com LINQ, que geram na base de dados o SQL esperado e otimizado para cada tipo de ação.
+
+Para ver os exemplos de consultas basta acessar a classe [LinqQueryExampleProcess](./EntityFrameworkCoreLab.Application/Process/LinqQueryExampleProcess.cs). Abaixo são listadas quais operações SQL os exemplos utilizam:
+
+* INNER JOIN;
+* LEFT JOIN;
+* Filtro WHERE;
+* Operadores relacionais >, =, etc;
+* Operadores lógicos AND, OR, etc;
+* Filtro IN;
+* Filtro NOT IN;
+* LIKE;
+* UNION;
+* Uso de DISTINCT;
+* Uso de BETWEEN;
+* ORDER BY;
+* GROUP BY;
+* Uso de HAVING;
+* MAX;
+* MIN;
+* AVG;
+* SUM;
+* COUNT;
 
 ## Transações
 
