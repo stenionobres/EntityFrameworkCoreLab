@@ -94,6 +94,26 @@ As principais namespaces são `Data Factory` e `Process`.
 
 * **Process**: classes que gerenciam chamadas ao projeto `EntityFrameworkCoreLab.Persistence`, que por sua vez faz o acesso as bases de dados. Cada classe possui um conjunto de operações que buscam avaliar um determinado escopo de ações no EF Core.
 
+### EntityFrameworkCoreLab.Persistence
+
+Trata-se de um `.Net Core Class Library` que tem como responsabilidade manter as configurações do EF Core e fazer as operações nas bases de dados.
+
+![image info](./readme-pictures/entityframeworkcorelab-persistence.jpg)
+
+As principais namespaces são: `DataTransferObjects`, `EntityFrameworkContexts`, `EntityTypeConfigurations`, `Log`, `Mappers` e `Migrations`.
+
+* **DataTransferObjects**: classes que representam os models que mapeiam as tabelas em cada base de dados.
+
+* **EntityFrameworkContexts**: classes que configuram o acesso as bases de dados. Neste estudo de caso foram utilizados três bases de dados.
+
+* **EntityTypeConfigurations**: classes que tem como objetivo modularizar o código de configurações feitas para cada model nos DbContexts.
+
+* **Log**: classes desenvolvidas para realizar a gravação de logs do EF Core em arquivo.
+
+* **Mappers**: classes que fazem as operações CRUD nas bases de dados.
+
+* **Migrations**: classes que representam as migrações que serão aplicadas em cada base de dados.
+
 ## Model First x Database First 
 
 As duas principais estratégias para manipulação, atualização e criação de schema de banco de dados utilizando o EF Core são: ``Model First e Database First``.
