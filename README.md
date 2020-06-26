@@ -26,7 +26,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Model First x Database First
 
-### Field table
+### Fields table
 
 ## Migration Strategies
 
