@@ -84,7 +84,7 @@ A solução `EntityFrameworkCoreLab` se divide em dois projetos: `EntityFramewor
 
 ### EntityFrameworkCoreLab.Application
 
-Trata-se de um `.Net Core Console Application` que tem como responsabilidade ser o ponto de entrada para execução e depuração das classes desenvolvidas na solução.
+Trata-se de um `.Net Core Console Application` que tem como responsabilidade ser o ponto de entrada para execução e depuração das classes desenvolvidas na solução. Para realizar a execução, as classes da namespace **Process** devem ser instanciadas e os métodos executados na classe **Program.cs**.
 
 ![image info](./readme-pictures/entityframeworkcorelab-application.jpg)
 
