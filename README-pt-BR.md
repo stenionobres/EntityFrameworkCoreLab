@@ -80,6 +80,20 @@ Neste diagrama é apresentada a **modelagem lógica** do banco de dados. A model
 
 ## Estrutura do projeto
 
+A solução `EntityFrameworkCoreLab` se divide em dois projetos: `EntityFrameworkCoreLab.Application` e `EntityFrameworkCoreLab.Persistence`. Logo abaixo cada um dos projetos são detalhados.
+
+### EntityFrameworkCoreLab.Application
+
+Trata-se de um `.Net Core Console Application` que tem como responsabilidade ser o ponto de entrada para execução e depuração das classes desenvolvidas na solução.
+
+![image info](./readme-pictures/entityframeworkcorelab-application.jpg)
+
+As principais namespaces são `Data Factory` e `Process`.
+
+* **Data Factory**: classes que tem a responsabilidade **de criar objetos fakes** para viabilizar algumas operações nas bases de dados. Esses objetos são criados com o apoio das extensões NBuilder e Faker.Net.
+
+* **Process**: classes que gerenciam chamadas ao projeto `EntityFrameworkCoreLab.Persistence`, que por sua vez faz o acesso as bases de dados. Cada classe possui um conjunto de operações que buscam avaliar um determinado escopo de ações no EF Core.
+
 ## Model First x Database First 
 
 As duas principais estratégias para manipulação, atualização e criação de schema de banco de dados utilizando o EF Core são: ``Model First e Database First``.
