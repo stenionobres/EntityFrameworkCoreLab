@@ -28,7 +28,11 @@ After the case studies, the main conclusions were documented in this file and se
 
 ## Prerequisites
 
-What things you need to install the software and how to install them
+What needs to be installed on the machine to extend and debug the project:
+
+    Visual Studio Community 2019;
+    Net Core SDK 3.1;
+    SQL Server
 
 ## Getting Started
 
