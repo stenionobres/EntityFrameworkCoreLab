@@ -1,6 +1,6 @@
 # Entity Framework Core Lab
 
-Read this in other languages: [Portuguese (pt-BR)](README-pt-BR.md)
+Read this documentation in other languages: [Portuguese (pt-BR)](README-pt-BR.md)
 
 One Paragraph of project description goes here
 
