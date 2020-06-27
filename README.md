@@ -45,6 +45,29 @@ What needs to be installed on the machine to extend and debug the project:
 
 ## Project Requirements
 
+In order to experience the features of the Entity Framework Core and establish the best and most efficient usage practices, some requirements have been established.
+
+These requirements aim to bring the case study closer to a real use scenario where several characteristics of the framework must be explored.
+
+Below are listed which requirements the solution meets:
+
+    Use of multiple databases;
+    Use of multiple schemas;
+    Use Model First and Database First;
+    To consider 1 x 1 relationship between tables;
+    To consider 1 x N relationship between tables;
+    To consider N X N relationship between tables;
+    Better use of DataAnnotations;
+    Behavior of Inserts;
+    Behavior of Updates;
+    Behavior of Deletes ;
+    Use of transactions;
+    Use of views;
+    Database seed using migrations;
+    Entities that do not use an auto-incremental key;
+    Evaluate and optimize performance for operations with large data volumes;
+    Querys log and data audit;
+
 ## Database Model
 
 ## Project Structure
