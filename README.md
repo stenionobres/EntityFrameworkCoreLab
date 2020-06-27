@@ -146,6 +146,22 @@ The operations are carried out in a `disconnected` way, that is, the entities ha
 
 ### Indexes
 
+**Create an index**
+    
+    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp); 
+
+**Create index with multiple fields**
+
+    modelBuilder.Entity<MyEntity>().HasIndex(p => new {p.MyProp01, p.MyProp02}); 
+
+**Create named index**
+
+    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).HasName("Index_MyProp");
+
+**Create unique index (unique key)**
+
+    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).IsUnique();
+
 ### Schemas and Tables
 
 ### Primary keys
