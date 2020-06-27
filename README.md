@@ -179,6 +179,11 @@ To consult the code used, check the class [PerformanceDeleteLabProcess](./Entity
 
 ### Considerations about data
 
+* The code using Bulk Operation is the most efficient. It should be used for large masses of data that need to be processed in a short time;
+* Whether or not to recreate the DbContext instance did not change the time spent on operations;
+* The use of the call `SaveChanges` should only be made after including all the data in DbContext, EF Core has optimizations so that the data can be processed more quickly.
+* Among all strategies, the one using `AddRange` proved to be the strategy with the best cost benefit. It has excellent performance using only native EF Core features.
+
 ## Considerations about selects
 
 ### Eager loading
