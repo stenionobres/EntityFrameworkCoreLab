@@ -294,6 +294,10 @@ To consult the code used, check the class [PerformanceDeleteLabProcess](./Entity
 
 ## Data Audity
 
+In some situations, it is necessary to record the creation, update and deletion times of the records manipulated in the database, as well as the user who performed these operations.
+
+In order to avoid duplication of code, the DbContext's `SaveChanges` method was overwritten [EbayDatabaseFirstDbContext](./EntityFrameworkCoreLab.Persistence/EntityFrameworkContexts/EbayDatabaseFirstDbContext.cs). This overwrite applies the audit data in the database to entities that are of the type [Auditable](./EntityFrameworkCoreLab.Persistence/Auditing/Auditable.cs). An example of an entity that uses auditing is the entity [Customer](./EntityFrameworkCoreLab.Persistence/DataTransferObjects/Ebay/Customer.cs).
+
 ## Fast tips
 
 ### Indexes
