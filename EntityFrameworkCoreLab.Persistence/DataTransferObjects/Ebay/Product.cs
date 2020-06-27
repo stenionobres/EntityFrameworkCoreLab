@@ -19,7 +19,7 @@ namespace EntityFrameworkCoreLab.Persistence.DataTransferObjects.Ebay
 
         [Column(TypeName = "decimal(6,2)")]
         public decimal Price { get; set; }
-        public IList<CartProduct> CartProducts { get; set; }
+        
         public IList<ProductShippingRate> ProductShippingRates { get; set; }
     }
 }
