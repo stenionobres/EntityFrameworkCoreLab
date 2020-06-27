@@ -82,9 +82,39 @@ In this diagram, **logical modeling** of the database is presented. The modeling
 
 ## Project Structure
 
+The solution `EntityFrameworkCoreLab` is divided into two projects: `EntityFrameworkCoreLab.Application` and `EntityFrameworkCoreLab.Persistence`. Below each of the projects are detailed.
+
 ### EntityFrameworkCoreLab.Application
 
+It is a `.Net Core Console Application` that has the responsibility of being the entry point for executing and debugging the classes developed in the solution. To perform the execution, the classes in the **Process** namespace must be instantiated and the methods executed in the **Program.cs** class.
+
+![image info](./readme-pictures/entityframeworkcorelab-application.jpg)
+
+The main namespaces are `Data Factory` and `Process`.
+
+* **Data Factory**: classes that have the responsibility **to create fakes objects** to make some operations in the databases feasible. These objects are created with the support of the extensions NBuilder and Faker.Net.
+
+* **Process**: classes that manage calls to the `EntityFrameworkCoreLab.Persistence` project, which in turn accesses the databases. Each class has a set of operations that seek to evaluate a specific scope of actions in EF Core.
+
 ### EntityFrameworkCoreLab.Persistence
+
+It is a `.Net Core Class Library` which has the responsibility to maintain the EF Core configurations and carry out the operations in the databases.
+
+![image info](./readme-pictures/entityframeworkcorelab-persistence.jpg)
+
+The main namespaces are: `DataTransferObjects`, `EntityFrameworkContexts`, `EntityTypeConfigurations`, `Log`, `Mappers` and `Migrations`.
+
+* **DataTransferObjects**: classes that represent the models that map the tables in each database.
+
+* **EntityFrameworkContexts**: classes that configure access to databases. In this case study, three databases were used.
+
+* **EntityTypeConfigurations**: classes that aim to modularize the code of configurations made for each model in DbContexts.
+
+* **Log**: classes developed to write EF Core logs to file.
+
+* **Mappers**: classes that perform CRUD operations on databases.
+
+* **Migrations**: classes that represent the migrations that will be applied in each database.
 
 ## Model First x Database First
 
