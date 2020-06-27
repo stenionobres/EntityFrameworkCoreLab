@@ -36,7 +36,12 @@ What needs to be installed on the machine to extend and debug the project:
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+* Install and/or configure all the prerequisites mentioned above;
+* Clone the repository on the local machine;
+* Create the three databases used in the application: AmazonCodeFirst, EbayDatabaseFirst and Experiments;
+* Download Nuget dependencies for the solution in Visual Studio;
+* Run the migrations to the desired database with the command: Update-Database -Context [ClassName of context];
+* Execute the calling of some class from the [Process](./EntityFrameworkCoreLab.Application/Process) namespace in the Program.cs file;
 
 ## Project Requirements
 
