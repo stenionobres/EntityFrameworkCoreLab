@@ -164,6 +164,24 @@ The operations are carried out in a `disconnected` way, that is, the entities ha
 
 ### Schemas and Tables
 
+**Apply schema and table name (Data Annotation)**
+
+    [Table("TableName", Schema = "SchemaName")]
+    public class MyEntity
+    {
+
+    }
+
+**Apply schema and table name (Fluent API)**
+
+    modelBuilder.Entity<MyEntity>().ToTable("TableName", "SchemaName");
+
+**Default value columns**
+
+    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValue(3);
+
+    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValueSql("getdate()");
+
 ### Primary keys
 
 ### Raw SQL
