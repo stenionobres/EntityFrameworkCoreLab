@@ -162,6 +162,32 @@ It is not necessary to include the class that represents the associative table i
 
 ### EF Core Entity State
 
+A brief explanation of the EF Core Entity State aims to help understand what happens when entities are added, updated or deleted from the database.
+
+When an entity is read it is `tracked` by default by EF Core, this is known as a `tracked entity`.
+
+> Tracked entities: are instances of entities that were read from the database using a query that does not include the **AsNoTracking** method. Alternatively after an entity is used in an EF Core method (Add, Update or Delete) the entity is tracked.
+
+All tracked entities have a property called `State`. The State of an entity can be obtained using the following command:
+
+    context.Entry(someEntityInstance).State
+
+Where `context` is the instance of the DbContext class used.
+
+Below is a list of possible States and what happens when the `SaveChanges` method is executed:
+
+* Added - The entity does not exist in the database. SaveChanges inserts it.
+* Unchanged - The entity exists in the database and has not been modified on the client. SaveChanges ignores it.
+* Modified - The entity exists in the database and has been modified on the client. SaveChanges updates it.
+* Deleted - The entity exists in the database and has been deleted. SaveChanges the delete.
+* Detached - The entity is not "tracked". SaveChanges ignores it.
+
+Normally the `State` is not changed directly, for that, several EF Core commands are used to ensure that everything will be changed correctly.
+
+The classes [AmazonCustomerInsertLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Amazon/AmazonCustomerInsertLabMapper.cs), [AmazonCustomerUpdateLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Amazon/AmazonCustomerUpdateLabMapper.cs) and [AmazonCustomerDeleteLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Amazon/AmazonCustomerDeleteLabMapper.cs) present examples of how the different states of the `State` property influence the operations sent to the database by DbContext. For better interpretation it is necessary to pay attention to the comments inserted in the code.
+
+> It is highly recommended that the **State** property is not changed directly via code in real applications.
+
 ## Insert and update use examples
 
 The class [DisconnectedOperationProcess](./EntityFrameworkCoreLab.Application/Process/DisconnectedOperationProcess.cs) and its dependencies present examples of how to perform inserts and updates on entities with 1 x 1, 1 x N and N x N relationships.
