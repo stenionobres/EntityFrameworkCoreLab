@@ -140,6 +140,8 @@ In the migration file [DatabaseSeeding](./EntityFrameworkCoreLab.Persistence/Mig
 
 ### One to Many (1 x N)
 
+If the id of the main entity does not exist in the dependent entity, EF Core inserts it as `shadow property`. It is recommended to insert the id property that references the main entity for the sake of clarity in the data model.
+
 ### Many to Many (N x N)
 
 ## Inserts, updates and deletes considerations
