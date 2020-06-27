@@ -126,7 +126,7 @@ The main namespaces are: `DataTransferObjects`, `EntityFrameworkContexts`, `Enti
 
 ### ModelSnapshot File
 
-Migrations create a **snapshot** of the current database schema in the `Migrations/<DbContextName> ModelSnapshot.cs` file. When a migration is added, EF Core determines which changes will be applied by comparing the data model with the snapshot file.
+Migrations create a **snapshot** of the current database schema in the `Migrations/<DbContextName>ModelSnapshot.cs` file. When a migration is added, EF Core determines which changes will be applied by comparing the data model with the snapshot file.
 
 ### Main commands when using migrations
 
