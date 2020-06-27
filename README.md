@@ -60,7 +60,7 @@ Below are listed which requirements the solution meets:
     Better use of DataAnnotations;
     Behavior of Inserts;
     Behavior of Updates;
-    Behavior of Deletes ;
+    Behavior of Deletes;
     Use of transactions;
     Use of views;
     Database seed using migrations;
