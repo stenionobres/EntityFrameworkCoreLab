@@ -46,6 +46,26 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
             }
         }
 
+        public IEnumerable<ProductShippingRate> GetProductsWithShippingRatesExemplifyingManyToManyRelationship()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from productShippingRate in amazonCodeFirstContext.ProductShippingRate
+                            join product in amazonCodeFirstContext.Product
+                                on productShippingRate.ProductId equals product.Id
+                            join shippingRate in amazonCodeFirstContext.ShippingRate
+                                on productShippingRate.ShippingRateId equals shippingRate.Id
+                            select new
+                            {
+                                product, productShippingRate, shippingRate
+                            };
+
+                var data = query.ToList();
+
+                return data.Select(d => d.productShippingRate);
+            }
+        }
+
         public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInInnerJoin()
         {
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())

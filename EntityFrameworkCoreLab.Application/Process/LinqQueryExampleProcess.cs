@@ -21,6 +21,13 @@ namespace EntityFrameworkCoreLab.Application.Process
             return carts;
         }
 
+        public IEnumerable<ProductShippingRate> GetProductsWithShippingRatesExemplifyingManyToManyRelationship()
+        {
+            var productShippingRates = new LinqQueryExampleMapper().GetProductsWithShippingRatesExemplifyingManyToManyRelationship();
+
+            return productShippingRates;
+        }
+
         public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInInnerJoin()
         {
             var customers = new LinqQueryExampleMapper().GetCustomersWithAddressAndCartsBasedInInnerJoin();
