@@ -26,6 +26,26 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
             }
         }
 
+        public IEnumerable<Cart> GetCartsWithProductsExemplifyingOneToManyRelationship()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from cart in amazonCodeFirstContext.Cart
+                            join cartProduct in amazonCodeFirstContext.CartProduct
+                                on cart.Id equals cartProduct.CartId
+                            join product in amazonCodeFirstContext.Product
+                                on cartProduct.ProductId equals product.Id
+                            select new
+                            {
+                                cart, cartProduct, product
+                            };
+
+                var data = query.ToList();
+
+                return data.Select(d => d.cart).Distinct();
+            }
+        }
+
         public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInInnerJoin()
         {
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
