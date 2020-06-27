@@ -184,6 +184,18 @@ The operations are carried out in a `disconnected` way, that is, the entities ha
 
 ### Primary keys
 
+**Create table without primary key**
+
+    modelBuilder.Entity<MyEntity>().HasNoKey();
+
+**Create table with primary key without autoincrement**
+
+    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).ValueGeneratedNever();
+
+**Create table with compound primary key**
+
+    modelBuilder.Entity<MyEntity>().HasKey(p => new { p.MyProp01, p.MyProp02 });
+
 ### Raw SQL
 
 ### Organize Fluent API in DbContext
