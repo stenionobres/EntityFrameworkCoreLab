@@ -7,6 +7,13 @@ namespace EntityFrameworkCoreLab.Application.Process
 {
     public class LinqQueryExampleProcess
     {
+        public IEnumerable<Customer> GetCustomersWithAddressExemplifyingOneToOneRelationship()
+        {
+            var customers = new LinqQueryExampleMapper().GetCustomersWithAddressExemplifyingOneToOneRelationship();
+
+            return customers;
+        }
+
         public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInInnerJoin()
         {
             var customers = new LinqQueryExampleMapper().GetCustomersWithAddressAndCartsBasedInInnerJoin();

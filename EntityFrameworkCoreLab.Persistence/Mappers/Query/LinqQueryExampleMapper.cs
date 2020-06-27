@@ -8,6 +8,24 @@ namespace EntityFrameworkCoreLab.Persistence.Mappers.Query
 {
     public class LinqQueryExampleMapper
     {
+        public IEnumerable<Customer> GetCustomersWithAddressExemplifyingOneToOneRelationship()
+        {
+            using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+            {
+                var query = from customer in amazonCodeFirstContext.Customer
+                            join address in amazonCodeFirstContext.Address
+                                on customer.AddressId equals address.Id
+                            select new
+                            {
+                                customer, address
+                            };
+
+                var data = query.ToList();
+
+                return data.Select(d => d.customer);
+            }
+        }
+
         public IEnumerable<Customer> GetCustomersWithAddressAndCartsBasedInInnerJoin()
         {
             using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
