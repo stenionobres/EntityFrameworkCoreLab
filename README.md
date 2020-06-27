@@ -2,7 +2,11 @@
 
 Read this documentation in other languages: [Portuguese (pt-BR)](README-pt-BR.md)
 
-One Paragraph of project description goes here
+Application created with the main objective of exploring the features and characteristics of the Entity Framework Core.
+
+In this application, several real usage scenarios were tested based on an ecommerce mini data model.
+
+After the case studies, the main conclusions were documented in this file and serve as a reference for use and source of consultation.
 
 **Used Packages:**
 
