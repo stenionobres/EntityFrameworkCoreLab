@@ -132,6 +132,8 @@ Migrations create a **snapshot** of the current database schema in the `Migratio
 
 ### Database Seeding
 
+In the migration file [DatabaseSeeding](./EntityFrameworkCoreLab.Persistence/Migrations/Amazon/20200404115959_DatabaseSeeding.cs) an example of loading into the database is presented through the use of migration. Both `Insert, Update and Delete` operations are presented.
+
 ## Relationships Strategies
 
 ### One to One (1 x 1)
