@@ -110,6 +110,25 @@ The operations are carried out in a `disconnected` way, that is, the entities ha
 
 ## Performance considerations
 
+The purpose of this session is mainly to explore the various possibilities of data manipulation using EF Core in terms of performance.
+
+It is important to evaluate the data collected from the point of view of `order of magnitude`, that is, if strategy A needs 10ms and strategy B needs 1ms to do the same operation, then strategy B is more efficient. However, it does not mean that strategy B will run at the same time on different hardware.
+
+With that in mind, don't take the time spent on each strategy so much into consideration, but **how often it is more efficient** compared to the others.
+
+Evaluations were made for the Insert, Update and Delete operations. For the tests the following forms of execution were used:
+
+* **Add**: evaluated the method that is part of both DbSet and DbContext;
+* **AddRange**: evaluated the method that is part of both DbSet and DbContext;
+* **ExecuteSql**: Use of pure SQL through DbContext;
+* **Bulk Operation**: Use of Bulk operations on SQL Server through DbContext and the **EFCore.BulkExtensions** extension.
+
+The operations that are described as `with Recycle` mean that the DbContext instance has been recreated for each database call.
+
+For testing purposes **15,000 addresses** were created using the **NBuilder** and **Faker.Net** extensions.
+
+The data below are presented in **Milliseconds per record**.
+
 ### INSERT
 
 To consult the code used, check the class [PerformanceInsertLabProcess](./EntityFrameworkCoreLab.Application/Process/PerformanceInsertLabProcess.cs).
