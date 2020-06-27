@@ -138,6 +138,14 @@ In the migration file [DatabaseSeeding](./EntityFrameworkCoreLab.Persistence/Mig
 
 ### One to One (1 x 1)
 
+By default, EF Core creates a field that can assume **null values** in the database. This field is a foreign key for the dependent table and assumes the exclusion pattern `ReferentialAction.Restrict`. If `DataAnnotation [Required]` is inserted, it assumes the `ReferentialAction.Cascade` exclusion pattern.
+
+It can be done in two ways:
+
+1 - A property in the main class referencing the dependent class with a property in the dependent class that represents the key of the main;
+
+2 - The reverse. A property in the main class that represents the dependent key with a property in the dependent class referencing the main class;
+
 ### One to Many (1 x N)
 
 If the id of the main entity does not exist in the dependent entity, EF Core inserts it as `shadow property`. It is recommended to insert the id property that references the main entity for the sake of clarity in the data model.
