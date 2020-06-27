@@ -70,6 +70,16 @@ Below are listed which requirements the solution meets:
 
 ## Database Model
 
+In order to exemplify the use of the Entity Framework, a mini **database model was created that has 1 x 1, 1 x N and N x N** relationships. This model is geared towards ecommerce and is mainly based on `Customers` who live in certain `Addresses`, these customers in turn buy several `Products` and the products have related `Delivery Rates`.
+
+Below is a **conceptual modeling** of the database. The modeling was done with the support of the tool [BrModelo](http://www.sis4.com/brModelo/).
+
+![image info](./readme-pictures/ecommerce-conceitual.png)
+
+In this diagram, **logical modeling** of the database is presented. The modeling was done with the support of the tool [SqlDBM](https://sqldbm.com/). It is important to note that the tables have been divided into two schemes: `common` and `sales`.
+
+![image info](./readme-pictures/ecommerce-logical.jpg)
+
 ## Project Structure
 
 ### EntityFrameworkCoreLab.Application
