@@ -144,6 +144,12 @@ If the id of the main entity does not exist in the dependent entity, EF Core ins
 
 ### Many to Many (N x N)
 
+By default, EF Core does not define the two foreign keys in the associative table as a composite primary key. An extra key must be added or a configuration used to define both fields as a key. Example:
+
+    modelBuilder.Entity<BookCategory>().HasKey(bc => new { bc.BookId, bc.CategoryId });
+
+It is not necessary to include the class that represents the associative table in DbSet for it to be created in the database.
+
 ## Inserts, updates and deletes considerations
 
 ### EF Core Entity State
