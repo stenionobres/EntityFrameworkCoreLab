@@ -6,6 +6,22 @@ One Paragraph of project description goes here
 
 **Used Packages:**
 
+>Net Core 3.1
+
+>[Entity Framework Core 3.1.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.1.2)
+
+>[Entity.Framework.Core.Sql.Server 3.1.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/3.1.2)
+
+>[Microsoft.EntityFrameworkCore.Tools 3.1.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/3.1.2)
+
+>[EFCore.BulkExtensions 3.1.1](https://www.nuget.org/packages/EFCore.BulkExtensions/3.1.1)
+
+>[Microsoft.Extensions.Logging.Console 3.1.2](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.2)
+
+>[Faker.Net 1.3.77](https://www.nuget.org/packages/Faker.Net/1.3.77)
+
+>[NBuilder 6.1.0](https://www.nuget.org/packages/NBuilder/6.1.0)
+
 ## Prerequisites
 
 What things you need to install the software and how to install them
