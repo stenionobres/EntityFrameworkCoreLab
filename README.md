@@ -377,6 +377,10 @@ If you want to build the command in a separate method, the return type `Formatta
 
 ### Organize Fluent API in DbContext
 
+Sometimes, over time, the use of the Fluent API in the `OnModelCreating` method of DbContext can leave the class with excessive lines, making maintenance a little more difficult and increasing complexity.
+
+EF Core has a feature to better organize this code. This is the use of the `IEntityTypeConfiguration` interface. An example of this feature is presented in class [CustomerTypeConfiguration](./EntityFrameworkCoreLab.Persistence/EntityTypeConfigurations/Ebay/CustomerTypeConfiguration.cs), in which some configurations of the entity were defined. These settings are applied at [EbayDatabaseFirstDbContext](./EntityFrameworkCoreLab.Persistence/EntityFrameworkContexts/EbayDatabaseFirstDbContext.cs).
+
 ## Lessons learned
 
 ## References used
