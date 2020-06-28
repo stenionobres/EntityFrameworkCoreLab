@@ -290,6 +290,36 @@ To consult the code used, check the class [PerformanceDeleteLabProcess](./Entity
 
 ## Views
 
+You can use views in EF Core by following these steps:
+
+1 - The view sql script is created;
+
+2 - The **model** is created to represent the view in the application using this [Table](#table-of-fields)*;
+
+3 - The view creation script is applied directly to the database or through migration;
+
+4 - Performs the inclusion of an entry for the model in the DbContext and the instruction below in the `OnModelCreating` method of the DbContext;
+
+    modelBuilder.Entity<TEntity>().ToView("ViewName", "schemaName");
+
+*The use of the table is optional, however its objective is to approximate as much as possible the types and annotations of the model with the types established in the database.
+
+The [SalesInsightsProcess](./EntityFrameworkCoreLab.Application/Process/SalesInsightsProcess.cs) and [SalesInsights](./EntityFrameworkCoreLab.Persistence/DataTransferObjects/Amazon/SalesInsights.cs) classes and their dependencies present an example of using views. In this example, the view was created directly in the database without using migration.
+
+Below is an example of migration that creates a view:
+
+    public partial class CreateView : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql("create view SomeView as select * from SomeTable");
+        }
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql("drop view SomeView");
+        }
+    }
+
 ## Logging
 
 It is possible to use the [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.2) extension to capture logs of the operations applied in the database.
