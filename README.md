@@ -190,6 +190,16 @@ The commands listed are in the format used in the **Package Manager Console**. I
 
 ### Criteria for generating migrations
 
+EF Core establishes some criteria for generating migrations, which consequently generate changes in the database. The execution of commands to generate migrations will always compile the **Target project** and **Startup project**. The criteria are:
+
+* Change in the properties of the entity classes, for example, the name of the property or inclusion of a new property;
+
+* Changing the EF Core settings, for example, changing the configuration of some relationship between tables;
+
+* Change in **DbSet** properties in some **DbContext** of the application. This change can be changing the name of that property or adding a new property.
+
+>For migration purposes, the EF Core data model configuration strategies have **order of precedence** when generating changes to the database. Following, the strategies are cited in order of precedence, from lowest to highest: **By Convention, Data Annotation and Fluent API**. Based on this it is correct to state that the same configuration made via Fluent API or Data Annotation, the configuration that was done via Fluent API will be used when generating the migration.
+
 ### ModelSnapshot File
 
 Migrations create a **snapshot** of the current database schema in the `Migrations/<DbContextName>ModelSnapshot.cs` file. When a migration is added, EF Core determines which changes will be applied by comparing the data model with the snapshot file.
