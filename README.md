@@ -292,6 +292,16 @@ To consult the code used, check the class [PerformanceDeleteLabProcess](./Entity
 
 ## Logging
 
+It is possible to use the [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.2) extension to capture logs of the operations applied in the database.
+
+This log can be presented either in the console, in the development environment, or recorded in a file for later verification. The main utility of these logs is to identify any errors or eventual queries that have performance problems.
+
+In class [AmazonCodeFirstDbContext](./EntityFrameworkCoreLab.Persistence/EntityFrameworkContexts/AmazonCodeFirstDbContext.cs), an implementation was made to present the log on the console using the `LoggerFactoryToConsole` property.
+
+The implementation of the log in file was done through the `LoggerFactoryToFile` property using classes that extend some interfaces of the Microsoft log package. These classes are in the [Log](./EntityFrameworkCoreLab.Persistence/Log/) namespace.
+
+To use the log in file, just use the call `optionsBuilder.UseLoggerFactory (LoggerFactoryToFile)` in the `OnConfiguring` method of DbContext.
+
 ## Data Audity
 
 In some situations, it is necessary to record the creation, update and deletion times of the records manipulated in the database, as well as the user who performed these operations.
