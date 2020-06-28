@@ -118,6 +118,22 @@ The main namespaces are: `DataTransferObjects`, `EntityFrameworkContexts`, `Enti
 
 ## Model First x Database First
 
+The two main strategies for manipulating, updating and creating database schema using EF Core are: `Model First and Database First`.
+
+The strategy that the author recommends to be used is the **Model First**, however in some situations it is necessary to work with a database already defined, with a physical model already created. In this scenario, EF Core allows the **Database First** strategy to be used to use the database.
+
+Based on this it is important that the three data model configuration strategies provided by EF Core are explained:
+
+* **By Convention**: simple rules adopted in the types and names of properties for configuring the database schema. It does not meet all configuration scenarios;
+* **Data annotation**: a set of annotations that can be used in the entity classes and properties for configuration;
+* **Fluent API**: can be used when overriding the `OnModelCreating` method of the class that extends the `DbContext`. This is the most powerful and flexible way to configure the data model, however the configuration can become more complex and generate much boilerplate code.
+
+A problem observed with the `Database First` strategy is that it creates a lot of unnecessary code or `boilerplate code`, leaving the data model created in the application more complex and often difficult to understand.
+
+With that in mind, based on the tests and experiments carried out in the project, a way of working with existing tables was established using all the power of the **Model First** strategy.
+
+>If the table already exists in the database, it is possible to create the `Model` based on the database structure. After the creation of this model the migration is generated normally, but its application in the database is not done. To avoid any error, an `Insert` is done in the `__EFMigrationsHistory` table with the name of the migration file and EF Core version. In this way, the Database First strategy's boilerplate code is avoided. `But, how to translate the fields from the SqlServer to C# types?` **Answer**: using the field table below.
+
 ### Fields table
 
 ## Migration Strategies
