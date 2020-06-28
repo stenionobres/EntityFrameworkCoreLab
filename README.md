@@ -288,6 +288,14 @@ To consult the code used, check the class [PerformanceDeleteLabProcess](./Entity
 
 ## Transactions
 
+By default, EF Core's DbContext class performs database operations within a transaction. Based on this, it is possible to make several calls to the `Add/AddRange, Update/UpdateRange and Remove/RemoveRange` methods of the same DbContext instance that when calling the` SaveChanges` the operations will be executed within a transaction. Based on this, **in most scenarios it is not necessary to use transactions explicitly in EF Core**.
+
+The [TransactionLabProcess](./EntityFrameworkCoreLab.Application/Process/TransactionLabProcess.cs) and [EbayTransactionLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Transaction/EbayTransactionLabMapper.cs) class present several examples that evaluate the behavior of transactions in DbContext.
+
+It is important to pay attention to some `comments` in the [TransactionLabProcess](./EntityFrameworkCoreLab.Application/Process/TransactionLabProcess.cs) class that explain the behavior of each evaluated scenario.
+
+To see an example of using the transaction `explicitly` the method` InsertAddressWithAddWithTransactionSaveChangesBefore` of class [EbayTransactionLabMapper](./EntityFrameworkCoreLab.Persistence/Mappers/Transaction/EbayTransactionLabMapper.cs) should be used as an example.
+
 ## Views
 
 You can use views in EF Core by following these steps:
