@@ -354,6 +354,27 @@ In order to avoid duplication of code, the `SaveChanges` method of DbContext [Eb
 
 ### Raw SQL
 
+It is possible to use raw sql with the Entity Framework Core if necessary. Just use the following call:
+
+    context.Database.ExecuteSqlInterpolated(stringSqlWithCommand)
+
+Where `context` is the instance of DbContext used and `stringSqlWithCommand` is the desired sql command. The call executes the sql command on the database and returns the number of rows affected.
+
+It is important to reinforce the importance of avoiding `SQL Injection` failures. For this, it is important to use `string interpolation` in the construction of the sql command. EF Core already translates this command using parameters that prevent SQL Injection errors.
+
+Example of a sql command that uses string interpolation:
+
+    context.Database.ExecuteSqlInterpolated($"delete from common.Address where Id={address.Id}")
+
+If you want to build the command in a separate method, the return type `FormattableString` should be used.
+
+    private FormattableString GetDeleteAddressSql(Address address)
+    {
+      return $"delete from common.Address where Id={address.Id}";
+    }
+
+**It is important to reinforce that the use of raw SQL with Entity Framework Core is not recommended, being advisable only in exceptional cases.**
+
 ### Organize Fluent API in DbContext
 
 ## Lessons learned
