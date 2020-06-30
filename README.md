@@ -429,6 +429,49 @@ After reading chapter 2 of the book **Entity Framework Core in Action** and deve
 
 ### Raw SQL in querys
 
+It is possible to run queries with raw SQL using EF Core. For this, the `FromSqlInterpolated` method must be used. This method with the use of string interpolation already adds parameters to the query in order to avoid SQL Injection failures. Example:
+
+    var searchTerm = ".NET";
+
+    var blogs = context.Blogs.FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                        .AsNoTracking()
+                        .ToList();
+
+The use of raw SQL with this strategy has the following limitations:
+
+* The SQL query must return data for all properties of the entity;
+* The names of the columns in the result set must match the names of the columns to which the properties are mapped;
+* It is only possible to list other tables using the `Include` method;
+
+Another alternative for using pure SQL is to use the `GetDbConnection` method to obtain the connection to the database and use the api offered by ADO.NET. Example:
+
+    var conn = context.Database.GetDbConnection();
+
+    try
+    {
+        conn.Open();
+        using (var command = conn.CreateCommand())
+        {
+            command.CommandText = "select * from dbo.Books";
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+
+    }
+    finally
+    {
+        conn.Close();
+    }
+
 ### Query examples
 
 ## Transactions
