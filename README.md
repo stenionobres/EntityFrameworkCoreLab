@@ -425,6 +425,8 @@ The disadvantage in its use is that the developer needs to pay attention and car
 
 ### Which strategy to use?
 
+After reading chapter 2 of the book **Entity Framework Core in Action** and developing some queries in the [data model](#database-model) defined for this case study, it can be said that the [Select loading](#select-loading) strategy is more effective for building queries using EF Core. This is due to the fact that this strategy has good flexibility and performance. Throughout this documentation, examples of building queries using this strategy will be presented.
+
 ### Raw SQL in querys
 
 ### Query examples
