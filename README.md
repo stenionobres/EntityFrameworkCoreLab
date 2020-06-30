@@ -474,6 +474,32 @@ Another alternative for using pure SQL is to use the `GetDbConnection` method to
 
 ### Query examples
 
+In the previous sessions, the various strategies for performing queries on the Entity Framework Core were presented. One of them is `Select loading` which uses LINQ to bring information from the database.
+
+Beginner programmers to EF Core or LINQ may find it difficult to develop such queries, since the syntax is slightly different from the standard SQL they are used to. With this in mind, this session provides several examples of queries, made with LINQ, which generate the SQL expected and optimized for each type of action in the database.
+
+To see the examples of queries just access the class [LinqQueryExampleProcess](./EntityFrameworkCoreLab.Application/Process/LinqQueryExampleProcess.cs). Below are listed which SQL operations the examples use:
+
+* INNER JOIN;
+* LEFT JOIN;
+* WHERE Filter;
+* Relational Operators >, =, etc;
+* Logical Operators AND, OR, etc;
+* IN Filter;
+* NOT IN Filter;
+* LIKE;
+* UNION;
+* DISTINCT;
+* BETWEEN;
+* ORDER BY;
+* GROUP BY;
+* HAVING;
+* MAX;
+* MIN;
+* AVG;
+* SUM;
+* COUNT;
+
 ## Transactions
 
 By default, EF Core's DbContext class performs database operations within a transaction. Based on this, it is possible to make several calls to the `Add/AddRange, Update/UpdateRange and Remove/RemoveRange` methods of the same DbContext instance that when calling the` SaveChanges` the operations will be executed within a transaction. Based on this, **in most scenarios it is not necessary to use transactions explicitly in EF Core**.
