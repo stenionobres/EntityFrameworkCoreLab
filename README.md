@@ -645,6 +645,28 @@ EF Core has a feature to better organize this code. This is the use of the `IEnt
 
 ## Lessons learned
 
+* Entity Framework Core 3.1 has considerably improved aspects of ease of use, robustness and performance over Entity Framework 6 and earlier versions;
+
+* Although EF Core makes a lot easier, aspects such as database design and SQL performance generated should not be overlooked. If your database design and queries are bad, EF Core won't do a miracle;
+
+* The data model must be decoupled from your application domain model. Almost 100% of the examples on the internet or reference materials preach the idea of using the same model. This is a major architectural error that most of the time will cause problems in your modeling. With that in mind, use models that have the sole responsibility of generating your data model and loading query data. For business objects use other classes, despite the slightly larger work, this leaves the application with fewer bugs and code smells in the medium/long term;
+
+* Programmers with little experience in database design, query optimization and the use of ORMs pointed to EF Core as the villain of performance. Check these items first before pointing out the ORM as the villain of the performance;
+
+* For operations that involve inserting/updating/deleting several records, try to accumulate the N operations in DbContext and make a single call to SaveChanges. In addition to being in a transaction context, EF Core already has optimizations for working with batch records. The use of methods that work with AddRange/UpdateRange/RemoveRange collections are much more efficient in terms of performance;
+
+* For operations that need to be part of a single transaction, just call SaveChanges after the N DbContext method calls. All operations will already be transacted;
+
+* The use of LINQ proved to be the most expressive and flexible tool for building queries. However, it is necessary to pay attention to the generated query log in order to check if the generated SQL needs to be optimized for each situation;
+
+* Avoid the use of raw SQL with EF Core, ORM has the objective of abstracting raw SQL. If you notice that the need for pure SQL is becoming frequent, try to improve your knowledge in using the framework or migrate to a solution using [ADO.NET](https://docs.microsoft.com/en-US/dotnet/framework/data/adonet/ado-net-code-examples) or [Dapper](https://github.com/StackExchange/Dapper);
+
+* This entire case study was done using SQL Server. Some implementations and/or results may change to other DBMSs. If your DBMS is not the SqlServer do tests with the DBMS you use to have more reliable results;
+
+* The use of the Model First strategy proved to be more reliable and generated less boilerplate code. The design is cleaner and more intuitive. Nevertheless, if you are using Model First, check the migrations generated and how the physical database project is doing. Adjustments always appear according to the needs of each business;
+
+* To create the data and relationship model, prioritize the use of the ByConvention strategy and then DataAnnotation, leave the FluentAPI strategy for exceptional cases. The project is more intuitive and with less code generated for maintenance;
+
 ## References used
 
 * [Entity Framework Core Official documentation](https://docs.microsoft.com/en-us/ef/core/index)
