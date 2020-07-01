@@ -443,33 +443,34 @@ The use of raw SQL with this strategy has the following limitations:
 * The names of the columns in the result set must match the names of the columns to which the properties are mapped;
 * It is only possible to list other tables using the `Include` method;
 
-Another alternative for using pure SQL is to use the `GetDbConnection` method to obtain the connection to the database and use the api offered by ADO.NET. Example:
+Another alternative for using raw SQL is to use the `GetDbConnection` method to obtain the connection to the database and use the api offered by ADO.NET. Example:
 
-    var conn = context.Database.GetDbConnection();
-
-    try
+    using (conn = context.Database.GetDbConnection())
     {
-        conn.Open();
-        using (var command = conn.CreateCommand())
+        try
         {
-            command.CommandText = "select * from dbo.Books";
-
-            using (var reader = command.ExecuteReader())
+            conn.Open();
+            using (var command = conn.CreateCommand())
             {
-                while (reader.Read())
-                {
+                command.CommandText = "select * from dbo.Books";
 
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                    }
                 }
             }
         }
-    }
-    catch (Exception ex)
-    {
+        catch (Exception ex)
+        {
 
-    }
-    finally
-    {
-        conn.Close();
+        }
+        finally
+        {
+            conn.Close();
+        }
     }
 
 ### Query examples
