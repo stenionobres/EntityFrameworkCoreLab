@@ -29,7 +29,7 @@ namespace EntityFrameworkCoreLab.Persistence.EntityFrameworkContexts
             if (optionsBuilder.IsConfigured) return;
 
             optionsBuilder.UseSqlServer(ConnectionString);
-            optionsBuilder.UseLoggerFactory(LoggerFactoryToFile);
+            optionsBuilder.UseLoggerFactory(LoggerFactoryToConsole);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
