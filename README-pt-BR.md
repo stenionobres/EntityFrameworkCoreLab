@@ -471,31 +471,32 @@ O uso de SQL puro com essa estratégia possui as seguintes limitações:
 
 Outra alternativa para uso de SQL puro é a utilização do método `GetDbConnection` para obtenção da conexão com o banco de dados e uso da api oferecida pelo ADO.NET. Exemplo:
 
-    var conn = context.Database.GetDbConnection();
-
-    try
+    using (conn = context.Database.GetDbConnection())
     {
-        conn.Open();
-        using (var command = conn.CreateCommand())
+        try
         {
-            command.CommandText = "select * from dbo.Books";
-
-            using (var reader = command.ExecuteReader())
+            conn.Open();
+            using (var command = conn.CreateCommand())
             {
-                while (reader.Read())
-                {
+                command.CommandText = "select * from dbo.Books";
 
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                    }
                 }
             }
         }
-    }
-    catch (Exception ex)
-    {
+        catch (Exception ex)
+        {
 
-    }
-    finally
-    {
-        conn.Close();
+        }
+        finally
+        {
+            conn.Close();
+        }
     }
 
 ### Exemplos de consultas
