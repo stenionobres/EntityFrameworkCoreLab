@@ -702,7 +702,7 @@ Caso deseje fazer a construção do comando em um método em separado o tipo de 
 ``` C#
 private FormattableString GetDeleteAddressSql(Address address)
 {
-return $"delete from common.Address where Id={address.Id}";
+    return $"delete from common.Address where Id={address.Id}";
 }
 ```
 

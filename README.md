@@ -584,25 +584,25 @@ In order to avoid duplication of code, the `SaveChanges` method of DbContext [Eb
 **Create an index**
 
 ``` C# 
-    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp); 
+modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp); 
 ``` 
 
 **Create index with multiple fields**
 
 ``` C#
-    modelBuilder.Entity<MyEntity>().HasIndex(p => new {p.MyProp01, p.MyProp02}); 
+modelBuilder.Entity<MyEntity>().HasIndex(p => new {p.MyProp01, p.MyProp02}); 
 ```
 
 **Create named index**
 
 ``` C#
-    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).HasName("Index_MyProp");
+modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).HasName("Index_MyProp");
 ```
 
 **Create unique index (unique key)**
 
 ``` C#
-    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).IsUnique();
+modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).IsUnique();
 ```
 
 ### Schemas and Tables
@@ -610,25 +610,25 @@ In order to avoid duplication of code, the `SaveChanges` method of DbContext [Eb
 **Apply schema and table name (Data Annotation)**
 
 ``` C#
-    [Table("TableName", Schema = "SchemaName")]
-    public class MyEntity
-    {
+[Table("TableName", Schema = "SchemaName")]
+public class MyEntity
+{
 
-    }
+}
 ```
 
 **Apply schema and table name (Fluent API)**
 
 ``` C#
-    modelBuilder.Entity<MyEntity>().ToTable("TableName", "SchemaName");
+modelBuilder.Entity<MyEntity>().ToTable("TableName", "SchemaName");
 ```
 
 **Default value columns**
 
 ``` C#
-    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValue(3);
+modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValue(3);
 
-    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValueSql("getdate()");
+modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValueSql("getdate()");
 ```
 
 ### Primary keys
@@ -636,19 +636,19 @@ In order to avoid duplication of code, the `SaveChanges` method of DbContext [Eb
 **Create table without primary key**
 
 ``` C#
-    modelBuilder.Entity<MyEntity>().HasNoKey();
+modelBuilder.Entity<MyEntity>().HasNoKey();
 ```
 
 **Create table with primary key without autoincrement**
 
 ``` C#
-    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).ValueGeneratedNever();
+modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).ValueGeneratedNever();
 ```
 
 **Create table with compound primary key**
 
 ``` C#
-    modelBuilder.Entity<MyEntity>().HasKey(p => new { p.MyProp01, p.MyProp02 });
+modelBuilder.Entity<MyEntity>().HasKey(p => new { p.MyProp01, p.MyProp02 });
 ```
 
 ### Raw SQL
