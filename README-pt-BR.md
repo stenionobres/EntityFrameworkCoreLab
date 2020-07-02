@@ -303,9 +303,11 @@ Caso não exista o id da entidade principal na entidade dependente o EF Core a i
 ### N para N (N x N)
 
 Por padrão o EF Core não define as duas chaves estrangeiras na tabela associativa como chave primária composta. Deve ser adicionada uma chave extra ou usada uma configuração para definir os dois campos como chave. Exemplo:
-	
-	modelBuilder.Entity<BookCategory>().HasKey(bc => new { bc.BookId, bc.CategoryId });  
-	 
+
+``` C#	
+modelBuilder.Entity<BookCategory>().HasKey(bc => new { bc.BookId, bc.CategoryId });  
+```
+
 Não é necessário incluir a classe que representa a tabela associativa no DbSet para que ela seja criada no banco de dados.
 
 ## Considerações sobre inserts, updates e deletes
@@ -428,14 +430,18 @@ O Entity Framework Core possui **4 estratégias para consulta de informações**
 
 Carrega a entidade relacionada na mesma consulta em que carrega a classe principal. O relacionamento na consulta SQL geralmente é expresso por meio do comando `LEFT JOIN`. Essa estratégia utiliza dois fluent métodos: `Include e ThenInclude`. Em alguns cenários o EF Core pode traduzir os comandos em mais de uma consulta no banco de dados. Exemplo:
 
-    var book = context.Books.Include(r => r.AuthorsLink).ThenInclude(r => r.Author);
+``` C#
+var book = context.Books.Include(r => r.AuthorsLink).ThenInclude(r => r.Author);
+```
 
 ### Explicit loading
 
 Essa estratégia se caracteriza pela busca das entidades relacionadas após se ter carregado a entidade principal. É útil quando não se sabe ao certo quais relacionamentos se deseja carregar previamente. A desvantagem é que são feitas diversas chamadas ao banco de dados. Exemplo:
 
-    var book = context.Books.First();          
-    context.Entry(book).Collection(c => c.AuthorsLink).Load(); 
+``` C#
+var book = context.Books.First();          
+context.Entry(book).Collection(c => c.AuthorsLink).Load(); 
+```
 
 ### Lazy loading
 
@@ -447,7 +453,9 @@ Técnica batizada com esse nome por **John P Smith** em seu livro [Entity Framew
 
 A desvantagem no seu uso é que o desenvolvedor precisa ter atenção e cuidado na construção da query para que o código não fique muito complexo e para que o EF Core consiga traduzir todos os comandos em SQL com boa performance. Isso pode ser acompanhado através do log de consultas gerado pelo EF Core. Exemplo:
 
-    var result = context.Books.Select(p => new {p.Title, p.Price, NumReviews = p.Reviews.Count}).First(); 
+``` C#
+var result = context.Books.Select(p => new {p.Title, p.Price, NumReviews = p.Reviews.Count}).First(); 
+```
 
 ### Qual estratégia utilizar?
 
@@ -457,11 +465,13 @@ Após a leitura do capítulo 2 do livro **Entity Framework Core in Action** e o 
 
 É possível executar consultas com SQL puro utilizando o EF Core. Para isso o método `FromSqlInterpolated` deve ser utilizado. Este método com o uso de interpolação de strings já adiciona parâmetros a consulta com o objetivo de evitar falhas de SQL Injection. Exemplo:
 
-    var searchTerm = ".NET";
+``` C#
+var searchTerm = ".NET";
 
-    var blogs = context.Blogs.FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
-                       .AsNoTracking()
-                       .ToList();
+var blogs = context.Blogs.FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                         .AsNoTracking()
+                         .ToList();
+```
 
 O uso de SQL puro com essa estratégia possui as seguintes limitações:
 
@@ -471,33 +481,35 @@ O uso de SQL puro com essa estratégia possui as seguintes limitações:
 
 Outra alternativa para uso de SQL puro é a utilização do método `GetDbConnection` para obtenção da conexão com o banco de dados e uso da api oferecida pelo ADO.NET. Exemplo:
 
-    using (conn = context.Database.GetDbConnection())
+``` C#
+using (conn = context.Database.GetDbConnection())
+{
+    try
     {
-        try
+        conn.Open();
+        using (var command = conn.CreateCommand())
         {
-            conn.Open();
-            using (var command = conn.CreateCommand())
+            command.CommandText = "select * from dbo.Books";
+
+            using (var reader = command.ExecuteReader())
             {
-                command.CommandText = "select * from dbo.Books";
-
-                using (var reader = command.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
 
-                    }
                 }
             }
         }
-        catch (Exception ex)
-        {
-
-        }
-        finally
-        {
-            conn.Close();
-        }
     }
+    catch (Exception ex)
+    {
+
+    }
+    finally
+    {
+        conn.Close();
+    }
+}
+```
 
 ### Exemplos de consultas
 
@@ -549,7 +561,9 @@ Para ver um exemplo de uso de transação de forma `explícita` o método `Inser
 
 4 - Realiza a inclusão de uma entrada para o model no DbContext e da instrução abaixo no método `OnModelCreating` do DbContext;
 
-    modelBuilder.Entity<TEntity>().ToView("ViewName", "schemaName");
+``` C#
+modelBuilder.Entity<TEntity>().ToView("ViewName", "schemaName");
+```
 
 *A utilização da tabela é opcional, entretanto seu objetivo é aproximar o máximo possível os tipos e anotações do model com os tipos estabelecidos no banco de dados.
 
@@ -557,18 +571,20 @@ As classes [SalesInsightsProcess](./EntityFrameworkCoreLab.Application/Process/S
 
 Abaixo é apresentado um exemplo de migração que realiza a criação de uma view:
 
-    public partial class CreateView : Migration
+``` C#
+public partial class CreateView : Migration
+{
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql("create view SomeView as select * from SomeTable");
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql("drop view SomeView");
-        }
+        migrationBuilder.Sql("create view SomeView as select * from SomeTable");
     }
+
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.Sql("drop view SomeView");
+    }
+}
+```
 
 ## Log de consultas e comandos
 
@@ -593,60 +609,83 @@ Com o objetivo de evitar duplicidades de código foi feita uma sobreescrita do m
 ### Índices
 
 **Criar um índice**
-    
-    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp); 
+
+``` C#    
+modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp); 
+```
 
 **Criar índice com múltiplos campos**
 
-    modelBuilder.Entity<MyEntity>().HasIndex(p => new {p.MyProp01, p.MyProp02}); 
+``` C#
+modelBuilder.Entity<MyEntity>().HasIndex(p => new {p.MyProp01, p.MyProp02}); 
+```
 
 **Criar índice nomeado**
 
-    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).HasName("Index_MyProp");
+``` C#
+modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).HasName("Index_MyProp");
+```
 
 **Criar índice único (unique key)**
 
-    modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).IsUnique();
+``` C#
+modelBuilder.Entity<MyEntity>().HasIndex(p => p.MyProp).IsUnique();
+```
 
 ### Schemas e Tabelas
 
 **Aplicar schema e nome de tabela (Data Annotation)**
 
-    [Table("TableName", Schema = "SchemaName")]
-    public class MyEntity
-    {
+``` C#
+[Table("TableName", Schema = "SchemaName")]
+public class MyEntity
+{
 
-    }
+}
+
+```
 
 **Aplicar schema e nome de tabela (Fluent API)**
 
-    modelBuilder.Entity<MyEntity>().ToTable("TableName", "SchemaName");
+``` C#
+modelBuilder.Entity<MyEntity>().ToTable("TableName", "SchemaName");
+```
 
 **Valores padrões em colunas**
 
-    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValue(3);
+``` C#
+modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValue(3);
 
-    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValueSql("getdate()");
+modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).HasDefaultValueSql("getdate()");
+```
 
 ### Chaves primárias
 
 **Criar tabela sem chave primária**
 
-    modelBuilder.Entity<MyEntity>().HasNoKey();
+``` C#
+modelBuilder.Entity<MyEntity>().HasNoKey();
+```
 
 **Criar tabela com chave primária sem autoincremento**
 
-    modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).ValueGeneratedNever();
+``` C#
+modelBuilder.Entity<MyEntity>().Property(p => p.MyProp).ValueGeneratedNever();
+```
 
 **Criar tabela com chave primária composta**
 
-    modelBuilder.Entity<MyEntity>().HasKey(p => new { p.MyProp01, p.MyProp02 });
+``` C#
+modelBuilder.Entity<MyEntity>().HasKey(p => new { p.MyProp01, p.MyProp02 });
+```
 
 ### Uso de SQL Puro
 
 É possível utilizar sql puro com o Entity Framework Core caso haja necessidade. Basta para isso utilizar a seguinte chamada:
 
-    context.Database.ExecuteSqlInterpolated(stringSqlWithCommand)
+``` C#
+context.Database.ExecuteSqlInterpolated("stringSqlWithCommand")
+```
 
 Onde `context` é a instância do DbContext utilizado e `stringSqlWithCommand` é o comando sql desejado. A chamada executa o comando sql na base de dados e retorna o número de linhas afetadas.
 
@@ -654,14 +693,18 @@ Onde `context` é a instância do DbContext utilizado e `stringSqlWithCommand` �
 
 Exemplo de comando sql que utiliza interpolação de strings:
 
-    context.Database.ExecuteSqlInterpolated($"delete from common.Address where Id={address.Id}")
+``` C#
+context.Database.ExecuteSqlInterpolated($"delete from common.Address where Id={address.Id}")
+```
 
 Caso deseje fazer a construção do comando em um método em separado o tipo de retorno `FormattableString` deve ser utilizado.
 
-      private FormattableString GetDeleteAddressSql(Address address)
-      {
-        return $"delete from common.Address where Id={address.Id}";
-      }
+``` C#
+private FormattableString GetDeleteAddressSql(Address address)
+{
+return $"delete from common.Address where Id={address.Id}";
+}
+```
 
 **É importante reforçar de que o uso de SQL Puro com Entity Framework Core não é recomendável, sendo aconselhável somente em casos excepcionais.**
 
