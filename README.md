@@ -402,7 +402,9 @@ The Entity Framework Core has **4 strategies for querying information** in the d
 
 Load the related entity in the same query as the main class. The relationship in the SQL query is usually expressed using the `LEFT JOIN` command. This strategy uses two fluent methods: `Include and ThenInclude`. In some scenarios, EF Core can translate commands into more than one query in the database. Example:
 
-    var book = context.Books.Include(r => r.AuthorsLink).ThenInclude(r => r.Author);
+``` C#
+var book = context.Books.Include(r => r.AuthorsLink).ThenInclude(r => r.Author);
+```
 
 ### Explicit loading
 
