@@ -539,6 +539,41 @@ Para ver os exemplos de consultas basta acessar a classe [LinqQueryExampleProces
 * SUM;
 * COUNT;
 
+### Performance em consultas
+
+Para melhorar a performance de consultas utilizando o Entity Framework Core é importante observar alguns aspectos que reduzem o tempo de execução do mapeamento dos dados. O itens apresentados abaixo
+servem de pontos de atenção e/ou checklist para melhoria de performance em consultas:
+
+* Analisar o SQL gerado no [log](#log-de-consultas-e-comandos) do EF Core. O objetivo é buscar consultas que estejam executando com performance ruim. Muitas vezes alguma mudança na construção do LINQ já melhora a performance da consulta, caso necessário o [plano de execução de consultas](https://en.wikipedia.org/wiki/Query_plan) do banco de dados pode ser utilizado. Na sessão [Exemplos de consultas](#exemplos-de-consultas) são apresentadas várias consultas comuns que já possuem a sintaxe otimizada para execução; 
+
+* Revisar o projeto físico da base de dados. Eliminar sempre que possível joins com campos alfanúmericos, verificar se é possível criar ou melhorar índices em colunas;
+
+* Utilizar o método de extensão **AsNoTracking** após o LINQ desenvolvido. Esse método evita que o EF Core mapeie as entidades para o `ChangeTracker`, isso reduz o tempo de mapeamento dos dados. Exemplo:
+
+``` C#
+public IEnumerable<Customer> GetCustomersWithAddressExemplifyingOneToOneRelationship()
+{
+    using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+    {
+        var query = from customer in amazonCodeFirstContext.Customer
+                    join address in amazonCodeFirstContext.Address
+                        on customer.AddressId equals address.Id
+                    select new
+                    {
+                        customer, address
+                    };
+
+        var data = query.AsNoTracking().ToList();
+
+        return data.Select(d => d.customer);
+    }
+}
+```
+
+* Avaliar se a criação de uma **view** que retorna os dados consultados reduz o tempo de execução. Às vezes utilizar a capacidade de processamento do servidor de banco de dados pode ser uma alternativa de melhoria de performance. Na sessão [Views](#views) é mostrado como se utilizar views no EF Core;
+
+* Considerar o uso de SQL puro via [ADO.NET](https://docs.microsoft.com/en-US/dotnet/framework/data/adonet/ado-net-code-examples) ou [Dapper](https://github.com/StackExchange/Dapper);
+
 ## Transações
 
 Por padrão a classe DbContext do EF Core executa as operações no banco de dados dentro de uma transação. Com base nisso, é possível fazer diversas chamadas aos métodos `Add/AddRange, Update/UpdateRange e Remove/RemoveRange` de uma mesma instância do DbContext que ao se fazer a chamada ao `SaveChanges` as operações vão ser executadas dentro de uma transação. Com base nisso, **na maioria dos cenários não é necessário utilizar transações de forma explícita no EF Core**.
