@@ -513,6 +513,40 @@ To see the examples of queries just access the class [LinqQueryExampleProcess](.
 * SUM;
 * COUNT;
 
+### Query performance
+
+To improve the performance of queries using the Entity Framework Core, it is important to note some aspects that reduce the data mapping execution time. The items shown below serve as points of attention and/or checklist for improving performance in querys:
+
+* Analyze the SQL generated in the EF Core [log](#logging). The goal is to search for queries that are performing poorly. Often, some change in the construction of LINQ already improves query performance, if necessary the [query execution plan](https://en.wikipedia.org/wiki/Query_plan) of the database can be used. The [Query examples](#query-examples) section presents several common queries that already have the optimized syntax for execution;
+
+* Review the physical design of the database. Eliminate joins with alphanumeric fields whenever possible, check if it is possible to create or improve indexes in columns;
+
+* Use the **AsNoTracking** extension method after the LINQ developed. This method prevents EF Core from mapping entities to `ChangeTracker`, this reduces the time to map the data. Example:
+
+``` C#
+public IEnumerable<Customer> GetCustomersWithAddressExemplifyingOneToOneRelationship()
+{
+    using (var amazonCodeFirstContext = new AmazonCodeFirstDbContext())
+    {
+        var query = from customer in amazonCodeFirstContext.Customer
+                    join address in amazonCodeFirstContext.Address
+                        on customer.AddressId equals address.Id
+                    select new
+                    {
+                        customer, address
+                    };
+
+        var data = query.AsNoTracking().ToList();
+
+        return data.Select(d => d.customer);
+    }
+}
+```
+
+* Assess whether the creation of a **view** that returns the queried data reduces the execution time. Sometimes using the processing power of the database server can be an alternative to improve performance. In the section [Views](#views) it is shown how to use views in EF Core;
+
+* Consider using pure SQL via [ADO.NET](https://docs.microsoft.com/en-US/dotnet/framework/data/adonet/ado-net-code-examples) or [Dapper](https://github.com/StackExchange/Dapper);
+
 ## Transactions
 
 By default, EF Core's DbContext class performs database operations within a transaction. Based on this, it is possible to make several calls to the `Add/AddRange, Update/UpdateRange and Remove/RemoveRange` methods of the same DbContext instance that when calling the` SaveChanges` the operations will be executed within a transaction. Based on this, **in most scenarios it is not necessary to use transactions explicitly in EF Core**.
