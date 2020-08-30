@@ -218,6 +218,10 @@ Se todo o modelo de dados já estiver relacionado no arquivo ``ModelSnapshot`` s
 
 Ao criar uma migração, o conteúdo do arquivo ``design`` da migração anterior é acrescentado no arquivo design na nova migração.
 
+    Add-Migration <MigrationName> -Context <ClassName of context> -OutputDir <Migration folder> 
+
+O comando acima cria uma migração com a flexibilidade de informar o contexto e o diretório de migrações. Muito útil para o cenário de uso de vários contextos e diretórios de migrações customizados.
+
     Remove-Migration -Context <ClassName of context>
 
 O comando acima remove o arquivo de migração gerado pelo comando ``Add-Migration``. O arquivo removido será o de maior timestamp que ainda não tenha sido aplicado ao banco de dados e/ou não esteja na tabela ``__EFMigrationsHistory``. O arquivo ModelSnapshot também é atualizado.
