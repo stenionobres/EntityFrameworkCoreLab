@@ -260,6 +260,34 @@ In the migration file [DatabaseSeeding](./EntityFrameworkCoreLab.Persistence/Mig
 
 ## Relationships Strategies
 
+This section discusses the ways that relationships between tables can be made using EF Core. For this, the strategies can be used: `By Convention, Data annotation and Fluent API`.
+
+The way these relationships can be made is implemented in the namespace `Experiments` of the project `EntityFrameworkCoreLab.Persistence`. Below is an image with the namespaces highlighted:
+
+![image info](./readme-pictures/relationship-experiments.jpg)
+
+To better understand how relationships are carried out it is necessary to describe the types of participating entities: `Principal Entity, Middle Entity and Dependent Entity`.
+
+* **Principal Entity**: Contains the key property on which the Dependent Entity refers via a foreign key.
+* **Middle Entity**: Entity that associates the Principal Entity and Dependent Entity in an N to N relationship.
+* **Dependent Entity**: Contains the foreign key property that references the Principal Entity.
+
+The entities are specified in the folders: `ManyToManyRelation, OneToManyRelation and OneToOneRelation`. The names of the entities follow the following nomenclature rule:
+
+    <Entity type><relationship strategy><relationship type abbreviation>.cs
+
+**Entity type**: Principal Entity, Middle Entity and Dependent Entity;
+
+**Relationship strategy**: By Convention, Data annotation and Fluent API;
+
+**Abbreviation for relationship type**: OTO (one to one), OTM (one to many), MTM (many to many).
+
+**Example entity name:** `PrincipalEntityByConventionOTM.cs`
+
+>The author's experience in creating and developing this project shows that the best strategy for creating relationships between entities is **By Convention**. The project becomes simpler and more intuitive to understand.
+
+Below are some important characteristics of each type of relationship.
+
 ### One to One (1 x 1)
 
 By default, EF Core creates a field that can assume **null values** in the database. This field is a foreign key for the dependent table and assumes the exclusion pattern `ReferentialAction.Restrict`. If `DataAnnotation [Required]` is inserted, it assumes the `ReferentialAction.Cascade` exclusion pattern.
