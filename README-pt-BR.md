@@ -9,7 +9,7 @@ Após os estudos de caso, as principais conclusões foram documentadas neste arq
 ## Índice
 
 * [Pré requisitos](#pré-requisitos)
-* [Como iniciar?](#como-iniciar?)
+* [Como iniciar?](#como-iniciar)
 * [Requisitos do projeto](#requisitos-do-projeto)
 * [Modelo do banco de dados](#modelo-do-banco-de-dados)
 * [Estrutura do projeto](#estrutura-do-projeto)
@@ -27,9 +27,9 @@ Após os estudos de caso, as principais conclusões foram documentadas neste arq
     * [Um para Um (1 x 1)](#um-para-um-(1-x-1))
     * [Um para N (1 x N)](#um-para-n-(1-x-N))
     * [N para N (N x N)](#n-para-n-(N-x-N))
-* [Considerações sobre inserts, updates e deletes](#considerações-sobre-inserts,-updates-e-deletes)
+* [Considerações sobre inserts, updates e deletes](#considerações-sobre-inserts-updates-e-deletes)
     * [EF Core Entity State](#ef-core-entity-state)
-    * [Exemplos de uso de insert/update](#exemplos-de-uso-de-insert/update)
+    * [Exemplos de uso de insert/update](#exemplos-de-uso-de-insertupdate)
 * [Considerações sobre performance](#considerações-sobre-performance)
     * [INSERT](#INSERT)
     * [UPDATE](#UPDATE)
