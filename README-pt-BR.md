@@ -40,7 +40,7 @@ Após os estudos de caso, as principais conclusões foram documentadas neste arq
     * [Explicit loading](#explicit-loading)
     * [Lazy loading](#lazy-loading)
     * [Select loading](#select-loading)
-    * [Qual estratégia utilizar?](#qual-estratégia-utilizar?)
+    * [Qual estratégia utilizar?](#qual-estratégia-utilizar)
     * [SQL puro em consultas](#sql-puro-em-consultas)
     * [Exemplos de consultas](#exemplos-de-consultas)
     * [Performance em consultas](#performance-em-consultas)
