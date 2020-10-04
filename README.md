@@ -8,6 +8,53 @@ In this application, several real usage scenarios were tested based on an ecomme
 
 After the case studies, the main conclusions were documented in this file and serve as a reference for use and source of consultation.
 
+## Table of contents
+
+* [Prerequisites](#prerequisites)
+* [Getting Started](#getting-started)
+* [Project Requirements](#project-requirements)
+* [Database Model](#database-model)
+* [Project Structure](#project-structure)
+    * [Used Packages](#used-packages)
+    * [EntityFrameworkCoreLab.Application](#entityFrameworkCoreLab.application)
+    * [EntityFrameworkCoreLab.Persistence](#entityFrameworkCoreLab.persistence)
+* [Model First x Database First](#model-first-x-database-first)
+    * [Fields table](#fields-table)
+* [Migration Strategies](#migration-strategies)
+    * [Criteria for generating migrations](#criteria-for-generating-migrations)
+    * [ModelSnapshot File](#modelSnapshot-file)
+    * [Main commands when using migrations](#main-commands-when-using-migrations)
+    * [Database Seeding](#database-seeding)
+* [Relationships Strategies](#relationships-strategies)
+    * [One to One (1 x 1)](#one-to-one-(1-x-1))
+    * [One to Many (1 x N)](#one-to-many-(1-x-N))
+    * [Many to Many (N x N)](#many-to-many-(N-x-N))
+* [Inserts, updates and deletes considerations](#inserts,-updates-and-deletes-considerations)
+    * [EF Core Entity State](#ef-core-entity-state)
+    * [Insert and update use examples](#insert-and-update-use-examples)
+* [Performance considerations](#performance-considerations)
+    * [INSERT](#INSERT)
+    * [UPDATE](#UPDATE)
+    * [DELETE](#DELETE)
+    * [Considerations about data](#considerations-about-data)
+* [Considerations about selects](#considerations-about-selects)
+    * [Eager loading](#eager-loading)
+    * [Explicit loading](#explicit-loading)
+    * [Lazy loading](#lazy-loading)
+    * [Select loading](#select-loading)
+    * [Which strategy to use?](#which-strategy-to-use?)
+    * [Raw SQL in querys](#raw-sql-in-querys)
+    * [Query examples](#query-examples)
+    * [Query performance](#query-performance)
+* [Transactions](#transactions)
+* [Views](#views)
+* [Logging](#logging)
+* [Fast tips](#fast-tips)
+* [Data Audity](#data-audity)
+* [Lessons learned](#lessons-learned)
+* [References used](#references-used)
+* [Authors](#authors)
+
 ## Prerequisites
 
 What needs to be installed on the machine to extend and debug the project:
@@ -346,7 +393,7 @@ The classes [AmazonCustomerInsertLabMapper](./EntityFrameworkCoreLab.Persistence
 
 > It is highly recommended that the **State** property is not changed directly via code in real applications.
 
-## Insert and update use examples
+### Insert and update use examples
 
 The class [DisconnectedOperationProcess](./EntityFrameworkCoreLab.Application/Process/DisconnectedOperationProcess.cs) and its dependencies present examples of how to perform inserts and updates on entities with 1 x 1, 1 x N and N x N relationships.
 
