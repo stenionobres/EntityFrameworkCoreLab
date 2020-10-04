@@ -8,24 +8,6 @@ In this application, several real usage scenarios were tested based on an ecomme
 
 After the case studies, the main conclusions were documented in this file and serve as a reference for use and source of consultation.
 
-**Used Packages:**
-
->Net Core 3.1
-
->[Entity Framework Core 3.1.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.1.2)
-
->[Entity.Framework.Core.Sql.Server 3.1.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/3.1.2)
-
->[Microsoft.EntityFrameworkCore.Tools 3.1.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/3.1.2)
-
->[EFCore.BulkExtensions 3.1.1](https://www.nuget.org/packages/EFCore.BulkExtensions/3.1.1)
-
->[Microsoft.Extensions.Logging.Console 3.1.2](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.2)
-
->[Faker.Net 1.3.77](https://www.nuget.org/packages/Faker.Net/1.3.77)
-
->[NBuilder 6.1.0](https://www.nuget.org/packages/NBuilder/6.1.0)
-
 ## Prerequisites
 
 What needs to be installed on the machine to extend and debug the project:
@@ -83,6 +65,24 @@ In this diagram, **logical modeling** of the database is presented. The modeling
 ## Project Structure
 
 The solution `EntityFrameworkCoreLab` is divided into two projects: `EntityFrameworkCoreLab.Application` and `EntityFrameworkCoreLab.Persistence`. Below each of the projects are detailed.
+
+### Used Packages
+
+>Net Core 3.1
+
+>[Entity Framework Core 3.1.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.1.2)
+
+>[Entity.Framework.Core.Sql.Server 3.1.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/3.1.2)
+
+>[Microsoft.EntityFrameworkCore.Tools 3.1.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/3.1.2)
+
+>[EFCore.BulkExtensions 3.1.1](https://www.nuget.org/packages/EFCore.BulkExtensions/3.1.1)
+
+>[Microsoft.Extensions.Logging.Console 3.1.2](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.2)
+
+>[Faker.Net 1.3.77](https://www.nuget.org/packages/Faker.Net/1.3.77)
+
+>[NBuilder 6.1.0](https://www.nuget.org/packages/NBuilder/6.1.0)
 
 ### EntityFrameworkCoreLab.Application
 
