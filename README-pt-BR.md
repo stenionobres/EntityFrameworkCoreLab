@@ -6,6 +6,53 @@ Nesta aplicação foram experimentados diversos cenários reais de uso baseados 
 
 Após os estudos de caso, as principais conclusões foram documentadas neste arquivo e servem como referência de uso e fonte de consulta.
 
+## Índice
+
+* [Pré requisitos](#pré-requisitos)
+* [Como iniciar?](#como-iniciar?)
+* [Requisitos do projeto](#requisitos-do-projeto)
+* [Modelo do banco de dados](#modelo-do-banco-de-dados)
+* [Estrutura do projeto](#estrutura-do-projeto)
+    * [Versões utilizadas](#versões-utilizadas)
+    * [EntityFrameworkCoreLab.Application](#entityFrameworkCoreLab.application)
+    * [EntityFrameworkCoreLab.Persistence](#entityFrameworkCoreLab.persistence)
+* [Model First x Database First](#model-first-x-database-first)
+    * [Tabela de campos](#tabela-de-campos)
+* [Estratégias no uso de migrações](#estratégias-no-uso-de-migrações)
+    * [Critérios de geração de migrações](#critérios-de-geração-de-migrações)
+    * [Arquivo ModelSnapshot](#arquivo-modelSnapshot)
+    * [Principais comandos no uso de migrações](#principais-comandos-no-uso-de-migrações)
+    * [Database Seeding](#database-seeding)
+* [Estratégias nos relacionamentos](#estratégias-nos-relacionamentos)
+    * [Um para Um (1 x 1)](#um-para-um-(1-x-1))
+    * [Um para N (1 x N)](#um-para-n-(1-x-N))
+    * [N para N (N x N)](#n-para-n-(N-x-N))
+* [Considerações sobre inserts, updates e deletes](#considerações-sobre-inserts,-updates-e-deletes)
+    * [EF Core Entity State](#ef-core-entity-state)
+    * [Exemplos de uso de insert/update](#exemplos-de-uso-de-insert/update)
+* [Considerações sobre performance](#considerações-sobre-performance)
+    * [INSERT](#INSERT)
+    * [UPDATE](#UPDATE)
+    * [DELETE](#DELETE)
+    * [Considerações sobre os dados](#considerações-sobre-os-dados)
+* [Considerações sobre selects](#considerações-sobre-selects)
+    * [Eager loading](#eager-loading)
+    * [Explicit loading](#explicit-loading)
+    * [Lazy loading](#lazy-loading)
+    * [Select loading](#select-loading)
+    * [Qual estratégia utilizar?](#qual-estratégia-utilizar?)
+    * [SQL puro em consultas](#sql-puro-em-consultas)
+    * [Exemplos de consultas](#exemplos-de-consultas)
+    * [Performance em consultas](#performance-em-consultas)
+* [Transações](#transações)
+* [Views](#views)
+* [Log de consultas e comandos](#log-de-consultas-e-comandos)
+* [Auditoria de dados](#auditoria-de-dados)
+* [Dicas rápidas](#dicas-rápidas)
+* [Principais lições aprendidas](#principais-lições-aprendidas)
+* [Referências utilizadas](#referências-utilizadas)
+* [Autores](#autores)
+
 ## Pré-requisitos
 
 O que precisa ser instalado na máquina para extender e depurar o projeto:
@@ -344,7 +391,7 @@ As classes [AmazonCustomerInsertLabMapper](./EntityFrameworkCoreLab.Persistence/
 
 >É altamente recomendável que a propriedade **State** não seja alterada diretamente via código em aplicações reais.
 
-## Exemplos de uso de insert/update
+### Exemplos de uso de insert/update
 
 A classe [DisconnectedOperationProcess](./EntityFrameworkCoreLab.Application/Process/DisconnectedOperationProcess.cs) e suas dependências apresentam exemplos de como se realizar inserts e updates em entidades com relacionamentos 1 x 1, 1 x N e N x N.
 
